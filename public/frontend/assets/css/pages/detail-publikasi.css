@@ -1,0 +1,98 @@
+.section-berita.bg-gelap {
+  background-color: #F2F2F2;
+}
+
+.section-berita .card-berita {
+  background-color: #fff;
+}
+.section-berita .card-berita.with-padding {
+  height: auto;
+  padding: 30px 50px;
+}
+
+.section-berita .card-berita .card-berita-body .card-author {
+  display: flex;
+  justify-content: space-between;
+}
+
+.section-berita .card-berita .card-berita-body .card-author p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.section-berita .card-berita .card-berita-body h1.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 5px 0;
+}
+
+.section-berita .card-berita .card-berita-body .card-image-content {
+  width: 100%;
+  position: relative;
+  margin: 10px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.section-berita .card-berita .card-berita-body .card-image-content img.img-content {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.section-berita .card-berita .card-berita-body .card-image-content p.img-description {
+  font-style: italic;
+  font-size: 12px;
+  margin: 0;
+  padding-top: 10px;
+  padding-left: 20px;
+  font-weight: 500;
+}
+
+/* in mobile version */
+@media (max-width: 575.98px) {
+  .section-berita {
+      padding: 50px 0;
+  }
+
+  .section-berita .card-berita.with-padding {
+      padding: 30px;
+      border-radius: 16px;
+  }
+
+  .section-berita .card-berita .card-berita-body h1.title {
+      font-size: 18px;
+  }
+
+  .section-berita .card-berita .card-berita-body .card-image-content {
+      width: 100%;
+      left: 0;
+  }
+
+  .section-berita .card-berita .card-berita-body .card-image-content p.img-description {
+      padding-left: 0px;
+  }
+}
+
+.eapps-social-share-buttons-item-icon {
+  width: 14px;
+  height: 14px;
+  backface-visibility: hidden;
+  transition: all .2s ease;
+}
+
+.btn-facebook{
+  background-color: #3b5998;
+  color: white;
+}
+.btn-facebook:hover{
+  background-color: #3b5998;
+  color: white;
+}
+.btn-twitter{
+  background-color: #3e3e3e;
+  color: white;
+}
+.btn-twitter:hover{
+  background-color: #3e3e3e;
+  color: white;
+}
