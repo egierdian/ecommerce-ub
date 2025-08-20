@@ -28,6 +28,9 @@ class RentalPriceController extends Controller
 
                     return $btnEdit.$btnDelete;
                 })
+                ->addColumn('spesial_price', function($row) {
+                    return number_format($row->spesial_price, 0, ',', '.');
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
