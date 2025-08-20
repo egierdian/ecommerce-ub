@@ -45,7 +45,7 @@
                             <div class="col-md-6 view-type view-product">
                                 <div class="form-group @error('price') has-error @enderror">
                                     <label>Price <span class="text-danger">*</span></label>
-                                    <input type="text" name="price" class="form-control" value="{{ isset($data) ? $data->price : old('price') }}">
+                                    <input type="text" name="price" class="form-control format-number" value="{{ isset($data) ? $data->price : old('price') }}">
                                     @error('price')
                                     <small class="form-text text-muted">{{ $message }}</small>
                                     @enderror
@@ -54,7 +54,7 @@
                             <div class="col-md-6 view-type view-sewa">
                                 <div class="form-group @error('base_price_per_hour') has-error @enderror">
                                     <label>Base Price per Hour <span class="text-danger">*</span></label>
-                                    <input type="text" name="base_price_per_hour" class="form-control" value="{{ isset($data) ? $data->base_price_per_hour : old('base_price_per_hour') }}">
+                                    <input type="text" name="base_price_per_hour" class="form-control format-number" value="{{ isset($data) ? $data->base_price_per_hour : old('base_price_per_hour') }}">
                                     @error('base_price_per_hour')
                                     <small class="form-text text-muted">{{ $message }}</small>
                                     @enderror
@@ -63,7 +63,7 @@
                             <div class="col-md-6 view-type view-sewa">
                                 <div class="form-group @error('holiday_price_per_hour') has-error @enderror">
                                     <label>Holiday Price per Hour <span class="text-danger">*</span></label>
-                                    <input type="text" name="holiday_price_per_hour" class="form-control" value="{{ isset($data) ? $data->holiday_price_per_hour : old('holiday_price_per_hour') }}">
+                                    <input type="text" name="holiday_price_per_hour" class="form-control format-number" value="{{ isset($data) ? $data->holiday_price_per_hour : old('holiday_price_per_hour') }}">
                                     @error('holiday_price_per_hour')
                                     <small class="form-text text-muted">{{ $message }}</small>
                                     @enderror
@@ -74,7 +74,7 @@
                             <div class="col-md-12">
                                 <div class="form-group @error('description') has-error @enderror">
                                     <label>Description <span class="text-danger">*</span></label>
-                                    <textarea name="description" class="form-control"> {{ isset($data) ? $data->description : old('description') }} </textarea>
+                                    <textarea name="description" id="description" class="form-control"> {{ isset($data) ? $data->description : old('description') }} </textarea>
                                     @error('description')
                                     <small class="form-text text-muted">{{ $message }}</small>
                                     @enderror
@@ -96,6 +96,17 @@
 @section('script')
 <script>
     $(document).ready(function() {
+        $('#description').summernote({
+            tabsize: 2,
+            height: 200,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['fontsize', 'color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview']]
+            ]
+        });
         checkType()
 
         $("[name=type]").on("change", function() {

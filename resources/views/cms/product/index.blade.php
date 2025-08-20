@@ -36,6 +36,7 @@
                                 <tr>
                                     <th scope="col" style="width: 100px;">No</th>
                                     <th scope="col">Name</th>
+                                    <th scope="col">Type</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -76,6 +77,12 @@
                     data: 'name',
                     name: 'name',
                     searchable: true
+                },
+                {
+                    data: 'type',
+                    name: 'type',
+                    searchable: false,
+                    orderable: false
                 },
                 {
                     data: 'action',

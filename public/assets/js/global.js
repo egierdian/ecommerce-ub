@@ -33,3 +33,12 @@ function deleteItem (e) {
         }
     });
 }
+
+$(".format-number").on("input", function() {
+    let value = $(this).val().replace(/\./g, "");
+    if (!isNaN(value) && value !== "") {
+        $(this).val(value.replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+    } else {
+        $(this).val("");
+    }
+});

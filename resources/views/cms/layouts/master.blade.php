@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 	@yield('style')
+
+	<style>
+		.sidebar.sidebar-style-2 .nav .nav-item a {
+			padding: 8px 15px !important; 
+		}
+	</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -109,10 +115,22 @@
 								<p>Dashboard</p>
 							</a>
 						</li>
-						<li class="nav-item {{request()->is('product*') ? 'active' : ''}}">
-							<a href="#">
+						<li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+							<h4 class="text-section">Product</h4>
+						</li>
+						<li class="nav-item {{request()->is('admin/product*') ? 'active' : ''}}">
+							<a href="{{route('admin.product')}}">
 								<i class="fas fa-folder"></i>
 								<p>Product</p>
+							</a>
+						</li>
+						<li class="nav-item {{request()->is('admin/rental-price*') ? 'active' : ''}}">
+							<a href="{{route('admin.rental-price')}}">
+								<i class="fas fa-folder"></i>
+								<p>Rent Price</p>
 							</a>
 						</li>
 					</ul>
@@ -128,7 +146,7 @@
 			<footer class="footer">
 				<div class="container-fluid">
 					<div class="copyright ml-auto">
-						Layanan WhatsApp Api by <a href="https://watsha.id" target="_blank">Watsha.id</a> 
+						UB E-commerce	
 					</div>				
 				</div>
 			</footer>
@@ -146,7 +164,7 @@
 	<script src="{{asset('assets/js/plugin/summernote/summernote-bs4.min.js')}}"></script>
 	<script src="{{asset('assets/js/plugin/chart-circle/circles.min.js')}}"></script>
 	<script src="{{asset('assets/js/atlantis.js')}}"></script>
-	<script src="{{asset('assets/js/script.js')}}?v={{env('APP_VERSION') }}"></script>
+	<script src="{{asset('assets/js/global.js')}}?v={{env('APP_VERSION') }}"></script>
 	
 	<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.min.js')}}"></script>
 
