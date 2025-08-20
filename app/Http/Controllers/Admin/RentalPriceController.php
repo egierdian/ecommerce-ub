@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RentalPriceController extends Controller
 {
@@ -62,7 +63,14 @@ class RentalPriceController extends Controller
 
         $validator = Validator::make($request->all(), [
             'product' => 'required',
-            'date' => 'required|date',
+            'date' => [
+                'required',
+                'date',
+                Rule::unique('rental_prices', 'date')
+                    ->where(function ($query) use ($request) {
+                        return $query->where('product_id', $request->product);
+                    }),
+            ],
             'spesial_price' => 'required|numeric|min:100',
         ]);
 
@@ -91,7 +99,15 @@ class RentalPriceController extends Controller
 
         $validator = Validator::make($request->all(), [
             'product' => 'required',
-            'date' => 'required|date',
+            'date' => [
+                'required',
+                'date',
+                Rule::unique('rental_prices', 'date')
+                    ->where(function ($query) use ($request) {
+                        return $query->where('product_id', $request->product);
+                    })
+                    ->ignore($id),
+            ],
             'spesial_price' => 'required|numeric|min:100',
         ]);
 
