@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="card-action text-right">
-                        <a href="{{route('admin.product')}}" class="btn btn-info">Back</a>
+                        <a href="{{route('admin.rental-price')}}" class="btn btn-info">Back</a>
                         <button type="submit" class="btn btn-primary btn-border px-5" id="btnSave">{{isset($data) ? 'Update' : 'Submit'}}</button>
                     </div>
                 </div>
