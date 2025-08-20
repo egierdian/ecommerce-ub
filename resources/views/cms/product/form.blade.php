@@ -51,6 +51,15 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-6 view-type view-product">
+                                <div class="form-group @error('qty') has-error @enderror">
+                                    <label>Qty <span class="text-danger">*</span></label>
+                                    <input type="number" name="qty" class="form-control" value="{{ isset($data) ? $data->qty : old('qty') }}">
+                                    @error('qty')
+                                    <small class="form-text text-muted">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-md-6 view-type view-sewa">
                                 <div class="form-group @error('base_price_per_hour') has-error @enderror">
                                     <label>Base Price per Hour <span class="text-danger">*</span></label>

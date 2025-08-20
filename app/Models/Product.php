@@ -10,6 +10,6 @@ class Product extends Model
 {
     use HasFactory;
     protected $table = 'products';
-    protected $fillable = ['name','price','type','base_price_per_hour','holiday_price_per_hour','description','status'];
+    protected $fillable = ['name','price','type','base_price_per_hour','holiday_price_per_hour','description','status','qty'];
     public $timestamps = true;
 }

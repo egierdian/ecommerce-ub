@@ -67,10 +67,14 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required|in:1,2',
-            'holiday_price_per_hour' => 'nullable|numeric|min:100',
+            'holiday_price_per_hour' => 'nullable|numeric',
         ]);
 
         $validator->sometimes('price', 'required|numeric|min:1000', function ($input) {
+            return $input->type == 2;
+        });
+        
+        $validator->sometimes('qty', 'required|numeric|min:1', function ($input) {
             return $input->type == 2;
         });
 
@@ -83,12 +87,23 @@ class ProductController extends Controller
             $param = [
                 'name' => $request->name,
                 'type' => $request->type,
-                'price' => $request->price,
-                'base_price_per_hour' => $request->base_price_per_hour,
-                'holiday_price_per_hour' => $request->holiday_price_per_hour,
-                'description' => $request->description,
                 'status' => 1
             ];
+            $price = null;
+            $base_price_per_hour = null;
+            $holiday_price_per_hour = null;
+            $qty = null;
+            if($request->type == 1) {
+                $base_price_per_hour =  $request->base_price_per_hour;
+                $holiday_price_per_hour =  $request->holiday_price_per_hour;
+            } else {
+                $price =  $request->price;
+                $qty = $request->qty;
+            }
+            $param['base_price_per_hour'] = $base_price_per_hour;
+            $param['holiday_price_per_hour'] = $holiday_price_per_hour;
+            $param['price'] =  $price;
+            $param['qty'] =  $qty;
             Product::create($param);
 
             return redirect()->route('admin.product')->with('success', 'Success created!');
@@ -108,10 +123,14 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required|in:1,2',
-            'holiday_price_per_hour' => 'nullable|numeric|min:100',
+            'holiday_price_per_hour' => 'nullable|numeric',
         ]);
 
         $validator->sometimes('price', 'required|numeric|min:1000', function ($input) {
+            return $input->type == 2;
+        });
+
+        $validator->sometimes('qty', 'required|numeric|min:1', function ($input) {
             return $input->type == 2;
         });
 
@@ -131,15 +150,18 @@ class ProductController extends Controller
             $price = null;
             $base_price_per_hour = null;
             $holiday_price_per_hour = null;
+            $qty = null;
             if($request->type == 1) {
                 $base_price_per_hour =  $request->base_price_per_hour;
                 $holiday_price_per_hour =  $request->holiday_price_per_hour;
             } else {
                 $price =  $request->price;
+                $qty = $request->qty;
             }
             $data['base_price_per_hour'] = $base_price_per_hour;
             $data['holiday_price_per_hour'] = $holiday_price_per_hour;
             $data['price'] =  $price;
+            $data['qty'] =  $qty;
             $data->update($param);
 
             return redirect()->route('admin.product')->with('success', 'Success updated!');

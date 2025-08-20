@@ -1,0 +1,2 @@
+ALTER TABLE `products`
+	ADD COLUMN `qty` INT NULL DEFAULT NULL AFTER `holiday_price_per_hour`;
