@@ -37,7 +37,7 @@
 			<!-- Logo Header -->
 			<div class="logo-header" data-background-color="light-blue">
 				
-				<a href="index.html" class="logo">
+				<a href="{{route('admin.dashboard')}}" class="logo">
 					<img src="{{asset('assets/img/icon-ubakrie.png')}}" width="60" alt="navbar brand" class="navbar-brand">
 					{{$title}}
 				</a>

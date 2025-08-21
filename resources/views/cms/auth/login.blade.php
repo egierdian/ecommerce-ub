@@ -3,8 +3,8 @@
 @section('content')
 <div class="container container-login animated fadeIn">
 	<div class="text-center mb-4">
-		<img class="mx-auto" src="{{asset('assets/img/watsha-2.png')}}" width="110" alt=""><br>
-		<span class="text-muted">Secure login</span>
+		<img class="mx-auto" src="{{asset('assets/img/icon-ubakrie.png')}}" width="110" alt=""><br>
+		<span class="text-muted">Login e-Commerce UBakrie</span>
 	</div>
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -36,7 +36,7 @@
 				<div class="form-action mb-3">
 					<button type="submit" class="btn btn-primary btn-rounded btn-login">Login</button>
 				</div>
-				<div class="login-account">
+				<div class="login-account" hidden>
 					<span class="msg">Belum punya akun ?</span>
 					<a href="#" id="show-signup" class="link">Daftar</a>
 				</div>

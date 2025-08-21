@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    dd(bcrypt('password'));
+    return view('frontend.index');
+    // dd(bcrypt('password'));
 });
 
 Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name('login');
