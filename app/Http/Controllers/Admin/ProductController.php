@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -41,7 +43,8 @@ class ProductController extends Controller
     {
         $data = null;
         $type = $this->type();
-        return view('cms.product.form', compact('data','type'));
+        $images = [];
+        return view('cms.product.form', compact('data','type','images'));
     }
 
     public function edit($id)
@@ -53,7 +56,9 @@ class ProductController extends Controller
         $data->holiday_price_per_hour = number_format($data->holiday_price_per_hour, 0, ',', '.');
         $data->base_price_per_hour = number_format($data->base_price_per_hour, 0, ',', '.');
 
-        return view('cms.product.form', compact('data','type'));
+        $images = ProductImage::where('product_id', decrypt($id))->get();
+
+        return view('cms.product.form', compact('data','type','images'));
     }
 
     public function store(Request $request)
@@ -68,6 +73,8 @@ class ProductController extends Controller
             'name' => 'required',
             'type' => 'required|in:1,2',
             'holiday_price_per_hour' => 'nullable|numeric',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpg,jpeg,svg,png|max:5120',
         ]);
 
         $validator->sometimes('price', 'required|numeric|min:1000', function ($input) {
@@ -104,7 +111,23 @@ class ProductController extends Controller
             $param['holiday_price_per_hour'] = $holiday_price_per_hour;
             $param['price'] =  $price;
             $param['qty'] =  $qty;
-            Product::create($param);
+            $product = Product::create($param);
+
+            $productId = $product->id;
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $file) {
+                    $fileName = 'product-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
+                    $path = public_path('uploads/product');
+                    $file->move($path, $fileName);
+
+                    $paramImage = [
+                        'product_id' => $productId,
+                        'name' => $fileName,
+                        'path' => $path
+                    ];
+                    ProductImage::create($paramImage);
+                }
+            }
 
             return redirect()->route('admin.product')->with('success', 'Success created!');
         } catch (\Exception $e) {
@@ -124,6 +147,8 @@ class ProductController extends Controller
             'name' => 'required',
             'type' => 'required|in:1,2',
             'holiday_price_per_hour' => 'nullable|numeric',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpg,jpeg,svg,png|max:5120',
         ]);
 
         $validator->sometimes('price', 'required|numeric|min:1000', function ($input) {
@@ -164,6 +189,22 @@ class ProductController extends Controller
             $data['qty'] =  $qty;
             $data->update($param);
 
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $file) {
+                    $fileName = 'product-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
+                    $base_path = 'uploads/product';
+                    $path = public_path($base_path);
+                    $file->move($path, $fileName);
+
+                    $paramImage = [
+                        'product_id' => $id,
+                        'name' => $fileName,
+                        'path' => $base_path .'/'.$fileName
+                    ];
+                    ProductImage::create($paramImage);
+                }
+            }
+
             return redirect()->route('admin.product')->with('success', 'Success updated!');
         } catch (\Exception $e) {
             return redirect()->back()->withInput();
@@ -186,6 +227,41 @@ class ProductController extends Controller
         }
     }
 
+    public function deleteImage($id, $imageId = null) {
+        try {
+            $id = decrypt($id);
+            if ($imageId) {
+                $image = ProductImage::findOrFail($imageId);
+
+                $this->deleteImageFile($image->path);
+                $image->delete();
+
+            } else {
+                $images = ProductImage::where('product_id', $id)->get();
+
+                foreach ($images as $img) {
+                    $this->deleteImageFile($img->path);
+                    $img->delete();
+                }
+            }
+
+            return redirect()->route('admin.product.edit', ['id' => encrypt($id)])->with('success', 'Success deleted!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput();
+        }
+    }
+
+    private function deleteImageFile($path)
+    {
+        if ($path) {
+            $fullPath = public_path($path);
+
+            if (file_exists($fullPath)) {
+                @unlink($fullPath); // pakai @ supaya tidak error kalau gagal
+            }
+        }
+    }
+    
     private function type() {
         return [
             '1' => 'Sewa',

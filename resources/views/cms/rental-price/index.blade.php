@@ -2,9 +2,6 @@
 
 @section('content')
 <div class="page-inner">
-    <div class="page-header">
-        <h4 class="page-title">Rental Price</h4>
-    </div>
     @if(session('success'))
     <div class="alert alert-success d-flex justify-content-between align-items-center" id="successAlert">
         {{ session('success') }}
@@ -27,7 +24,12 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="{{ route('admin.rental-price.create') }}" class="btn btn-info btn-md mb-3 px-4">Create</a>
+                            <div class="d-flex align-items-center mb-1">
+                                <div class="page-header">
+                                    <h4 class="page-title">Rent Price</h4>
+                                </div>
+								<a href="{{ route('admin.rental-price.create') }}" class="btn btn-info btn-md mb-3 ml-auto">Create</a>
+							</div>
                         </div>
                     </div>
                     <div class="table-responsive">

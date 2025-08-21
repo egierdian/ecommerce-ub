@@ -27,6 +27,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/store', [Controllers\Admin\ProductController::class, 'store'])->name('admin.product.store');
         Route::post('/update/{id}', [Controllers\Admin\ProductController::class, 'update'])->name('admin.product.update');
         Route::get('/delete/{id}', [Controllers\Admin\ProductController::class, 'destroy'])->name('admin.product.delete');
+        Route::get('/delete-image/{id}/{imageId?}', [Controllers\Admin\ProductController::class, 'deleteImage'])->name('admin.product.delete-image');
     });
 
     Route::group((['prefix' => 'rental-price']), function () {

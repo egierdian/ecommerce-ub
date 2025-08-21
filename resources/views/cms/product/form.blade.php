@@ -11,7 +11,23 @@
     <div class="page-header">
         <h4 class="page-title">{{ isset($data) ? 'Edit' : 'Create' }} Product</h4>
     </div>
-    <form action="{{isset($data) ? route('admin.product.update', ['id'=>$data->id]) : route('admin.product.store') }}" method="POST">
+    @if(session('success'))
+    <div class="alert alert-success d-flex justify-content-between align-items-center" id="successAlert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(session('error'))
+    <div class="alert alert-danger d-flex justify-content-between align-items-center" id="errorAlert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    <form action="{{isset($data) ? route('admin.product.update', ['id'=>$data->id]) : route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-12">
@@ -90,6 +106,40 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group @error('images') has-error @enderror">
+                                    <label>Images <span class="text-danger"></span></label>
+                                    <input type="file" class="form-control" name="images[]" multiple>
+                                    @error('images')
+                                    <small class="form-text text-muted">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @if (count($images) > 0)
+                                    <div class="w-100 d-flex">
+                                        <button type="button" class="btn btn-sm btn-danger" data-id={{encrypt($data->id)}} data-type="all" onclick="deleteImage(this)">Hapus semua</button>
+                                    </div>
+                                    @foreach($images as $img)
+                                    <div class="w-100 d-flex align-items-center">
+                                        <p class="m-0">{{$img->name}}</p>
+                                        <div class="form-button-action">
+                                            <a href="{{ asset($img->path) }}" class="btn btn-link btn-primary btn-sm image-popup" data-original-title="Lihat">
+                                                <img class="img-fluid" alt="" src="{{ asset($img->path) }}" width="55" style="display:none">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+											<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-sm btn-danger" data-id={{encrypt($data->id)}} data-imageid="{{$img->id}}" data-name="{{$img->name}}" data-type="single" onclick="deleteImage(this)">
+												<i class="fa fa-times"></i>
+											</button>
+										</div>
+                                    </div>
+                                    @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="card-action text-right">
@@ -104,6 +154,7 @@
 @endsection
 
 @section('script')
+<script src="{{asset('assets/plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         $('#description').summernote({
@@ -122,6 +173,10 @@
         $("[name=type]").on("change", function() {
             checkType()
         })
+
+        $('.image-popup').magnificPopup({
+            type: 'image'
+        });
     })
 
 
@@ -133,6 +188,40 @@
         } else {
             $('.view-sewa').hide()
         }
+    }
+
+    function deleteImage(e) {
+        let images = $(e).data()
+        
+        let id = images.id
+        let type = images.type
+        let title = 'Hapus semua'
+        let imageId = null 
+        let name = null
+        if(type != 'all') {
+            name = images.name
+            title = `Hapus ${images.name}`
+            imageId = images.imageid
+        }
+
+        Swal.fire({
+            title: title,
+            text: "Apakah kamu yakin hapus?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if(type != 'all') {
+                    window.location.href = `/admin/product/delete-image/${id}/${imageId}`
+                } else {
+                    window.location.href = `/admin/product/delete-image/${id}`
+                }
+            }
+        });
     }
 </script>
 @endsection
