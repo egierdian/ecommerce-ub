@@ -5,21 +5,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('home');
+    dd(bcrypt('password'));
 });
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
+Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [Controllers\AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [Controllers\AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [Controllers\AuthController::class, 'register'])->name('register.post');
+Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
 
-// admin 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-});
-
-
-// Route::middleware('auth')->prefix('admin')->group(function () {
-Route::prefix('admin')->group(function () {
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('/dashboard', [Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+    
     Route::group((['prefix' => 'product']), function () {
         Route::get('/', [Controllers\Admin\ProductController::class, 'index'])->name('admin.product');
         Route::get('/create', [Controllers\Admin\ProductController::class, 'create'])->name('admin.product.create');

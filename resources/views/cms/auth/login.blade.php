@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('cms.layouts.app')
 
 @section('content')
 <div class="container container-login animated fadeIn">
