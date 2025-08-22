@@ -117,13 +117,14 @@ class ProductController extends Controller
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $file) {
                     $fileName = 'product-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
-                    $path = public_path('uploads/product');
+                    $base_path = 'uploads/product';
+                    $path = public_path($base_path);
                     $file->move($path, $fileName);
 
                     $paramImage = [
                         'product_id' => $productId,
                         'name' => $fileName,
-                        'path' => $path
+                        'path' => $base_path .'/'.$fileName
                     ];
                     ProductImage::create($paramImage);
                 }

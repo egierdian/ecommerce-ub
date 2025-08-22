@@ -120,7 +120,13 @@
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
-							<h4 class="text-section">Product</h4>
+							<h4 class="text-section">Master Data</h4>
+						</li>
+						<li class="nav-item {{request()->is('admin/category*') ? 'active' : ''}}">
+							<a href="{{route('admin.category')}}">
+								<i class="fas fa-folder"></i>
+								<p>Category</p>
+							</a>
 						</li>
 						<li class="nav-item {{request()->is('admin/product*') ? 'active' : ''}}">
 							<a href="{{route('admin.product')}}">

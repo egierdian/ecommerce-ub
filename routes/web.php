@@ -36,4 +36,15 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::post('/update/{id}', [Controllers\Admin\RentalPriceController::class, 'update'])->name('admin.rental-price.update');
         Route::get('/delete/{id}', [Controllers\Admin\RentalPriceController::class, 'destroy'])->name('admin.rental-price.delete');
     });
+
+    
+    Route::group((['prefix' => 'category']), function () {
+        Route::get('/', [Controllers\Admin\CategoryController::class, 'index'])->name('admin.category');
+        Route::get('/create', [Controllers\Admin\CategoryController::class, 'create'])->name('admin.category.create');
+        Route::get('/edit/{id}', [Controllers\Admin\CategoryController::class, 'edit'])->name('admin.category.edit');
+        Route::post('/store', [Controllers\Admin\CategoryController::class, 'store'])->name('admin.category.store');
+        Route::post('/update/{id}', [Controllers\Admin\CategoryController::class, 'update'])->name('admin.category.update');
+        Route::get('/delete/{id}', [Controllers\Admin\CategoryController::class, 'destroy'])->name('admin.category.delete');
+    });
+
 });
