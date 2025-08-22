@@ -156,7 +156,7 @@
 							<h4 class="text-section">Settings</h4>
 						</li>
 						<li class="nav-item {{request()->is('admin/setting*') ? 'active' : ''}}">
-							<a href="#">
+							<a href="{{route('admin.setting')}}">
 								<i class="fas fa-cog"></i>
 								<p>Setting</p>
 							</a>

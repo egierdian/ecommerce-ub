@@ -52,4 +52,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('/delete/{id}', [Controllers\Admin\SliderController::class, 'destroy'])->name('admin.slider.delete');
     });
 
+    Route::group((['prefix' => 'setting']), function () {
+        Route::get('/', [Controllers\Admin\SettingController::class, 'index'])->name('admin.setting');
+        Route::post('/update', [Controllers\Admin\SettingController::class, 'update'])->name('admin.setting.update');
+    });
+
 });
