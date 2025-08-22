@@ -29,6 +29,9 @@
 		.sidebar.sidebar-style-2 .nav .nav-item a {
 			padding: 8px 15px !important; 
 		}
+		#table-data {
+			width: 100% !important;
+		}
 	</style>
 </head>
 <body>
@@ -140,11 +143,23 @@
 								<p>Rent Price</p>
 							</a>
 						</li>
+						<li class="nav-item {{request()->is('admin/slider*') ? 'active' : ''}}">
+							<a href="{{route('admin.slider')}}">
+								<i class="fas fa-folder"></i>
+								<p>Slider</p>
+							</a>
+						</li>
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
-							<h4 class="text-section">Transaction</h4>
+							<h4 class="text-section">Settings</h4>
+						</li>
+						<li class="nav-item {{request()->is('admin/setting*') ? 'active' : ''}}">
+							<a href="#">
+								<i class="fas fa-cog"></i>
+								<p>Setting</p>
+							</a>
 						</li>
 					</ul>
 				</div>
@@ -164,9 +179,9 @@
 				</div>
 			</footer>
 		</div>
-		<a href="https://wa.me/62859106642630" title="hubungi kami" target="new" class="whatsapp-button position-fixed" style="bottom: 60px;right: 40px;">
+		<!-- <a href="https://wa.me/62859106642630" title="hubungi kami" target="new" class="whatsapp-button position-fixed" style="bottom: 60px;right: 40px;">
 			<img src="{{asset('assets/img/wa.png')}}" width="70px">
-		</a>
+		</a> -->
 	</div>
 	<script src="{{asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
 	<script src="{{asset('assets/js/core/popper.min.js')}}"></script>

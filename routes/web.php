@@ -42,5 +42,14 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::post('/update/{id}', [Controllers\Admin\CategoryController::class, 'update'])->name('admin.category.update');
         Route::get('/delete/{id}', [Controllers\Admin\CategoryController::class, 'destroy'])->name('admin.category.delete');
     });
+    
+    Route::group((['prefix' => 'slider']), function () {
+        Route::get('/', [Controllers\Admin\SliderController::class, 'index'])->name('admin.slider');
+        Route::get('/create', [Controllers\Admin\SliderController::class, 'create'])->name('admin.slider.create');
+        Route::get('/edit/{id}', [Controllers\Admin\SliderController::class, 'edit'])->name('admin.slider.edit');
+        Route::post('/store', [Controllers\Admin\SliderController::class, 'store'])->name('admin.slider.store');
+        Route::post('/update/{id}', [Controllers\Admin\SliderController::class, 'update'])->name('admin.slider.update');
+        Route::get('/delete/{id}', [Controllers\Admin\SliderController::class, 'destroy'])->name('admin.slider.delete');
+    });
 
 });

@@ -14,31 +14,20 @@
           <div class="banner-ad large bg-info block-1">
             <div class="swiper main-swiper">
               <div class="swiper-wrapper">
+                @foreach($sliders as $slider)
                 <div class="swiper-slide">
                   <div class="row banner-content p-5 align-items-center">
                     <div class="content-wrapper col-md-7">
-                      <h3 class="display-4">Fresh Smoothie & Summer Juice</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
-                      <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Shop Collection</a>
+                      <h3 class="display-4">{{$slider->title}}</h3>
+                      <p>{{$slider->description}}</p>
+                      <a href="{{$slider->url}}" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">More Detail</a>
                     </div>
                     <div class="img-wrapper col-md-5">
-                      <img src="{{asset('frontend/images/product-thumb-1.png')}}" class="img-fluid">
+                      <img src="{{asset($slider->image)}}" class="img-fluid">
                     </div>
                   </div>
                 </div>
-
-                <div class="swiper-slide">
-                  <div class="row banner-content p-5 align-items-center">
-                    <div class="content-wrapper col-md-7">
-                      <h3 class="banner-title">Heinz Tomato Ketchup</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
-                      <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Shop Collection</a>
-                    </div>
-                    <div class="img-wrapper col-md-5">
-                      <img src="{{ asset('frontend/images/product-thumb-2.png') }}" class="img-fluid">
-                    </div>
-                  </div>
-                </div>
+                @endforeach
               </div>
 
               <div class="swiper-pagination"></div>
