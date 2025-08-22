@@ -3,11 +3,7 @@
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/', function () {
-    return view('frontend.index');
-    // dd(bcrypt('password'));
-});
+Route::get('/', [Controllers\Frontend\IndexController::class, 'index'])->name('frontend.index');
 
 Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [Controllers\AuthController::class, 'login'])->name('login.post');

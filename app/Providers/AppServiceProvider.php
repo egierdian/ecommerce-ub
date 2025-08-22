@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
             $title = 'e-Commerce';
 
             $view->with('title', $title); 
+        });
+
+        View::composer('frontend.layouts.master', function ($view) {
+            $title = 'e-Commerce';
         });
 
     }

@@ -12,4 +12,20 @@ class Product extends Model
     protected $table = 'products';
     protected $fillable = ['name','price','type','base_price_per_hour','holiday_price_per_hour','description','status','qty'];
     public $timestamps = true;
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function firstImage()
+    {
+        return $this->hasOne(ProductImage::class, 'product_id')
+                    ->oldest(); 
+    }
 }

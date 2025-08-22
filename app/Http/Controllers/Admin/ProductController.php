@@ -98,7 +98,7 @@ class ProductController extends Controller
             $param = [
                 'name' => $request->name,
                 'type' => $request->type,
-                'category' => $request->category,
+                'category_id' => $request->category,
                 'status' => 1
             ];
             $price = null;
@@ -177,7 +177,7 @@ class ProductController extends Controller
             $param = [
                 'name' => $request->name,
                 'type' => $request->type,
-                'category' => $request->category,
+                'category_id' => $request->category,
                 'description' => $request->description,
             ];
             $price = null;
