@@ -56,6 +56,19 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group @error('category') has-error @enderror">
+                                    <label>Category <span class="text-danger">*</span></label>
+                                    <select name="category" class="form-control">
+                                        @foreach($categories as $k => $v)
+                                        <option value="{{$v->id}}" {{ (isset($data) ? $data->category_id : old('category')) == $v->id ? 'selected' : '' }}>{{$v->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('category')
+                                    <small class="form-text text-muted">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 view-type view-product">

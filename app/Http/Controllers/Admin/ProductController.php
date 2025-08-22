@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
@@ -44,7 +45,8 @@ class ProductController extends Controller
         $data = null;
         $type = $this->type();
         $images = [];
-        return view('cms.product.form', compact('data','type','images'));
+        $categories = Category::where('status', 1)->get();
+        return view('cms.product.form', compact('data','type','images','categories'));
     }
 
     public function edit($id)
@@ -57,8 +59,9 @@ class ProductController extends Controller
         $data->base_price_per_hour = number_format($data->base_price_per_hour, 0, ',', '.');
 
         $images = ProductImage::where('product_id', decrypt($id))->get();
+        $categories = Category::where('status', 1)->get();
 
-        return view('cms.product.form', compact('data','type','images'));
+        return view('cms.product.form', compact('data','type','images','categories'));
     }
 
     public function store(Request $request)
@@ -72,6 +75,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required|in:1,2',
+            'category' => 'required',
             'holiday_price_per_hour' => 'nullable|numeric',
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpg,jpeg,svg,png|max:5120',
@@ -94,6 +98,7 @@ class ProductController extends Controller
             $param = [
                 'name' => $request->name,
                 'type' => $request->type,
+                'category' => $request->category,
                 'status' => 1
             ];
             $price = null;
@@ -147,6 +152,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required|in:1,2',
+            'category' => 'required',
             'holiday_price_per_hour' => 'nullable|numeric',
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpg,jpeg,svg,png|max:5120',
@@ -171,6 +177,7 @@ class ProductController extends Controller
             $param = [
                 'name' => $request->name,
                 'type' => $request->type,
+                'category' => $request->category,
                 'description' => $request->description,
             ];
             $price = null;
