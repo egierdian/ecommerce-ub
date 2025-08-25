@@ -158,22 +158,22 @@
                 <div class="col-sm-4 col-lg-3 text-center text-sm-start">
                     <div class="main-logo">
                         <a href="index.html">
-                            <img src="{{asset('frontend/images/logo.png')}}" alt="logo" class="img-fluid">
+                            <img src="{{asset($webSettings['logo_website'] ?? '')}}" alt="logo" height="70">
                         </a>
                     </div>
                 </div>
 
                 <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
                     <div class="search-bar row bg-light p-2 my-2 rounded-4">
-                        <div class="col-md-4 d-none d-md-block">
+                        <!-- <div class="col-md-4 d-none d-md-block">
                             <select class="form-select border-0 bg-transparent">
                                 <option>All Categories</option>
-                                <option>Groceries</option>
-                                <option>Drinks</option>
-                                <option>Chocolates</option>
+                                @foreach($menuCategories as $category) 
+                                <option name="{{$category->slug}}">{{$category->name}}</option>
+                                @endforeach
                             </select>
-                        </div>
-                        <div class="col-11 col-md-7">
+                        </div> -->
+                        <div class="col-11 col-md-11">
                             <form id="search-form" class="text-center" action="index.html" method="post">
                                 <input type="text" class="form-control border-0 bg-transparent" placeholder="Search for more than 20,000 products" />
                             </form>
@@ -188,8 +188,8 @@
 
                 <div class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
                     <div class="support-box text-end d-none d-xl-block">
-                        <span class="fs-6 text-muted">For Support?</span>
-                        <h5 class="mb-0">+980-349</h5>
+                        <span class="fs-6 text-muted">Butuh Bantuan?</span>
+                        <h5 class="mb-0">{{$webSettings['contact_phone']}}</h5>
                     </div>
 
                     <ul class="d-flex justify-content-end list-unstyled m-0">
@@ -223,12 +223,12 @@
                         </li>
                     </ul>
 
-                    <div class="cart text-end d-none d-lg-block dropdown">
+                    <!-- <div class="cart text-end d-none d-lg-block dropdown">
                         <button class="border-0 bg-transparent d-flex flex-column gap-2 lh-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <span class="fs-6 text-muted dropdown-toggle">Your Cart</span>
                             <span class="cart-total fs-5 fw-bold">$1290.00</span>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
