@@ -163,7 +163,7 @@
   </div>
 </section>
 
-<section class="py-5">
+<section class="py-5" hidden>
   <div class="container-fluid">
     <div class="row">
 
