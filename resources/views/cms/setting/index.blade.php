@@ -35,11 +35,15 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>{{ucwords( str_replace('_', ' ',$setting->id))}} <span class="text-danger">*</span></label>
-                                    <input type="hidden" name="id[]" value="{{$setting->id}}">
                                     @if($setting->type == 'textarea')
-                                    <textarea name="value[]" class="form-control">{{$setting->value}}</textarea>
+                                    <textarea name="value[{{$setting->id}}]" class="form-control">{{$setting->value}}</textarea>
+                                    @elseif($setting->type == 'file')
+                                        <input type="file" name="value[{{$setting->id}}]" class="form-control">
+                                        @if($setting->value)
+                                            <small>File saat ini: <a href="{{ asset($setting->value) }}" class="image-popup" target="_blank">Lihat</a></small>
+                                        @endif
                                     @else
-                                    <input type="{{$setting->type}}" name="value[]" class="form-control" value="{{$setting->value}}">
+                                    <input type="{{$setting->type}}" name="value[{{$setting->id}}]" class="form-control" value="{{$setting->value}}">
                                     @endif
                                 </div>
                             </div>
@@ -58,8 +62,12 @@
 @endsection
 
 @section('script')
+<script src="{{asset('assets/plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script>
     $(document).ready(function() {
+        $('.image-popup').magnificPopup({
+            type: 'image'
+        });
     })
 </script>
 @endsection

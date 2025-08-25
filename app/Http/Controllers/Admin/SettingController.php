@@ -21,10 +21,30 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         try {
-            foreach($request->id as $k => $v) {
-                $data = Setting::where('id', $request->id[$k])->first();
+            foreach($request->value as $id => $v) {
+                $data = Setting::where('id', $id)->first();
+
+                $value = $v;
+                if($data->type == 'file' && $request->hasFile("value.$id")) {
+                    $file = $request->file("value.$id");
+
+                    if($data->value && file_exists(public_path($data->value))) {
+                        unlink(public_path($data->value));
+                    }
+
+                    $fileName = 'setting-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
+                    $base_path = 'uploads/setting';
+                    $path = public_path($base_path);
+                    if (!file_exists($path)) {
+                        mkdir($path, 0777, true);
+                    }
+                    $file->move($path, $fileName);
+
+                    $value = $base_path.'/'.$fileName;
+                }
+
                 $data->update([
-                    'value' => $request->value[$k]
+                    'value' => $value
                 ]);
             }
 
