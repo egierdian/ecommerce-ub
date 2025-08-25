@@ -297,19 +297,7 @@
                                 <a href="#" class="nav-link">About us</a>
                             </li>
                             <li class="menu-item">
-                                <a href="#" class="nav-link">Conditions </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">Our Journals</a>
-                            </li>
-                            <li class="menu-item">
                                 <a href="#" class="nav-link">Careers</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">Affiliate Programme</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">Ultras Press</a>
                             </li>
                         </ul>
                     </div>
@@ -326,15 +314,6 @@
                             </li>
                             <li class="menu-item">
                                 <a href="#" class="nav-link">Privacy Policy</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">Returns & Refunds</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">Cookie Guidelines</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">Delivery Information</a>
                             </li>
                         </ul>
                     </div>

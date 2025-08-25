@@ -89,7 +89,7 @@
 
         <div class="bootstrap-tabs product-tabs">
           <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-            <h3>Produk terlaris</h3>
+            <h3>Produk</h3>
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all">All</a>
@@ -132,6 +132,7 @@
             <div class="tab-pane fade" id="{{$category->slug}}" role="tabpanel" aria-labelledby="{{$category->slug}}-tab">
 
               <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                @if(count($category->products) > 0)
                 @foreach($category->products as $product)
                 <div class="col">
                   <div class="product-item">
@@ -150,6 +151,11 @@
                   </div>
                 </div>
                 @endforeach
+                @else
+                <div class="w-100 text-center">
+                Data tidak ditemukan
+                </div>
+                @endif
               </div>
               <!-- / product-grid -->
 
