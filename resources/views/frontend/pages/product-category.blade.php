@@ -21,7 +21,7 @@
             </p>
             @else
             <h3>
-              {{ $dataCategory->name }}
+              {{ $dataCategory->name ?? '' }}
             </h3>
             @endif
           </div>

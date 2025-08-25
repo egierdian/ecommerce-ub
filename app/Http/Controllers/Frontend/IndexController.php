@@ -47,9 +47,11 @@ class IndexController extends Controller
                     $query->where('products.name', 'like', '%' . $search . '%');
                 }
             } else {
-                $query->where('categories.slug', $category);
-                
                 $dataCategory = Category::where('status', 1)->where('slug', $category)->first();
+
+                if(!$dataCategory) return redirect()->route('frontend.index');
+                
+                $query->where('categories.slug', $category);
             }
             $products = $query->paginate(10);
 
