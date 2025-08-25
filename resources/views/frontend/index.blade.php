@@ -68,7 +68,7 @@
         <div class="category-carousel swiper">
           <div class="swiper-wrapper">
             @foreach($categories as $category)
-            <a href="#" class="nav-link category-item swiper-slide">
+            <a href="{{route('frontend.product.category', ['category' => $category->slug])}}" class="nav-link category-item swiper-slide">
               <img src="{{asset($category->image)}}" alt="{{$category->name}}" width="50">
               <h3 class="category-title">{{$category->name}}</h3>
             </a>

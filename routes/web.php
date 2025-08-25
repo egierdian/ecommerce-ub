@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Controllers\Frontend\IndexController::class, 'index'])->name('frontend.index');
 
+Route::get('/product/{category}/{productId?}', [Controllers\Frontend\IndexController::class, 'showProduct'])->name('frontend.product.category');
+
 Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [Controllers\AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [Controllers\AuthController::class, 'showRegister'])->name('register');
