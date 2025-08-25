@@ -18,26 +18,34 @@ class IndexController extends Controller
                 }
             ])->where('status', 1)->get();
 
-        $products = Product::with('firstImage')->where('status', 1)->limit(10)->get();
+        $products = Product::with('category','firstImage')->where('status', 1)->limit(10)->get();
 
         $sliders = Slider::where('status', 1)->get();
        
         return view('frontend.index', compact('categories','products','sliders'));
     }
 
-    public function showProduct($category = null, $productId = null)
+    public function showProduct($category = null, $product = null)
     {
-        $products = Product::with(['firstImage', 'category'])
-            ->select('products.*')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->where('products.status', 1)
-            ->where('categories.slug', $category)
-            ->paginate(10);
+        if($product) {
+            $product = Product::with('category','images')->where('status', 1)->where('slug', $product)->first();
+            
+            if(!$product) return redirect()->route('frontend.index');
 
-        $category = Category::where('status', 1)->where('slug', $category)->first();
+            return view('frontend.pages.product-detail', compact('product'));
+        } else {
+            $products = Product::with(['firstImage', 'category'])
+                ->select('products.*')
+                ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
+                ->where('products.status', 1)
+                ->where('categories.slug', $category)
+                ->paginate(10);
 
-        if(count($products) < 1) return redirect()->route('frontend.index');
+            $category = Category::where('status', 1)->where('slug', $category)->first();
 
-        return view('frontend.pages.product-detail', compact('products','category'));
+            if(count($products) < 1) return redirect()->route('frontend.index');
+
+            return view('frontend.pages.product-category', compact('products','category'));
+        }
     }
 }

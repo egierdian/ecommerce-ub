@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>e-Commerce UBakrie</title>
+    <title>{{$webSettings['title_website'] ??''}}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/vendor.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/style.css')}}">
+	<link rel="icon" href="{{asset($webSettings['x_icon']??'')}}" type="image/x-icon" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -189,7 +190,7 @@
                 <div class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
                     <div class="support-box text-end d-none d-xl-block">
                         <span class="fs-6 text-muted">Butuh Bantuan?</span>
-                        <h5 class="mb-0">{{$webSettings['contact_phone']}}</h5>
+                        <h5 class="mb-0">{{$webSettings['contact_phone']??''}}</h5>
                     </div>
 
                     <ul class="d-flex justify-content-end list-unstyled m-0">

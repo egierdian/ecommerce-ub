@@ -117,8 +117,8 @@
                       </a>
                     </figure>
                     <h3>{{$product->name}}</h3>
-                    <span class="price">Rp. {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
-                    <a href="">Lihat</a>
+                    <span class="price">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
+                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-dark rounded-2 mt-2">Detail</a>
                   </div>
                 </div>
                 @endforeach
@@ -145,8 +145,8 @@
                       </a>
                     </figure>
                     <h3>{{$product->name}}</h3>
-                    <span class="price">Rp. {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
-                    <a href="">Lihat</a>
+                    <span class="price">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
+                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-dark rounded-2 mt-2">Detail</a>
                   </div>
                 </div>
                 @endforeach

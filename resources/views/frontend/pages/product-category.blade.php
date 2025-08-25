@@ -1,0 +1,71 @@
+@extends('frontend.layouts.master')
+
+@section('style')
+<link rel="stylesheet" href="{{asset('assets/plugins/select2/select2.min.css')}}">
+@endsection
+
+@section('content')
+
+<section class="py-5">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="bootstrap-tabs product-tabs">
+          <div class="tabs-header justify-content-between border-bottom mb-2 text-center">
+            <h3>{{$category->name}}</h3>
+          </div>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+
+              <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                @if(count($products) > 0)
+                @foreach($products as $product)
+                <div class="col">
+                  <div class="product-item">
+                    <!-- <span class="badge bg-success position-absolute m-3">-30%</span> -->
+                    <a href="#" class="btn-wishlist"><svg width="24" height="24">
+                        <use xlink:href="#heart"></use>
+                      </svg></a>
+                    <figure>
+                      <a href="#" title="{{$product->name}}">
+                        <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
+                      </a>
+                    </figure>
+                    <h3>{{$product->name}}</h3>
+                    <span class="price">Rp. {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
+                    <a href="">Lihat</a>
+                  </div>
+                </div>
+                @endforeach
+                @else 
+                <div class="col">
+                  Data not found
+                </div>
+                @endif
+              </div>
+              <!-- / product-grid -->
+
+            </div>
+          </div>
+          <div class="mt-4">
+            {{ $products->links('frontend.layouts.pagination') }}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+@endsection
+
+@section('script')
+<script>
+  $(document).ready(function() {
+    console.log('test')
+  })
+</script>
+@endsection
