@@ -25,7 +25,7 @@ class IndexController extends Controller
         return view('frontend.index', compact('categories','products','sliders'));
     }
 
-    public function showProduct($category = null, $product = null)
+    public function showProduct(Request $request, $category, $product = null)
     {
         if($product) {
             $product = Product::with('category','images')->where('status', 1)->where('slug', $product)->first();
@@ -34,18 +34,26 @@ class IndexController extends Controller
 
             return view('frontend.pages.product-detail', compact('product'));
         } else {
-            $products = Product::with(['firstImage', 'category'])
+            $dataCategory = null;
+            $search = null;
+            $query = Product::with(['firstImage', 'category'])
                 ->select('products.*')
                 ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
-                ->where('products.status', 1)
-                ->where('categories.slug', $category)
-                ->paginate(10);
+                ->where('products.status', 1);
+            
+            if($category == 'all') {
+                $search = $request->query('q');
+                if($search){
+                    $query->where('products.name', 'like', '%' . $search . '%');
+                }
+            } else {
+                $query->where('categories.slug', $category);
+                
+                $dataCategory = Category::where('status', 1)->where('slug', $category)->first();
+            }
+            $products = $query->paginate(10);
 
-            $category = Category::where('status', 1)->where('slug', $category)->first();
-
-            if(count($products) < 1) return redirect()->route('frontend.index');
-
-            return view('frontend.pages.product-category', compact('products','category'));
+            return view('frontend.pages.product-category', compact('products','dataCategory','search'));
         }
     }
 }

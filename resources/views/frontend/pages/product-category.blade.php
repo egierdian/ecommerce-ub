@@ -14,7 +14,16 @@
 
         <div class="bootstrap-tabs product-tabs">
           <div class="tabs-header justify-content-between border-bottom mb-2 text-center">
-            <h3>{{$category->name}}</h3>
+          
+            @if($search)
+            <p>
+              Hasil pencarian <b>'{{ $search }}'</b>
+            </p>
+            @else
+            <h3>
+              {{ $dataCategory->name }}
+            </h3>
+            @endif
           </div>
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
@@ -40,8 +49,8 @@
                 </div>
                 @endforeach
                 @else 
-                <div class="col">
-                  Data not found
+                <div class="col text-center w-100">
+                  Data tidak ditemukan.
                 </div>
                 @endif
               </div>

@@ -144,8 +144,8 @@
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-primary">Search</span>
                 </h4>
-                <form role="search" action="index.html" method="get" class="d-flex mt-3 gap-0">
-                    <input class="form-control rounded-start rounded-0 bg-light" type="email" placeholder="What are you looking for?" aria-label="What are you looking for?">
+                <form role="search" action="{{route('frontend.product.category', ['category' => 'all'])}}" method="get" class="d-flex mt-3 gap-0">
+                    <input class="form-control rounded-start rounded-0 bg-light" type="text" name="q" placeholder="What are you looking for?" aria-label="What are you looking for?" autocomplete="off">
                     <button class="btn btn-dark rounded-end rounded-0" type="submit">Search</button>
                 </form>
             </div>
@@ -158,7 +158,7 @@
 
                 <div class="col-sm-4 col-lg-3 text-center text-sm-start">
                     <div class="main-logo">
-                        <a href="index.html">
+                        <a href="{{route('frontend.index')}}">
                             <img src="{{asset($webSettings['logo_website'] ?? '')}}" alt="logo" height="70">
                         </a>
                     </div>
@@ -175,8 +175,8 @@
                             </select>
                         </div> -->
                         <div class="col-11 col-md-11">
-                            <form id="search-form" class="text-center" action="index.html" method="post">
-                                <input type="text" class="form-control border-0 bg-transparent" placeholder="Search for more than 20,000 products" />
+                            <form id="search-form" class="text-center" action="{{route('frontend.product.category', ['category' => 'all'])}}" method="get">
+                                <input type="text" name="q" class="form-control border-0 bg-transparent" placeholder="Search for more than 1,000 products" autocomplete="off" />
                             </form>
                         </div>
                         <div class="col-1">
