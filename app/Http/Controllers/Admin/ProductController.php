@@ -73,7 +73,7 @@ class ProductController extends Controller
         ]);
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|unique:products,name',
             'type' => 'required|in:1,2',
             'category' => 'required',
             'holiday_price_per_hour' => 'nullable|numeric',
@@ -99,7 +99,8 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'type' => $request->type,
                 'category_id' => $request->category,
-                'status' => 1
+                'status' => 1,
+                'slug' => Str::slug($request->name),
             ];
             $price = null;
             $base_price_per_hour = null;
@@ -150,7 +151,7 @@ class ProductController extends Controller
         ]);
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|unique:products,name,' . $id,
             'type' => 'required|in:1,2',
             'category' => 'required',
             'holiday_price_per_hour' => 'nullable|numeric',
@@ -179,6 +180,7 @@ class ProductController extends Controller
                 'type' => $request->type,
                 'category_id' => $request->category,
                 'description' => $request->description,
+                'slug' => Str::slug($request->name),
             ];
             $price = null;
             $base_price_per_hour = null;
