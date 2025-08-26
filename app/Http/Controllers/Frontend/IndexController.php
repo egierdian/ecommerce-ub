@@ -49,7 +49,13 @@ class IndexController extends Controller
         } else {
             $dataCategory = null;
             $search = null;
-            $query = Product::with(['firstImage', 'category'])
+            $query = Product::with([
+                    'firstImage', 
+                    'category',
+                    'wishlists' => function($q) {
+                        $q->where('user_id', Auth::id());
+                    }
+                ])
                 ->select('products.*')
                 ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
                 ->where('products.status', 1);
