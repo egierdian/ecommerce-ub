@@ -60,7 +60,7 @@ class CartController extends Controller
                 return response()->json([
                     'status'  => false,
                     'message' => 'Cart tidak ditemukan!'
-                ], 404);
+                ]);
             }
 
             $cart->delete();
@@ -83,7 +83,7 @@ class CartController extends Controller
             return response()->json([
                 'status'  => false,
                 'message' => 'Terjadi kesalahan!',
-            ], 500);
+            ]);
         }
     }
 }

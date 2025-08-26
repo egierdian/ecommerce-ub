@@ -38,4 +38,10 @@ class Product extends Model
     {
         return $this->hasMany(TransactionItem::class);
     }
+
+    public function wishlists()
+    {
+        return $this->belongsToMany(User::class, 'wishlists', 'product_id', 'user_id')
+                    ->withTimestamps();
+    }
 }

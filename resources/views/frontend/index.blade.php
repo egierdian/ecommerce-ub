@@ -108,9 +108,11 @@
                 <div class="col">
                   <div class="product-item">
                     <!-- <span class="badge bg-success position-absolute m-3">-30%</span> -->
-                    <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                        <use xlink:href="#heart"></use>
-                      </svg></a>
+                    <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}">
+                      <svg width="24" height="24">
+                        <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
+                      </svg>
+                    </button>
                     <figure>
                       <a href="#" title="{{$product->name}}">
                         <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
@@ -137,9 +139,9 @@
                 <div class="col">
                   <div class="product-item">
                     <!-- <span class="badge bg-success position-absolute m-3">-30%</span> -->
-                    <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                        <use xlink:href="#heart"></use>
-                      </svg></a>
+                    <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}"><svg width="24" height="24">
+                        <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
+                      </svg></button>
                     <figure>
                       <a href="#" title="{{$product->name}}">
                         <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">

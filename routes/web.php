@@ -17,6 +17,8 @@ Route::post('/checkout/process', [Controllers\Frontend\IndexController::class, '
 
 Route::get('/invoice/{code}', [Controllers\Frontend\IndexController::class, 'invoice'])->name('frontend.invoice');
 
+Route::post('/wishlist/{productId}', [Controllers\Frontend\WishlistController::class, 'toggle'])->name('frontend.wishlist.add');
+
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/dashboard', [Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
     

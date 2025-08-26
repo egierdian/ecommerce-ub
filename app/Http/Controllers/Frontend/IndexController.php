@@ -25,7 +25,13 @@ class IndexController extends Controller
             }
         ])->where('status', 1)->get();
 
-        $products = Product::with('category', 'firstImage')->where('status', 1)->limit(10)->get();
+        $products = Product::with([
+            'category', 
+            'firstImage',
+            'wishlists' => function($q) {
+                $q->where('user_id', Auth::id());
+            }
+        ])->where('status', 1)->limit(10)->get();
 
         $sliders = Slider::where('status', 1)->get();
 

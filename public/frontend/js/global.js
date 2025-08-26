@@ -28,4 +28,40 @@ $(document).ready(function() {
     });
   });
 
+    
+  $('.btn-wishlist').click(function (e) {
+    e.preventDefault();
+    let productId = $(this).data('id');
+    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    
+    let btn = $(this);
+    $.ajax({
+        url: '/wishlist/' + productId,
+        type: 'POST',
+        data: {
+          _token: csrfToken
+        },
+        success: function (response) {
+          if(response.status){
+            if (btn.hasClass("active")) {
+              
+              btn.removeClass("active");
+              btn.html(`
+                    <svg width="24" height="24">
+                      <use xlink:href="#heart"></use>
+                    </svg>
+              `)
+            } else {
+              btn.addClass("active");
+              btn.html(`
+                    <svg width="24" height="24">
+                      <use xlink:href="#trash"></use>
+                    </svg>
+              `);
+            }
+          }
+        }
+    });
+  });
+
 })
