@@ -28,4 +28,14 @@ class Product extends Model
         return $this->hasOne(ProductImage::class, 'product_id')
                     ->oldest(); 
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class, 'product_id');
+    }
+
+    public function transactionDetails()
+    {
+        return $this->hasMany(TransactionItem::class);
+    }
 }

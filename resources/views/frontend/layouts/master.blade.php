@@ -11,12 +11,13 @@
     <meta name="author" content="">
     <meta name="keywords" content="">
     <meta name="description" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/vendor.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/style.css')}}">
-	<link rel="icon" href="{{asset($webSettings['x_icon']??'')}}" type="image/x-icon" />
+    <link rel="icon" href="{{asset($webSettings['x_icon']??'')}}" type="image/x-icon" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,12 +32,28 @@
             width: 100%;
         }
     </style>
+	<script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{asset("assets/css/fonts.min.css")}}']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
 
     @yield('style')
 </head>
 
 <body>
 
+    @php
+        $totalPrice = $carts->sum(function($cart) {
+            return $cart->subtotal;
+        });
+        $totalPriceText = number_format($totalPrice, 0, ',', '.');
+    @endphp
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <defs>
             <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24">
@@ -100,37 +117,30 @@
             <div class="order-md-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-primary">Your cart</span>
-                    <span class="badge bg-primary rounded-pill">3</span>
+                    <span class="badge bg-primary rounded-pill count-cart">{{count($carts)}}</span>
                 </h4>
                 <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div class="section-message"></div>
+                    @foreach($carts as $cart)
+                    <li class="list-group-item d-flex justify-content-between lh-sm" id="cart-item-{{($cart->id)}}">
                         <div>
-                            <h6 class="my-0">Growers cider</h6>
-                            <small class="text-body-secondary">Brief description</small>
+                            <h6 class="my-0">{{$cart->product->name}}</h6>
+                            <small class="text-body-secondary">Jumlah : {{$cart->qty}}</small>
+                            <button class="btn btn-sm btn-delete-cart" data-id="{{$cart->id}}"><i class="fa fa-trash"></i></button>
                         </div>
-                        <span class="text-body-secondary">$12</span>
+                        <span class="text-body-secondary">Rp {{number_format($cart->price, 0, ',', '.')}}</span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Fresh grapes</h6>
-                            <small class="text-body-secondary">Brief description</small>
-                        </div>
-                        <span class="text-body-secondary">$8</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Heinz tomato ketchup</h6>
-                            <small class="text-body-secondary">Brief description</small>
-                        </div>
-                        <span class="text-body-secondary">$5</span>
-                    </li>
+                    @endforeach
                     <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
+                        <span>Total</span>
+                        <strong class="cart-total">Rp {{$totalPriceText}}</strong>
                     </li>
                 </ul>
 
+                <form action="{{route('frontend.checkout')}}" method="GET" class="flex items-center gap-2">
+                  @csrf
                 <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                </form>
             </div>
         </div>
     </div>
@@ -164,7 +174,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
+                <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-4 d-none d-lg-block">
                     <div class="search-bar row bg-light p-2 my-2 rounded-4">
                         <!-- <div class="col-md-4 d-none d-md-block">
                             <select class="form-select border-0 bg-transparent">
@@ -187,7 +197,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
+                <div class="col-sm-8 col-lg-5 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
                     <div class="support-box text-end d-none d-xl-block">
                         <span class="fs-6 text-muted">Butuh Bantuan?</span>
                         <h5 class="mb-0">{{$webSettings['contact_phone']??''}}</h5>
@@ -224,12 +234,12 @@
                         </li>
                     </ul>
 
-                    <!-- <div class="cart text-end d-none d-lg-block dropdown">
+                    <div class="cart text-end d-none d-lg-block dropdown">
                         <button class="border-0 bg-transparent d-flex flex-column gap-2 lh-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <span class="fs-6 text-muted dropdown-toggle">Your Cart</span>
-                            <span class="cart-total fs-5 fw-bold">$1290.00</span>
+                            <span class="cart-total fw-bold">Rp {{$totalPriceText}}</span>
                         </button>
-                    </div> -->
+                    </div>
                 </div>
 
             </div>
@@ -237,7 +247,7 @@
     </header>
 
     <!-- content section -->
-	@yield('content')
+    @yield('content')
     <!-- end content section -->
 
     <footer class="py-5">
@@ -348,9 +358,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="{{asset('frontend/js/plugins.js')}}"></script>
     <script src="{{asset('frontend/js/script.js')}}"></script>
+    <script src="{{asset('frontend/js/global.js')}}"></script>
 
-    
-	@yield('script')
+
+    @yield('script')
 </body>
 
 </html>

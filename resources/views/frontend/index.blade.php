@@ -204,7 +204,7 @@
   </div>
 </section>
 
-<section id="latest-blog" class="py-5">
+<section id="latest-blog" class="py-5" hidden>
   <div class="container-fluid">
     <div class="row">
       <div class="section-header d-flex align-items-center justify-content-between my-5">

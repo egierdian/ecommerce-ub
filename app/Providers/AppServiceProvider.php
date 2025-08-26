@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,12 +32,27 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('frontend.layouts.master', function ($view) {
-            $settings = Setting::pluck('value', 'id')->toArray();
             $categories = Category::where('status', 1)->orderBy('name', 'asc')->get();
             
+            #START CART
+            $carts = collect();
+            if (Auth::check()) {
+                $carts = Cart::with('product')
+                            ->where('user_id', Auth::id())
+                            ->get();
+            }
+            #END CART
+            
+            $view->with([
+                'menuCategories' => $categories,
+                'carts' => $carts
+            ]); 
+
+        });
+         View::composer('frontend.*', function ($view) {
+            $settings = Setting::pluck('value', 'id')->toArray();
             $view->with([
                 'webSettings' => $settings,
-                'menuCategories' => $categories
             ]); 
 
         });

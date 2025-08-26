@@ -1,0 +1,169 @@
+@extends('frontend.layouts.master')
+
+@section('style')
+<style>
+    .card {
+        border: none;
+        border-radius: 16px;
+    }
+
+    .card-header {
+        background: #fff;
+        border-bottom: none;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 1.2rem;
+    }
+
+    .form-control,
+    .list-group-item {
+        border-radius: 10px;
+    }
+
+    .btn-primary {
+        border-radius: 12px;
+        padding: 14px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .cart-summary li {
+        border: none !important;
+        padding: 0.75rem 0;
+    }
+
+    .cart-summary li:not(:last-child) {
+        border-bottom: 1px solid #eee !important;
+    }
+
+    .total-row {
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
+@endsection
+
+@section('content')
+
+<section class="py-3">
+    <div class="container-fluid">
+        <form action="{{route('frontend.checkout.process')}}" method="POST">
+            <div class="row g-4">
+                <!-- Form -->
+                <div class="col-lg-8">
+                    <div class="card shadow-sm p-4">
+                        <div class="card-header bg-white">📦 Informasi Pengiriman</div>
+                        <div class="card-body">
+                            @csrf
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control form-control-lg" name="name"
+                                        value="{{Auth::user()->name }}" required>
+                                    @error('name')
+                                    <small class="form-text text-muted">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">No. Telepon</label>
+                                    <input type="text" class="form-control form-control-lg" name="phone"
+                                        value="{{Auth::user()->phone }}" required>
+                                    @error('phone')
+                                    <small class="form-text text-muted">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Alamat Lengkap</label>
+                                    <textarea class="form-control form-control-lg" rows="3"
+                                        placeholder="Jl. Contoh No.123, Jakarta"
+                                        name="address" required>{{Auth::user()->address }}</textarea>
+                                    @error('address')
+                                    <small class="form-text text-muted">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Kota</label>
+                                    <input type="text" class="form-control form-control-lg"
+                                        placeholder="Jakarta" name="city" required>
+                                    @error('city')
+                                    <small class="form-text text-muted">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Kode Pos</label>
+                                    <input type="text" class="form-control form-control-lg"
+                                        placeholder="12345" name="postal_code" maxlength="5" required>
+                                    @error('postal_code')
+                                    <small class="form-text text-muted">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <h5 class="mb-3">💳 Metode Pembayaran</h5>
+                                <div class="list-group">
+                                    <label class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>Transfer Bank</span>
+                                        <input class="form-check-input" type="radio" name="payment_method" value="1" required checked>
+                                    </label>
+                                    <label class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>E-Wallet (OVO, Gopay, Dana)</span>
+                                        <input class="form-check-input" type="radio" name="payment_method" value="2" required>
+                                    </label>
+                                    <label class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>COD (Bayar di Tempat)</span>
+                                        <input class="form-check-input" type="radio" name="payment_method" value="3" required>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mt-4">Bayar Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ringkasan Pesanan -->
+                <div class="col-lg-4">
+                    <div class="card shadow-sm p-4">
+                        <div class="card-header bg-white">🧾 Ringkasan Pesanan</div>
+                        <div class="card-body">
+                            <ul class="list-group cart-summary mb-3">
+                                @foreach($checkoutCarts as $cart)
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <div>
+                                        <input type="hidden" name="carts[]" value="{{encrypt($cart->id)}}">
+                                        <h6 class="my-0">{{$cart->product->name}}</h6>
+                                        <small class="text-muted">x{{$cart->qty}}</small>
+                                    </div>
+                                    <span>Rp {{number_format($cart->subtotal, 0, ',', '.')}}</span>
+                                </li>
+                                @endforeach
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Subtotal</span>
+                                    <strong>Rp {{number_format($totalPrice, 0, ',', '.')}}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Ongkir</span>
+                                    <strong>Rp 20.000</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between total-row">
+                                    <span>Total</span>
+                                    <span>Rp {{number_format($totalPrice + 20000, 0, ',', '.')}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        console.log('test')
+    })
+</script>
+@endsection

@@ -7,11 +7,15 @@ Route::get('/', [Controllers\Frontend\IndexController::class, 'index'])->name('f
 
 Route::get('/product/{category}/{product?}', [Controllers\Frontend\IndexController::class, 'showProduct'])->name('frontend.product.category');
 
-Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [Controllers\AuthController::class, 'login'])->name('login.post');
-Route::get('/register', [Controllers\AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [Controllers\AuthController::class, 'register'])->name('register.post');
-Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
+Route::group((['prefix' => 'cart']), function () {
+    Route::post('/add/{productId}', [Controllers\Frontend\CartController::class, 'add'])->name('frontend.cart.add');
+    Route::post('/delete/{productId}', [Controllers\Frontend\CartController::class, 'delete'])->name('frontend.cart.delete');
+});
+
+Route::get('/checkout', [Controllers\Frontend\IndexController::class, 'checkout'])->name('frontend.checkout');
+Route::post('/checkout/process', [Controllers\Frontend\IndexController::class, 'checkoutProcess'])->name('frontend.checkout.process');
+
+Route::get('/invoice/{code}', [Controllers\Frontend\IndexController::class, 'invoice'])->name('frontend.invoice');
 
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/dashboard', [Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
@@ -60,3 +64,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     });
 
 });
+
+Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [Controllers\AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [Controllers\AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [Controllers\AuthController::class, 'register'])->name('register.post');
+Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
