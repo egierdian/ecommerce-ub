@@ -42,6 +42,72 @@
                 grid-template-rows: none; /* atau bisa diganti sesuai kebutuhan */
             }
         }
+
+        .floating-contact {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+        }
+
+        /* Tombol utama */
+        .contact-main {
+            background: #85171a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: background 0.3s;
+        }
+        .contact-main:hover {
+            background: #85171a;
+        }
+
+        /* Tombol tambahan */
+        .contact-item {
+            background: #85171a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        /* Hover (desktop) */
+        @media (hover: hover) {
+            .floating-contact:hover .contact-item {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                pointer-events: auto;
+            }
+            .floating-contact:hover .contact-item:nth-child(2) { transition-delay: 0.1s; }
+            .floating-contact:hover .contact-item:nth-child(3) { transition-delay: 0.2s; }
+            .floating-contact:hover .contact-item:nth-child(4) { transition-delay: 0.3s; }
+        }
+
+        /* Klik (mobile: class active) */
+        .floating-contact.active .contact-item {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        .floating-contact.active .contact-item:nth-child(2) { transition-delay: 0.1s; }
+        .floating-contact.active .contact-item:nth-child(3) { transition-delay: 0.2s; }
+        .floating-contact.active .contact-item:nth-child(4) { transition-delay: 0.3s; }
     </style>
 	<script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
 	<script>
@@ -364,6 +430,13 @@
             </div>
         </div>
     </div>
+    
+    <div class="floating-contact" id="floatingContact">
+        <button class="contact-main" id="contactMain">✉</button>
+        <button class="contact-item" title="WhatsApp 1">WA1</button>
+        <button class="contact-item" title="WhatsApp 2">WA2</button>
+        <button class="contact-item" title="Email">📧</button>
+    </div>
     <script src="{{asset('frontend/js/jquery-1.11.0.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -371,7 +444,83 @@
     <script src="{{asset('frontend/js/script.js')}}"></script>
     <script src="{{asset('frontend/js/global.js')}}"></script>
 
+    <script>
+    (function(){
+        const contact = document.getElementById('floatingContact');
+        const mainBtn = document.getElementById('contactMain');
 
+        // deteksi device touch dengan beberapa indikator
+        function isTouchDevice(){
+            return (('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches);
+        }
+
+        // helper toggle / close
+        function toggleMenu(e){
+            if (e && e.stopPropagation) e.stopPropagation();
+            contact.classList.toggle('active');
+        }
+        function closeMenu(){
+            contact.classList.remove('active');
+        }
+
+        // Untuk menghindari double-toggle ketika device memicu touch + click
+        let lastTouchTime = 0;
+
+        // HANDLER untuk tombol utama
+        function onMainTouchStart(e){
+            // pencegahan default supaya browser tidak memicu click ganda
+            if (e && e.preventDefault) e.preventDefault();
+            lastTouchTime = Date.now();
+            toggleMenu(e);
+        }
+        function onMainClick(e){
+            // jika klik terjadi segera setelah touch (<= 600ms), abaikan click
+            if (Date.now() - lastTouchTime < 600) return;
+            // hanya toggle via click pada perangkat touch (jika ingin mencegah toggling di desktop,
+            // ubah kondisi ini). Kita toggle hanya bila device touch.
+            if (isTouchDevice()) {
+            toggleMenu(e);
+            }
+        }
+
+        // daftar event sesuai device
+        if (isTouchDevice()) {
+            // touch devices -> pakai touchstart & click (dengan guard)
+            mainBtn.addEventListener('touchstart', onMainTouchStart, {passive:false});
+            mainBtn.addEventListener('click', onMainClick);
+
+            // klik / tap di luar -> tutup
+            document.addEventListener('touchstart', function(e){
+            if (!contact.contains(e.target)) closeMenu();
+            });
+            document.addEventListener('click', function(e){
+            if (!contact.contains(e.target)) closeMenu();
+            });
+
+        } else {
+            // non-touch (desktop) -> biarkan hover CSS yang mengendalikan
+            // optional: jika user klik mainBtn di desktop, kita tidak toggle. (keputusan desain)
+            // Namun kita tetap stopPropagation agar klik di mainBtn tidak men-trigger document listener jika ada.
+            mainBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            });
+            // pastikan klik di luar menutup jika .active tetap terpasang (misal akibat js sebelumnya)
+            document.addEventListener('click', function(e){
+            if (!contact.contains(e.target)) closeMenu();
+            });
+        }
+
+        // keyboard: Escape untuk tutup
+        document.addEventListener('keydown', function(e){
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        // resize/orientation change -> reset pada mode non-touch
+        window.addEventListener('resize', function(){
+            if (!isTouchDevice()) closeMenu();
+        });
+    })();
+    </script>
     @yield('script')
 </body>
 
