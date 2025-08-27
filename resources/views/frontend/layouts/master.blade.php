@@ -31,6 +31,11 @@
         .banner-content {
             width: 100%;
         }
+        @media (max-width: 768px) {
+            .banner-blocks {
+                grid-template-rows: none; /* atau bisa diganti sesuai kebutuhan */
+            }
+        }
     </style>
 	<script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
 	<script>
@@ -212,7 +217,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="rounded-circle bg-light p-2 mx-1">
+                            <a href="{{route('frontend.wishlist')}}" class="rounded-circle bg-light p-2 mx-1">
                                 <svg width="24" height="24" viewBox="0 0 24 24">
                                     <use xlink:href="#heart"></use>
                                 </svg>

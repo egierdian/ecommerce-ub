@@ -14,17 +14,16 @@ class WishlistController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Category::with([
-            'products' => function ($query) {
-                $query->limit(10)->with('firstImage');
+        if (!Auth::check()) {
+            return redirect()->route('frontend.index');
+        }
+        $wishlists = Wishlist::with([
+            'product' => function ($q) {
+                $q->with('firstImage');
             }
-        ])->where('status', 1)->get();
+        ])->where('user_id', Auth::id())->paginate(10);
 
-        $products = Product::with('category', 'firstImage')->where('status', 1)->limit(10)->get();
-
-        $sliders = Slider::where('status', 1)->get();
-
-        return view('frontend.index', compact('categories', 'products', 'sliders'));
+        return view('frontend.pages.wishlist', compact('wishlists'));
     }
 
     public function toggle($productId)

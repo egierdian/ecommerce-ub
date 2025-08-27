@@ -2,6 +2,33 @@
 
 @section('style')
 <link rel="stylesheet" href="{{asset('assets/plugins/select2/select2.min.css')}}">
+<style>
+  @media (max-width: 768px) {
+    .tabs-header {
+      flex-direction: column;
+      /* ubah jadi vertikal */
+      align-items: flex-start;
+      /* optional: agar kiri rata */
+    }
+
+    .tabs-header nav {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .tabs-header .nav-tabs {
+      flex-direction: row;
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .tabs-header .nav-tabs .nav-link {
+      flex: 0 0 auto;
+      margin-right: .5rem;
+      margin-bottom: 0;
+    }
+  }
+</style>
 @endsection
 
 @section('content')
@@ -155,7 +182,7 @@
                 @endforeach
                 @else
                 <div class="w-100 text-center">
-                Data tidak ditemukan
+                  Data tidak ditemukan
                 </div>
                 @endif
               </div>
