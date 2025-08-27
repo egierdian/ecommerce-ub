@@ -40,6 +40,24 @@
     background-size: 60% 60%;
     /* kecilin icon biar pas */
   }
+  .thumbnails {
+    margin: 0 8px;
+  }
+
+  .section-add-cart{
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #F7F7F7;margin-top: 10px; padding-top: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .section-add-cart {
+      flex-direction: column;   
+      justify-content: center;  
+      align-items: center;  
+      text-align: center;
+    }
+  }
 </style>
 <section class="py-3">
   <div class="container-fluid">
@@ -90,7 +108,7 @@
 
                 <!-- Thumbnails -->
                 <div class="row mt-3">
-                  <div class="d-flex overflow-auto gap-2 p-1">
+                  <div class="d-flex overflow-auto gap-2 p-1 thumbnails">
                     @foreach($product->images as $k => $img)
                     <img src="{{asset($img->path)}}"
                       class="thumb-img"
@@ -109,7 +127,7 @@
                 {!! $product->description !!}
                 <form action="{{route('frontend.cart.add', ['productId' => encrypt($product->id)])}}" method="POST" class="flex items-center gap-2">
                   @csrf
-                  <div class="d-flex align-items-center" style="border-top: 1px solid #F7F7F7;margin-top: 10px; padding-top: 10px;">
+                  <div class="section-add-cart">
                     <div class="input-group product-qty" style="margin-right: 20px;">
                       <span class="input-group-btn">
                         <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
@@ -127,7 +145,7 @@
                         </button>
                       </span>
                     </div>
-                    <button href="#" class="nav-link ml-2" type="submit"><b>Tambahkan ke Keranjang</b></button>
+                    <button href="#" class="nav-link ml-2 mt-2" type="submit"><b>Tambahkan ke Keranjang</b></button>
                   </div>
                 </form>
                 <div class="mt-2" hidden>
