@@ -1,5 +1,11 @@
 @extends('frontend.layouts.master')
 
+@if($search)
+  @section('title', 'Hasil pencarian ' . $search)
+@else
+  @section('title', $dataCategory->name ?? 'Kategori')
+@endif
+
 @section('style')
 <link rel="stylesheet" href="{{asset('assets/plugins/select2/select2.min.css')}}">
 @endsection
@@ -14,7 +20,7 @@
 
         <div class="bootstrap-tabs product-tabs">
           <div class="tabs-header justify-content-between border-bottom mb-2 text-center">
-          
+
             @if($search)
             <p>
               Hasil pencarian <b>'{{ $search }}'</b>
@@ -50,7 +56,7 @@
                   </div>
                 </div>
                 @endforeach
-                @else 
+                @else
                 <div class="col text-center w-100 mb-4">
                   Data tidak ditemukan.
                 </div>

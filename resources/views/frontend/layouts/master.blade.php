@@ -2,7 +2,13 @@
 <html lang="en">
 
 <head>
-    <title>{{$webSettings['title_website'] ??''}}</title>
+    <title>
+        @hasSection('title')
+            @yield('title') - {{ $webSettings['title_website'] ?? 'UBakrie' }}
+        @else
+            {{ $webSettings['title_website'] ?? 'UBakrie' }}
+        @endif
+    </title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

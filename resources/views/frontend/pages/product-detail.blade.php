@@ -1,5 +1,7 @@
 @extends('frontend.layouts.master')
 
+@section('title', $product->name??'')
+
 @section('style')
 <link rel="stylesheet" href="{{asset('assets/plugins/select2/select2.min.css')}}">
 @endsection

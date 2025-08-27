@@ -1,5 +1,7 @@
 @extends('frontend.layouts.master')
 
+@section('title', 'Checkout')
+
 @section('style')
 <style>
     .card {

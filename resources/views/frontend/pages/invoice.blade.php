@@ -1,5 +1,7 @@
 @extends('frontend.layouts.master')
 
+@section('title', 'Invoice')
+
 @section('style')
 <style>
     .invoice-box {
