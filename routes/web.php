@@ -3,6 +3,7 @@
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
+#start frontend
 Route::get('/', [Controllers\Frontend\IndexController::class, 'index'])->name('frontend.index');
 
 Route::get('/product/{category}/{product?}', [Controllers\Frontend\IndexController::class, 'showProduct'])->name('frontend.product.category');
@@ -17,12 +18,12 @@ Route::post('/checkout/process', [Controllers\Frontend\IndexController::class, '
 
 Route::get('/invoice/{code}', [Controllers\Frontend\IndexController::class, 'invoice'])->name('frontend.invoice');
 
-Route::post('/wishlist/{productId}', [Controllers\Frontend\WishlistController::class, 'toggle'])->name('frontend.wishlist.add');
-
 Route::get('/wishlist', [Controllers\Frontend\WishlistController::class, 'index'])->name('frontend.wishlist');
+Route::post('/wishlist/{productId}', [Controllers\Frontend\WishlistController::class, 'toggle'])->name('frontend.wishlist.add');
+#end frontend
 
-
-Route::middleware('auth')->prefix('admin')->group(function () {
+#admin
+Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
     
     Route::group((['prefix' => 'product']), function () {
@@ -63,6 +64,15 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('/delete/{id}', [Controllers\Admin\SliderController::class, 'destroy'])->name('admin.slider.delete');
     });
 
+    Route::group((['prefix' => 'transaction']), function () {
+        Route::get('/', [Controllers\Admin\TransactionController::class, 'index'])->name('admin.transaction');
+        Route::get('/create', [Controllers\Admin\TransactionController::class, 'create'])->name('admin.transaction.create');
+        Route::get('/edit/{id}', [Controllers\Admin\TransactionController::class, 'detail'])->name('admin.transaction.edit');
+        Route::post('/store', [Controllers\Admin\TransactionController::class, 'store'])->name('admin.transaction.store');
+        Route::post('/update/{id}', [Controllers\Admin\TransactionController::class, 'update'])->name('admin.transaction.update');
+        Route::get('/delete/{id}', [Controllers\Admin\TransactionController::class, 'destroy'])->name('admin.transaction.delete');
+    });
+
     Route::group((['prefix' => 'setting']), function () {
         Route::get('/', [Controllers\Admin\SettingController::class, 'index'])->name('admin.setting');
         Route::post('/update', [Controllers\Admin\SettingController::class, 'update'])->name('admin.setting.update');
@@ -70,8 +80,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
 });
 
-Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [Controllers\AuthController::class, 'login'])->name('login.post');
-Route::get('/register', [Controllers\AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [Controllers\AuthController::class, 'register'])->name('register.post');
+Route::get('/masuk', [Controllers\AuthController::class, 'showLogin'])->name('login');
+Route::post('/masuk', [Controllers\AuthController::class, 'login'])->name('login.post');
+Route::get('/daftar', [Controllers\AuthController::class, 'showRegister'])->name('register');
+Route::post('/daftar', [Controllers\AuthController::class, 'register'])->name('register.post');
 Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');

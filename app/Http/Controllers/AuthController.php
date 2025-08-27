@@ -19,19 +19,18 @@ class AuthController extends Controller
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
-            'role' => 'required|in:admin,user'
+            'phone' => 'required|max:16',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role' => 'customer',
         ]);
 
-        Auth::login($user);
-
-        return redirect()->route('dashboard');
+        return redirect()->route('login');
     }
 
     public function showLogin()
@@ -48,7 +47,13 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+
+            $user = Auth::user();
+            if ($user->role === 'administrator') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('frontend.index');
+            }
         }
 
         return back()->withErrors([

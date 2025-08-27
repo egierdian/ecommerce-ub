@@ -193,7 +193,7 @@
         <div class="offcanvas-body">
             <div class="order-md-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-primary">Your cart</span>
+                    <span class="text-primary">Keranjang</span>
                     <span class="badge bg-primary rounded-pill count-cart">{{count($carts)}}</span>
                 </h4>
                 <ul class="list-group mb-3">
@@ -313,7 +313,7 @@
 
                     <div class="cart text-end d-none d-lg-block dropdown">
                         <button class="border-0 bg-transparent d-flex flex-column gap-2 lh-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                            <span class="fs-6 text-muted dropdown-toggle">Your Cart</span>
+                            <span class="fs-6 text-muted dropdown-toggle">Keranjang</span>
                             <span class="cart-total fw-bold">Rp {{$totalPriceText}}</span>
                         </button>
                     </div>

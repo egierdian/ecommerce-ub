@@ -3,10 +3,13 @@
 @section('content')
 <div class="container container-login animated fadeIn">
 	<div class="text-center mb-4">
-		<img class="mx-auto" src="{{asset('assets/img/icon-ubakrie.png')}}" width="110" alt=""><br>
-		<span class="text-muted">Login e-Commerce UBakrie</span>
+        <a href="{{route('frontend.index')}}">
+		<img class="mx-auto" src="{{asset('assets/img/icon-ubakrie.png')}}" width="110" alt="">
+        </a>
+        <br>
+		<span class="text-muted mt-2">Daftar E-Commerce UBakrie</span>
 	</div>
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login.post') }}">
         @csrf
 			<div class="login-form">
 				@if (\Session::has('success'))
@@ -34,11 +37,11 @@
 				<div class="form-group form-floating-label">
 				</div>
 				<div class="form-action mb-3">
-					<button type="submit" class="btn btn-primary btn-rounded btn-login">Login</button>
+					<button type="submit" class="btn btn-primary btn-rounded btn-login">Masuk</button>
 				</div>
-				<div class="login-account" hidden>
+				<div class="login-account">
 					<span class="msg">Belum punya akun ?</span>
-					<a href="#" id="show-signup" class="link">Daftar</a>
+					<a href="{{route('register')}}" id="show-signup" class="link">Daftar</a>
 				</div>
 			</div>
 

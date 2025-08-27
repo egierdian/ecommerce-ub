@@ -62,7 +62,7 @@
             <div class="row g-4">
                 <!-- Form -->
                 <div class="col-lg-8">
-                    <div class="card shadow-sm p-4">
+                    <div class="card shadow-sm">
                         <div class="card-header bg-white">📦 Informasi Pengiriman</div>
                         <div class="card-body">
                             @csrf
@@ -135,7 +135,7 @@
 
                 <!-- Ringkasan Pesanan -->
                 <div class="col-lg-4">
-                    <div class="card shadow-sm p-4">
+                    <div class="card shadow-sm">
                         <div class="card-header bg-white">🧾 Ringkasan Pesanan</div>
                         <div class="card-body">
                             <ul class="list-group cart-summary mb-3">
