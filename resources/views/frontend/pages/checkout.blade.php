@@ -6,6 +6,15 @@
 <style>
     .card {
         border: none;
+        position: relative;
+        box-shadow: rgba(0, 0, 0, 0.04) 0px 5px 22px;
+        margin-bottom: 30px;
+        padding: 16px;
+        background: rgb(255, 255, 255);
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(251, 251, 251);
+        border-image: initial;
         border-radius: 16px;
     }
 
@@ -60,7 +69,7 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Nama Lengkap</label>
-                                    <input type="text" class="form-control form-control-lg" name="name"
+                                    <input type="text" class="form-control form-control" name="name"
                                         value="{{Auth::user()->name }}" required>
                                     @error('name')
                                     <small class="form-text text-muted">{{ $message }}</small>
@@ -68,7 +77,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">No. Telepon</label>
-                                    <input type="text" class="form-control form-control-lg" name="phone"
+                                    <input type="text" class="form-control form-control" name="phone"
                                         value="{{Auth::user()->phone }}" required>
                                     @error('phone')
                                     <small class="form-text text-muted">{{ $message }}</small>
@@ -76,7 +85,7 @@
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Alamat Lengkap</label>
-                                    <textarea class="form-control form-control-lg" rows="3"
+                                    <textarea class="form-control form-control" rows="3"
                                         placeholder="Jl. Contoh No.123, Jakarta"
                                         name="address" required>{{Auth::user()->address }}</textarea>
                                     @error('address')
@@ -85,7 +94,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Kota</label>
-                                    <input type="text" class="form-control form-control-lg"
+                                    <input type="text" class="form-control form-control"
                                         placeholder="Jakarta" name="city" required>
                                     @error('city')
                                     <small class="form-text text-muted">{{ $message }}</small>
@@ -93,7 +102,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Kode Pos</label>
-                                    <input type="text" class="form-control form-control-lg"
+                                    <input type="text" class="form-control form-control"
                                         placeholder="12345" name="postal_code" maxlength="5" required>
                                     @error('postal_code')
                                     <small class="form-text text-muted">{{ $message }}</small>
