@@ -17,6 +17,9 @@ class CartController extends Controller
         if (!Auth::check()) {
             return redirect()->back()->with(['error' => 'Silahkan login terlebih dahulu untuk menambahkan produk ke keranjang.']);
         }
+        if (Auth::user()->role != 'customer') {
+            return redirect()->back()->with(['error' => 'Hanya customer yang bisa menambahkan ke keranjang.']);
+        }
         $id = decrypt($id);
         $validator = Validator::make($request->all(), [
             'quantity' => 'required|numeric|min:1',
