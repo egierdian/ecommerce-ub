@@ -99,6 +99,7 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'type' => $request->type,
                 'category_id' => $request->category,
+                'description' => $request->description,
                 'status' => 1,
                 'slug' => Str::slug($request->name),
             ];

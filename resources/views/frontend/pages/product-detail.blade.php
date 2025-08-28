@@ -154,6 +154,7 @@
                 <form action="{{route('frontend.cart.add', ['productId' => encrypt($product->id)])}}" method="POST" class="flex items-center gap-2">
                   @csrf
                   <div class="section-add-cart">
+                    @if($product->type == 2)
                     <div class="input-group product-qty" style="margin-right: 20px;">
                       <span class="input-group-btn">
                         <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
@@ -172,6 +173,9 @@
                       </span>
                     </div>
                     <button href="#" class="nav-link ml-2 mt-2" type="submit"><b>Tambahkan ke Keranjang</b></button>
+                    @else
+                    <p class="fw-bold">For more information please contact admin!</p>
+                    @endif
                   </div>
                 </form>
                 <div class="mt-2" hidden>
