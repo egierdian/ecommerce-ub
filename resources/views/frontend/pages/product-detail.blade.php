@@ -148,8 +148,59 @@
               <!-- Product Details -->
               <div class="col-md-6 mb-2">
                 <h2>{{$product->name}}</h2>
-                <p class="text-muted">{{$product->category->name}}</p>
-                <h4 class="price">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</h4>
+                <p>
+                  <span class="badge bg-dark">
+                    <i class="bi bi-tag me-1"></i> {{$product->category->name}}
+                  </span>
+                </p>
+
+                @if($product->type == 1)
+                <div class="card shadow-sm border-0 mb-3">
+                  <div class="card-header bg-primary text-white fw-bold">
+                    Harga Sewa per Jam
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <div class="row align-items-center">
+                        <div class="col-7 col-md-8 text-muted">
+                          <i class="bi bi-clock me-2"></i> Senin - Jumat (08.00 - 18.00)
+                        </div>
+                        <div class="col-5 col-md-4 text-end fw-bold text-primary">
+                          Rp {{ number_format($product->base_price_per_hour, 0, ',', '.') }}
+                          <small class="text-muted">/Jam</small>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="list-group-item">
+                      <div class="row align-items-center">
+                        <div class="col-7 col-md-8 text-muted">
+                          <i class="bi bi-clock me-2"></i> Senin - Jumat (08.00 - 21.00)
+                        </div>
+                        <div class="col-5 col-md-4 text-end fw-bold text-primary">
+                          Rp {{ number_format($product->holiday_price_per_hour, 0, ',', '.') }}
+                          <small class="text-muted">/Jam</small>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="list-group-item">
+                      <div class="row align-items-center">
+                        <div class="col-7 col-md-8 text-muted">
+                          <i class="bi bi-clock me-2"></i> Sabtu (08.00 - 18.00)
+                        </div>
+                        <div class="col-5 col-md-4 text-end fw-bold text-primary">
+                          Rp {{ number_format($product->holiday_price_per_hour, 0, ',', '.') }}
+                          <small class="text-muted">/Jam</small>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                @else
+                <h4 class="price">Rp {{number_format($product->price, 0, ',', '.')}}</h4>
+                @endif
+
                 {!! $product->description !!}
                 <form action="{{route('frontend.cart.add', ['productId' => encrypt($product->id)])}}" method="POST" class="flex items-center gap-2">
                   @csrf

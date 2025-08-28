@@ -39,7 +39,7 @@
                 @foreach($products as $product)
                 <div class="col">
                   <div class="product-item">
-                    <!-- <span class="badge bg-success position-absolute m-3">-30%</span> -->
+                    <span class="badge bg-success position-absolute m-3"></span>
                     <a href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}">
                       <svg width="24" height="24">
                         <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
@@ -51,6 +51,7 @@
                       </a>
                     </figure>
                     <h3>{{$product->name}}</h3>
+                    <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
                     <span class="price">Rp. {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
                     <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-dark rounded-2 mt-2">Detail</a>
                   </div>

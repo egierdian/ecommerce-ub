@@ -644,6 +644,9 @@ h1,h2,h3,h4,h5,h6 {
   color: #222;
   padding: 0;
 }
+.product-item .product-category {
+  font-size: 14px;
+}
 
 /* cart */
 .cart .product-qty {
