@@ -169,5 +169,4 @@ class IndexController extends Controller
 
         return view('frontend.pages.invoice', compact('invoice'));
     }
-
 }

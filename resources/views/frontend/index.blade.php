@@ -166,7 +166,7 @@
                 @foreach($category->products as $product)
                 <div class="col">
                   <div class="product-item">
-                    <span class="badge bg-success position-absolute m-3">/span>
+                    <span class="badge bg-success position-absolute m-3"></span>
                     <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}"><svg width="24" height="24">
                         <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
                       </svg></button>

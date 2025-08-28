@@ -281,20 +281,22 @@
                     </div>
 
                     <ul class="d-flex justify-content-end list-unstyled m-0">
+                        @if(Auth::check())
                         <li>
-                            <a href="#" class="rounded-circle bg-light p-2 mx-1">
+                            <a href="{{Auth::user()->role == 'administrator' ? route('admin.dashboard') : route('frontend.dashboard')}}" class="rounded-circle bg-light p-2 mx-1">
                                 <svg width="24" height="24" viewBox="0 0 24 24">
                                     <use xlink:href="#user"></use>
                                 </svg>
                             </a>
                         </li>
-                        <li>
+                        @endif
+                        <!-- <li>
                             <a href="{{route('frontend.wishlist')}}" class="rounded-circle bg-light p-2 mx-1">
                                 <svg width="24" height="24" viewBox="0 0 24 24">
                                     <use xlink:href="#heart"></use>
                                 </svg>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="d-lg-none">
                             <a href="#" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                 <svg width="24" height="24" viewBox="0 0 24 24">

@@ -22,6 +22,13 @@ Route::get('/wishlist', [Controllers\Frontend\WishlistController::class, 'index'
 Route::post('/wishlist/{productId}', [Controllers\Frontend\WishlistController::class, 'toggle'])->name('frontend.wishlist.add');
 #end frontend
 
+#frontend auth
+Route::middleware(['auth', 'role:customer'])->prefix('dashboard')->group(function () {
+    Route::get('/', [Controllers\Frontend\DashboardController::class, 'index'])->name('frontend.dashboard');
+    Route::get('/pesanan', [Controllers\Frontend\DashboardController::class, 'myOrder'])->name('frontend.dashboard.my-order');
+    Route::get('/wishlist', [Controllers\Frontend\DashboardController::class, 'wishlist'])->name('frontend.dashboard.wishlist');
+});
+
 #admin
 Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
