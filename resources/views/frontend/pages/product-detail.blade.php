@@ -133,7 +133,7 @@
                 </div>
 
                 <!-- Thumbnails -->
-                <div class="row mt-3">
+                <div class="mt-3" style="border: 2px solid #F7F7F7;padding: 10px 0">
                   <div class="d-flex overflow-auto gap-2 p-1 thumbnails">
                     @foreach($product->images as $k => $img)
                     <img src="{{asset($img->path)}}"
