@@ -21,7 +21,7 @@ class IndexController extends Controller
     {
         $categories = Category::with([
             'products' => function ($query) {
-                $query->limit(10)->with('firstImage');
+                $query->limit(10)->with(['firstImage','category','wishlists']);
             }
         ])->where('status', 1)->get();
 
