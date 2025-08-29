@@ -70,8 +70,7 @@
                             <li><a href="{{route('frontend.dashboard')}}" class="nav-link {{ request()->routeIs('frontend.dashboard') ? 'active' : '' }}"><i class="bi bi-house-door me-2"></i>Dashboard</a></li>
                             <li><a href="{{route('frontend.dashboard.my-order')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}"><i class="bi bi-basket me-2"></i>Pesanan Saya</a></li>
                             <li><a href="{{route('frontend.dashboard.wishlist')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.wishlist') ? 'active' : '' }}"><i class="bi bi-heart me-2"></i>Wishlist</a></li>
-                            <li><a href="#" class="nav-link"><i class="bi bi-credit-card me-2"></i>Pembayaran</a></li>
-                            <li><a href="#" class="nav-link"><i class="bi bi-gear me-2"></i>Pengaturan</a></li>
+                            <li><a href="{{route('frontend.dashboard.change-password')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.change-password') ? 'active' : '' }}"><i class="bi bi-gear me-2"></i>Password</a></li>
                         </ul>
                         <div class="px-2 mt-auto">
                             <a href="{{route('logout')}}" class="btn btn-outline-light w-100"><i class="bi bi-box-arrow-right me-1"></i> Logout</a>
@@ -90,8 +89,7 @@
                             <li><a href="{{route('frontend.dashboard')}}" class="nav-link {{ request()->routeIs('frontend.dashboard') ? 'active' : '' }}"><i class="bi bi-house-door me-2"></i>Dashboard</a></li>
                             <li><a href="{{route('frontend.dashboard.my-order')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}"><i class="bi bi-basket me-2"></i>Pesanan Saya</a></li>
                             <li><a href="{{route('frontend.dashboard.wishlist')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.wishlist') ? 'active' : '' }}"><i class="bi bi-heart me-2"></i>Wishlist</a></li>
-                            <li><a href="#" class="nav-link"><i class="bi bi-credit-card me-2"></i>Pembayaran</a></li>
-                            <li><a href="#" class="nav-link"><i class="bi bi-gear me-2"></i>Pengaturan</a></li>
+                            <li><a href="{{route('frontend.dashboard.change-password')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.change-password') ? 'active' : '' }}"><i class="bi bi-gear me-2"></i>Password</a></li>
                         </ul>
                         <div class="mt-auto">
                             <a href="#" class="btn btn-outline-light w-100"><i class="bi bi-box-arrow-right me-1"></i> Logout</a>

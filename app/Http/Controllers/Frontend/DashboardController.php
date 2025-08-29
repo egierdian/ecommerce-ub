@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -47,5 +49,36 @@ class DashboardController extends Controller
         ])->where('user_id', $userId)->get();
 
         return view('frontend.dashboard.wishlist', compact('wishlists'));
+    }
+
+    
+    public function changePassword()
+    {
+        return view('frontend.dashboard.change-password');
+    }
+    
+    public function updatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required',
+            'password' => 'required|min:8|confirmed', 
+        ]);
+        $validator->validate();
+
+        try {
+            $user = User::findOrFail(Auth::id());
+
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+            }
+
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+            
+            return redirect()->route('frontend.dashboard.change-password')->with('success', 'Password berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput();
+        }
     }
 }
