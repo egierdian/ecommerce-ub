@@ -152,8 +152,9 @@
                   <span class="badge bg-secondary">
                     <i class="bi bi-tag me-1"></i> {{$product->category->name}}
                   </span>
-                  
+                  @if($product->type == 2)
                   <span class="badge bg-dark">Stok tersedia: {{$product->qty - $pendingStock??0}}</span>
+                  @endif
                 </p>
 
                 @if($product->type == 1)
