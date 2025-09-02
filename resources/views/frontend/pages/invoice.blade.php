@@ -84,6 +84,7 @@
                 <div>
                     <h1>INVOICE</h1>
                     <p>No: {{$invoice->code}}<br>Tanggal: {{date('d M Y', strtotime($invoice->created_at))}}</p>
+                    {!! paymentStatusBadge($invoice->status) !!}
                 </div>
                 <div class="company">
                     <strong>{{$webSettings['title_website'] ?? ''}}</strong><br>

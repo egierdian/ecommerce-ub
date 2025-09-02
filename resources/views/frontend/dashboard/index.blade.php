@@ -48,7 +48,7 @@
                     <td>{{$trans->code}}</td>
                     <td>{{date('d M Y', strtotime($trans->created_at))}}</td>
                     <td>
-                        <span class="badge bg-success">Selesai</span>
+                        {!! paymentStatusBadge($trans->status) !!}
                     </td>
                     <td>Rp {{number_format($trans->total, 0, ',', '.')}}</td>
                     <td><a href="{{route('frontend.invoice', ['code' => $trans->code])}}" class="btn btn-sm btn-primary" target="_blank">Invoice</a></td>
