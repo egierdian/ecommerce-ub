@@ -23,8 +23,8 @@ class DashboardController extends Controller
 
         $transaction = [
             'total_transaction' => (clone $transactions)->count(),
-            'total_on_process' => (clone $transactions)->where('status', 0)->count(),
-            'total_transaction_success' => (clone $transactions)->count(),
+            'total_on_process' => (clone $transactions)->where('status', 1)->count(),
+            'total_transaction_success' => (clone $transactions)->where('status', 2)->count(),
         ];
         $latestTransactions = $transactions->latest()->limit(5)->get();
 

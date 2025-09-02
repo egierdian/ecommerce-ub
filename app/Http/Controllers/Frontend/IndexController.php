@@ -44,8 +44,14 @@ class IndexController extends Controller
             $product = Product::with('category', 'images')->where('status', 1)->where('slug', $product)->first();
 
             if (!$product) return redirect()->route('frontend.index');
+            
+            $pendingStock = DB::table('transactions as a')
+                ->leftJoin('transaction_items as b', 'a.id', '=', 'b.transaction_id')
+                ->where('b.product_id', $product->id)
+                ->whereIn('a.status', [1]) 
+                ->sum('b.qty');
 
-            return view('frontend.pages.product-detail', compact('product'));
+            return view('frontend.pages.product-detail', compact('product', 'pendingStock'));
         } else {
             $dataCategory = null;
             $search = null;
@@ -113,47 +119,68 @@ class IndexController extends Controller
         try {
             DB::beginTransaction();
 
-            $code = 'TRX' . date('Ymd') . strtoupper(Str::random(6));
-            $param = [
-                'user_id' => Auth::user()->id,
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'address' => $request->address,  
-                'city' => $request->city,  
-                'postal_code' => $request->postal_code,  
-                'payment_method' => $request->payment_method,  
-                'total' => 0,  
-                'status' => 1,
-                'payment_status' => 1,
-                'code' => $code,
-            ];
-            $transaction = Transaction::create($param);
-            
             $total = 0;
-            foreach($request->carts as $k => $v) {
-                $cart = Cart::where('id', decrypt($v))->first();
-                $paramItems = [
+
+            foreach ($request->carts as $k => $v) {
+                $cart = Cart::with('product')->where('id', decrypt($v))->first();
+
+                $stock = $cart->product->qty;
+
+                $pendingStock = DB::table('transactions as a')
+                    ->leftJoin('transaction_items as b', 'a.id', '=', 'b.transaction_id')
+                    ->where('b.product_id', $cart->product_id)
+                    ->whereIn('a.status', [1]) 
+                    ->sum('b.qty');
+
+                $availableStock = $stock - $pendingStock;
+
+                if ($cart->qty > $availableStock) {
+                    DB::rollBack();
+                    return redirect()->back()->with('error', 'Stok produk tidak mencukupi.');
+                }
+            }
+
+            $code = 'TRX' . date('Ymd') . strtoupper(Str::random(6));
+            $transaction = Transaction::create([
+                'user_id'        => Auth::id(),
+                'name'           => $request->name,
+                'phone'          => $request->phone,
+                'address'        => $request->address,
+                'city'           => $request->city,
+                'postal_code'    => $request->postal_code,
+                'payment_method' => $request->payment_method,
+                'total'          => 0,
+                'status'         => 1,
+                'payment_status' => 1,
+                'code'           => $code,
+            ]);
+
+            foreach ($request->carts as $v) {
+                $cart = Cart::with('product')->where('id', decrypt($v))->first();
+
+                TransactionItem::create([
                     'transaction_id' => $transaction->id,
-                    'product_id' => $cart->product_id,
-                    'price' => $cart->price,
-                    'qty' => $cart->qty,
-                    'subtotal' => $cart->subtotal,
-                ];
-                TransactionItem::create($paramItems);
+                    'product_id'     => $cart->product_id,
+                    'price'          => $cart->price,
+                    'qty'            => $cart->qty,
+                    'subtotal'       => $cart->subtotal,
+                ]);
 
                 $total += $cart->subtotal;
-                #delete cart
+
                 $cart->delete();
             }
+
             $transaction->update(['total' => $total]);
 
             DB::commit();
-            
+
             return redirect()->route('frontend.invoice', ['code' => $code]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+
     }
 
     

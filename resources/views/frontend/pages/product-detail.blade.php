@@ -149,9 +149,11 @@
               <div class="col-md-6 mb-2">
                 <h2>{{$product->name}}</h2>
                 <p>
-                  <span class="badge bg-dark">
+                  <span class="badge bg-secondary">
                     <i class="bi bi-tag me-1"></i> {{$product->category->name}}
                   </span>
+                  
+                  <span class="badge bg-dark">Stok tersedia: {{$product->qty - $pendingStock??0}}</span>
                 </p>
 
                 @if($product->type == 1)

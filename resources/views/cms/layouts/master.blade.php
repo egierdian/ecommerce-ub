@@ -153,6 +153,18 @@
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
+							<h4 class="text-section">Transactional</h4>
+						</li>
+						<li class="nav-item {{request()->is('admin/transaction') ? 'active' : ''}}">
+							<a href="{{route('admin.transaction')}}">
+								<i class="fas fa-folder"></i>
+								<p>Transaction</p>
+							</a>
+						</li>
+						<li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
 							<h4 class="text-section">Settings</h4>
 						</li>
 						<li class="nav-item {{request()->is('admin/setting*') ? 'active' : ''}}">

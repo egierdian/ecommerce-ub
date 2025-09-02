@@ -75,11 +75,7 @@ Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(functi
 
     Route::group((['prefix' => 'transaction']), function () {
         Route::get('/', [Controllers\Admin\TransactionController::class, 'index'])->name('admin.transaction');
-        Route::get('/create', [Controllers\Admin\TransactionController::class, 'create'])->name('admin.transaction.create');
-        Route::get('/edit/{id}', [Controllers\Admin\TransactionController::class, 'detail'])->name('admin.transaction.edit');
-        Route::post('/store', [Controllers\Admin\TransactionController::class, 'store'])->name('admin.transaction.store');
-        Route::post('/update/{id}', [Controllers\Admin\TransactionController::class, 'update'])->name('admin.transaction.update');
-        Route::get('/delete/{id}', [Controllers\Admin\TransactionController::class, 'destroy'])->name('admin.transaction.delete');
+        Route::get('/approval/{id}', [Controllers\Admin\TransactionController::class, 'approval'])->name('admin.transaction.approval');
     });
 
     Route::group((['prefix' => 'setting']), function () {

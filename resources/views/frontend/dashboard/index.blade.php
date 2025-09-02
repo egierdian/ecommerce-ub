@@ -17,7 +17,7 @@
         <div class="card card-custom p-3">
             <h5>Pesanan Diproses</h5>
             <p class="fs-3 fw-bold text-primary">{{$transaction['total_on_process']}}</p>
-            <span class="text-muted">Menunggu pengiriman</span>
+            <span class="text-muted">Menunggu persetujuan</span>
         </div>
     </div>
     <div class="col-md-4">

@@ -3,151 +3,106 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Slider;
+use App\Models\Product;
+use App\Models\Transaction;
+use App\Models\TransactionItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class TransactionController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Slider::query()->where("status", 1);
+            $data = Transaction::query()
+                ->select('transactions.*', 'users.name as customer_name', 'users.email as customer_email')
+                ->leftJoin('users', 'users.id', '=', 'transactions.user_id');
+
 
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    $btnEdit = "<a href='".route('admin.slider.edit', ['id'=> encrypt($row->id)])."' class='text-primary text-decoration-none mr-1'><i class='fa fa-edit' data-toggle='tooltip' data-placement='top' title='Update'></i></a>";
-                    $btnDelete = "<a href='javascript:void(0)' class='text-danger text-decoration-none' data-toggle='tooltip' data-placement='top' title='Delete'><i class='fa fa-trash-alt' title='Delete' onclick='deleteItem(this)' data-modul='slider' data-id='$row->id' data-name='$row->name'></i></a>";
-
-                    return $btnEdit.$btnDelete;
+                ->addColumn('customer', function ($row) {
+                    return $row->customer_name . ' (' . $row->customer_email . ')';
                 })
-                ->rawColumns(['action'])
+                ->addColumn('total', function ($row) {
+                    return 'Rp ' . number_format($row->total, 0, ',', '.');
+                })
+                ->addColumn('status', function ($row) {
+                    return paymentStatusBadge($row->status);
+                })
+                ->addColumn('created_at', function ($row) {
+                    return date('Y-m-d', strtotime($row->created_at));
+                })
+                ->addColumn('action', function ($row) {
+                    $btnApprove = '';
+                    $btnReject = '';
+                    if ($row->status == 1) {
+                        $btnApprove = "<a href='javascript:void(0)' class='text-success text-decoration-none m-1' data-toggle='tooltip' data-placement='top' title='Approve'><i class='fa fa-check' title='Delete' onclick='approval(this)' data-id='".encrypt($row->id)."' data-code='$row->code' data-status='2'></i></a>";
+                        $btnReject = "<a href='javascript:void(0)' class='text-danger text-decoration-none m-1' data-toggle='tooltip' data-placement='top' title='Reject'><i class='fa fa-times' title='Delete' onclick='approval(this)' data-id='".encrypt($row->id)."' data-code='$row->code' data-status='3'></i></a>";
+                    }
+
+                    return $btnApprove . $btnReject;
+                })
+                ->filterColumn('customer', function ($query, $keyword) {
+                    $query->where(function ($q) use ($keyword) {
+                        $q->where('users.name', 'like', "%{$keyword}%")
+                            ->orWhere('users.email', 'like', "%{$keyword}%");
+                    });
+                })
+                ->filterColumn('created_at', function ($query, $keyword) {
+                    $query->whereRaw("DATE(transactions.created_at) like ?", ["%$keyword%"]);
+                })
+                ->rawColumns(['action', 'status'])
                 ->make(true);
         }
-        return view('cms.slider.index');
+        return view('cms.transaction.index');
     }
-
-    public function create()
+    public function approval(Request $request, $id)
     {
-        $data = null;
-        return view('cms.slider.form', compact('data'));
-    }
-
-    public function edit($id)
-    {
-        $data = Slider::findOrFail(decrypt($id));
-        
-        return view('cms.slider.form', compact('data'));
-    }
-
-    public function store(Request $request)
-    {
-        $fileSize = 1024 * 2;
         $validator = Validator::make($request->all(), [
-            'title'  => 'required',
-            'description' => 'required',
-            'url' => 'required',
-            'image' => "required|image|mimes:jpg,jpeg,svg,png|max:$fileSize"     
+            'status' => 'required|in:2,3'
         ]);
 
-        $validator->validate();
-
-        try {
-            $param = [
-                'name' => $request->name,
-                'title' => $request->title,
-                'url' => $request->url,
-                'description' => $request->description,
-                'status' => 1,
-                'image' => null
-            ];
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $fileName = 'slider-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
-                $base_path = 'uploads/slider';
-                $path = public_path($base_path);
-                $file->move($path, $fileName);
-
-                $param['image'] = $base_path .'/'.$fileName;
-            }
-            Slider::create($param);
-
-            return redirect()->route('admin.slider')->with('success', 'Success created!');
-        } catch (\Exception $e) {
-            return redirect()->back()->withInput();
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
-    }
 
-    public function update(Request $request, $id)
-    {
-        $fileSize = 1024 * 2;
-        $validator = Validator::make($request->all(), [
-            'title'  => 'required',
-            'description' => 'required',
-            'url' => 'required',
-            'image' => "nullable|image|mimes:jpg,jpeg,svg,png|max:$fileSize"   
-        ]);
-        $validator->validate();
-
+        DB::beginTransaction();
         try {
-            $data = Slider::findOrFail($id);
-            $param = [
-                'name' => $request->name,
-                'title' => $request->title,
-                'url' => $request->url,
-                'description' => $request->description,
-            ];
-            
-            $image = $data->image;
-            if($request->hasFile('image'))
-            {
-                if(isset($image) && file_exists(public_path($image)))
-                {
-                    $file = $request->file('image');
-                    $fileName = 'slider-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
-                    unlink(public_path($image)); 
-                    $base_path = 'uploads/slider';
-                    $path = public_path($base_path);
-                    $file->move($path, $fileName);
-                } else {
-                    $file = $request->file('image');
-                    $fileName = 'slider-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
-                    $base_path = 'uploads/slider';
-                    $path = public_path($base_path);
-                    $file->move($path, $fileName);
+            $id = decrypt($id);
+            $transaction = Transaction::findOrFail($id);
+
+            $transaction->update([
+                'status' => $request->status
+            ]);
+
+            if ($request->status == 2) {
+                $transactionItems = TransactionItem::where('transaction_id', $id)->get();
+
+                foreach ($transactionItems as $item) {
+                    $product = Product::findOrFail($item->product_id);
+
+                    if ($product->qty < $item->qty) {
+                        throw new \Exception("Stok produk {$product->name} tidak mencukupi.");
+                    }
+
+                    $product->decrement('qty', $item->qty);
                 }
-                $param['image'] = $base_path .'/'.$fileName;
             }
-            
-            $data->update($param);
 
-            return redirect()->route('admin.slider')->with('success', 'Success updated!');
+            DB::commit();
+
+            return redirect()->route('admin.transaction')
+                ->with('success', 'Transaksi berhasil diperbarui!');
         } catch (\Exception $e) {
-            return redirect()->back()->withInput();
-        }
-    }
-
-    public function destroy($id)
-    {
-        try {
-            $data = Slider::findOrFail($id);
-            $param = [
-                'status' => 0
-            ];
-            
-            if(isset($data->image) && file_exists(public_path($data->image)))
-            {
-                unlink(public_path($data->image));
-            }
-            $data->update($param);
-
-
-            return redirect()->route('admin.slider')->with('success', 'Success deleted!');
-        } catch (\Exception $e) {
-            return redirect()->back()->withInput();
+            DB::rollBack();
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
+                ->withInput();
         }
     }
 }

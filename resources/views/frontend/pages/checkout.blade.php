@@ -58,6 +58,12 @@
 
 <section class="py-3">
     <div class="container-fluid">
+        @if(session('error'))
+        <div class="alert alert-danger d-flex justify-content-between align-items-center" id="errorAlert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
         <form action="{{route('frontend.checkout.process')}}" method="POST">
             <div class="row g-4">
                 <!-- Form -->
