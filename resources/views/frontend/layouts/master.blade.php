@@ -37,6 +37,9 @@
         .banner-content {
             width: 100%;
         }
+        .banner-blocks .banner-ad {
+            background: rgb(230, 243, 250) !important;
+        }
         @media (max-width: 768px) {
             .banner-blocks {
                 grid-template-rows: none; /* atau bisa diganti sesuai kebutuhan */
