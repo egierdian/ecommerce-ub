@@ -38,7 +38,7 @@
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
-			<div class="logo-header" data-background-color="light-blue">
+			<div class="logo-header" data-background-color="blue">
 				
 				<a href="{{route('admin.dashboard')}}" class="logo">
 					<img src="{{asset('assets/img/icon-ubakrie.png')}}" width="60" alt="navbar brand" class="navbar-brand">
@@ -59,7 +59,7 @@
 			<!-- End Logo Header -->
 
 			<!-- Navbar Header -->
-			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="light-blue2">
+			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
 				
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
