@@ -69,6 +69,10 @@
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             transition: background 0.3s;
+            display: flex;              /* biar ikon selalu di tengah */
+            align-items: center;
+            justify-content: center;
+            text-decoration: none; 
         }
         .contact-main:hover {
             background: #85171a;
@@ -82,12 +86,17 @@
             border-radius: 50%;
             width: 45px;
             height: 45px;
-            font-size: 14px;
+            font-size: 18px;            /* diperbesar biar ikon proporsional */
             cursor: pointer;
             opacity: 0;
             transform: translateY(20px) scale(0.8);
             transition: all 0.3s ease;
             pointer-events: none;
+            display: flex;              /* biar ikon center */
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;      /* untuk <a> */
+            box-shadow: 0 3px 6px rgba(0,0,0,0.25);
         }
 
         /* Hover (desktop) */
@@ -445,10 +454,21 @@
     </div>
     
     <div class="floating-contact" id="floatingContact">
-        <button class="contact-main" id="contactMain">✉</button>
-        <button class="contact-item" title="WhatsApp 1">WA1</button>
-        <button class="contact-item" title="WhatsApp 2">WA2</button>
-        <button class="contact-item" title="Email">📧</button>
+        <button class="contact-main" id="contactMain"><i class="fa fa-envelope"></i></button>
+        <!-- <a href="https://wa.me/" target="_blank" 
+        class="contact-item" title="WhatsApp 1">
+            <i class="fab fa-whatsapp"></i>
+        </a> -->
+
+        <a href="https://wa.me/{{ preg_replace('/\D/', '', $webSettings['contact_whatsapp'] ?? '') }}" target="_blank" 
+        class="contact-item" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+
+        <a href="mailto:{{$webSettings['contact_email'??'']}}" 
+        class="contact-item" title="Email">
+            <i class="fa fa-envelope"></i>
+        </a>
     </div>
     <script src="{{asset('frontend/js/jquery-1.11.0.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
