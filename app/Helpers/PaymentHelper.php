@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 if (!function_exists('paymentStatus')) {
     function paymentStatus($status = null)
     {
@@ -31,6 +33,10 @@ if (!function_exists('paymentStatusBadge')) {
         $label = paymentStatus($status);
         $color = $badges[$status] ?? 'secondary';
 
-        return '<span class="badge bg-' . $color . '">' . $label . '</span>';
+        $badge = 'bg';
+        if (Auth::check()) {
+            if(Auth::user()->role != 'customer') $badge = 'badge';
+        }
+        return '<span class="badge '.$badge.'-' . $color . '">' . $label . '</span>';
     }
 }
