@@ -113,8 +113,8 @@
 							</span>
 							<h4 class="text-section">Dashboard</h4>
 						</li>
-						<li class="nav-item {{request()->is('/') ? 'active' : ''}}">
-							<a href="#">
+						<li class="nav-item {{request()->is('admin/dashboard') ? 'active' : ''}}">
+							<a href="{{route('admin.dashboard')}}">
 								<i class="fas fa-th-large"></i>
 								<p>Dashboard</p>
 							</a>
