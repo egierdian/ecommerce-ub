@@ -18,7 +18,8 @@ class TransactionController extends Controller
         if ($request->ajax()) {
             $data = Transaction::query()
                 ->select('transactions.*', 'users.name as customer_name', 'users.email as customer_email')
-                ->leftJoin('users', 'users.id', '=', 'transactions.user_id');
+                ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+                ->latest();
 
 
             return Datatables::of($data)
@@ -38,12 +39,13 @@ class TransactionController extends Controller
                 ->addColumn('action', function ($row) {
                     $btnApprove = '';
                     $btnReject = '';
+                    $btnDetail = "<a href='".route('admin.transaction.detail', ['id'=> encrypt($row->id)])."' class='text-primary text-decoration-none m-1'><i class='fa fa-eye' data-toggle='tooltip' data-placement='top' title='Detail'></i></a>";
                     if ($row->status == 1) {
                         $btnApprove = "<a href='javascript:void(0)' class='text-success text-decoration-none m-1' data-toggle='tooltip' data-placement='top' title='Approve'><i class='fa fa-check' title='Delete' onclick='approval(this)' data-id='".encrypt($row->id)."' data-code='$row->code' data-status='2'></i></a>";
                         $btnReject = "<a href='javascript:void(0)' class='text-danger text-decoration-none m-1' data-toggle='tooltip' data-placement='top' title='Reject'><i class='fa fa-times' title='Delete' onclick='approval(this)' data-id='".encrypt($row->id)."' data-code='$row->code' data-status='3'></i></a>";
                     }
 
-                    return $btnApprove . $btnReject;
+                    return $btnDetail . $btnApprove . $btnReject;
                 })
                 ->filterColumn('customer', function ($query, $keyword) {
                     $query->where(function ($q) use ($keyword) {
@@ -104,5 +106,13 @@ class TransactionController extends Controller
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
                 ->withInput();
         }
+    }
+
+    
+    public function detail($id)
+    {
+        $transaction = Transaction::with(['transactionItems.product'])->findOrFail(decrypt($id));
+
+        return view('cms.transaction.detail', compact('transaction'));
     }
 }
