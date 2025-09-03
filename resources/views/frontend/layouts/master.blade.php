@@ -472,7 +472,7 @@
     </div>
     <script src="{{asset('frontend/js/jquery-1.11.0.min.js')}}"></script>
     <script src="{{asset('frontend/js/swiper-bundle.min.js')}}"></script>
-    <script src="{{asset('frontend/js/bootstrap.bundle.min.js')}}" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="{{asset('frontend/js/bootstrap.bundle.min.js')}}" ></script>
     <script src="{{asset('frontend/js/plugins.js')}}"></script>
     <script src="{{asset('frontend/js/script.js')}}"></script>
     <script src="{{asset('frontend/js/global.js')}}"></script>
