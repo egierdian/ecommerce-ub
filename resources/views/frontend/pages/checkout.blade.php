@@ -161,11 +161,11 @@
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
                                     <span>Ongkir</span>
-                                    <strong>Rp 20.000</strong>
+                                    <strong>Rp 0</strong>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between total-row">
                                     <span>Total</span>
-                                    <span>Rp {{number_format($totalPrice + 20000, 0, ',', '.')}}</span>
+                                    <span>Rp {{number_format($totalPrice + 0, 0, ',', '.')}}</span>
                                 </li>
                             </ul>
                         </div>
