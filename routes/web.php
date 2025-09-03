@@ -76,6 +76,7 @@ Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(functi
     Route::group((['prefix' => 'transaction']), function () {
         Route::get('/', [Controllers\Admin\TransactionController::class, 'index'])->name('admin.transaction');
         Route::get('/approval/{id}', [Controllers\Admin\TransactionController::class, 'approval'])->name('admin.transaction.approval');
+        Route::get('/detail/{id}', [Controllers\Admin\TransactionController::class, 'detail'])->name('admin.transaction.detail');
     });
 
     Route::group((['prefix' => 'setting']), function () {
