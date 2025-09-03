@@ -201,4 +201,9 @@ class IndexController extends Controller
     {
         return view('frontend.pages.about');
     }
+
+    public function contactUs()
+    {
+        return view('frontend.pages.contact');
+    }
 }

@@ -22,6 +22,7 @@ Route::get('/wishlist', [Controllers\Frontend\WishlistController::class, 'index'
 Route::post('/wishlist/{productId}', [Controllers\Frontend\WishlistController::class, 'toggle'])->name('frontend.wishlist.add');
 
 Route::get('/tentang-kami', [Controllers\Frontend\IndexController::class, 'aboutUs'])->name('frontend.about-us');
+Route::get('/kontak', [Controllers\Frontend\IndexController::class, 'contactUs'])->name('frontend.contact');
 #end frontend
 
 #frontend auth
