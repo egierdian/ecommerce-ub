@@ -69,7 +69,7 @@ class DashboardController extends Controller
             $user = User::findOrFail(Auth::id());
 
             if (!Hash::check($request->current_password, $user->password)) {
-                return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+                return back()->with(['error' => 'Password lama tidak sesuai.']);
             }
 
             $user->update([
