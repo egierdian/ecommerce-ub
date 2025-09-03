@@ -9,7 +9,7 @@
             <div class="col-md-12 text-center">
                 <h1 class="display-3 fw-bold">404</h1>
                 <p class="fs-4 mb-4">Oops! Halaman yang kamu cari tidak ditemukan.</p>
-                <a href="{{ url('/') }}" class="btn btn-primary">Kembali ke Beranda</a>
+                <a href="{{ url()->previous() ?? url('/') }}" class="btn btn-primary">Kembali ke Beranda</a>
             </div>
         </div>
     </div>
