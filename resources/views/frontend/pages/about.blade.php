@@ -4,53 +4,6 @@
 
 @section('style')
 <style>
-    .card {
-        border: none;
-        position: relative;
-        box-shadow: rgba(0, 0, 0, 0.04) 0px 5px 22px;
-        margin-bottom: 30px;
-        padding: 16px;
-        background: rgb(255, 255, 255);
-        border-width: 1px;
-        border-style: solid;
-        border-color: rgb(251, 251, 251);
-        border-image: initial;
-        border-radius: 16px;
-    }
-
-    .card-header {
-        background: #fff;
-        border-bottom: none;
-        font-weight: bold;
-        font-size: 18px;
-        padding: 1.2rem;
-    }
-
-    .form-control,
-    .list-group-item {
-        border-radius: 10px;
-    }
-
-    .btn-primary {
-        border-radius: 12px;
-        padding: 14px;
-        font-size: 18px;
-        font-weight: 600;
-    }
-
-    .cart-summary li {
-        border: none !important;
-        padding: 0.75rem 0;
-    }
-
-    .cart-summary li:not(:last-child) {
-        border-bottom: 1px solid #eee !important;
-    }
-
-    .total-row {
-        font-size: 20px;
-        font-weight: bold;
-    }
 </style>
 @endsection
 
