@@ -20,6 +20,8 @@ Route::get('/invoice/{code}', [Controllers\Frontend\IndexController::class, 'inv
 
 Route::get('/wishlist', [Controllers\Frontend\WishlistController::class, 'index'])->name('frontend.wishlist');
 Route::post('/wishlist/{productId}', [Controllers\Frontend\WishlistController::class, 'toggle'])->name('frontend.wishlist.add');
+
+Route::get('/tentang-kami', [Controllers\Frontend\IndexController::class, 'aboutUs'])->name('frontend.about-us');
 #end frontend
 
 #frontend auth

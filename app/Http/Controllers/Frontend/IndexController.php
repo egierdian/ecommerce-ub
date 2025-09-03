@@ -196,4 +196,9 @@ class IndexController extends Controller
 
         return view('frontend.pages.invoice', compact('invoice'));
     }
+
+    public function aboutUs()
+    {
+        return view('frontend.pages.about');
+    }
 }
