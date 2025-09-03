@@ -6,10 +6,10 @@ if (!function_exists('paymentStatus')) {
     function paymentStatus($status = null)
     {
         $mapping = [
-            1 => 'Pesanan Dibuat',   
-            2 => 'Lunas',        
-            3 => 'Gagal/Ditolak',     
-            4 => 'Dibatalkan',   
+            1 => 'Order Created',
+            2 => 'Paid',
+            3 => 'Failed/Rejected',
+            4 => 'Cancelled',
         ];
 
         if ($status === null) {
