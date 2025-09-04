@@ -329,7 +329,7 @@
 
 <section class="py-5">
   <div class="container-fluid">
-    <h2 class="my-5">People are also looking for</h2>
+    <h2 class="my-5">Pencarian Populer</h2>
     @foreach($popularKeywords as $v)
       <a href="{{ route('frontend.product.category', ['category' => 'all', 'q' => $v->keyword]) }}" 
          class="btn btn-warning position-relative me-2 mb-2">

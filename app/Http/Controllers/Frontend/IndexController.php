@@ -40,7 +40,7 @@ class IndexController extends Controller
             ->select('keyword', DB::raw('COUNT(*) as total'))
             ->groupBy('keyword')
             ->orderByDesc('total')
-            ->limit(10)
+            ->limit(20)
             ->get();
 
         return view('frontend.index', compact('categories', 'products', 'sliders','popularKeywords'));
