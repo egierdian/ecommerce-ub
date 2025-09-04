@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SearchLog;
 use App\Models\Slider;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
@@ -35,7 +36,14 @@ class IndexController extends Controller
 
         $sliders = Slider::where('status', 1)->get();
 
-        return view('frontend.index', compact('categories', 'products', 'sliders'));
+        $popularKeywords = DB::table('search_logs')
+            ->select('keyword', DB::raw('COUNT(*) as total'))
+            ->groupBy('keyword')
+            ->orderByDesc('total')
+            ->limit(10)
+            ->get();
+
+        return view('frontend.index', compact('categories', 'products', 'sliders','popularKeywords'));
     }
 
     public function showProduct(Request $request, $category, $product = null)
@@ -70,6 +78,13 @@ class IndexController extends Controller
                 $search = $request->query('q');
                 if ($search) {
                     $query->where('products.name', 'like', '%' . $search . '%');
+
+                    #insert search log
+                    SearchLog::create([
+                        'keyword' => strtolower($search),
+                        'ip_address' => $request->ip(),
+                        'user_agent' => $request->header('User-Agent'),
+                    ]);
                 }
             } else {
                 $dataCategory = Category::where('status', 1)->where('slug', $category)->first();
