@@ -81,4 +81,35 @@ class DashboardController extends Controller
             return redirect()->back()->withInput();
         }
     }
+
+    public function profile()
+    {
+        $user = Auth::user();
+        return view('frontend.dashboard.profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|unique:users,email,'.Auth::user()->id,
+            'address' => 'required',
+        ]);
+        $validator->validate();
+        try {
+            $user = User::findOrFail(Auth::id());
+            $user->update([
+                'email' => $request->email,
+                'address' => $request->address,
+                'name' => $request->name,
+                'phone' => $request->phone
+            ]);
+            
+            return redirect()->route('frontend.dashboard.profile')->with('success', 'Profil berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput();
+        }
+    }
+
 }

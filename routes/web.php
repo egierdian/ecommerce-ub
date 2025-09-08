@@ -32,6 +32,8 @@ Route::middleware(['auth', 'role:customer'])->prefix('dashboard')->group(functio
     Route::get('/wishlist', [Controllers\Frontend\DashboardController::class, 'wishlist'])->name('frontend.dashboard.wishlist');
     Route::get('/ubah-password', [Controllers\Frontend\DashboardController::class, 'changePassword'])->name('frontend.dashboard.change-password');
     Route::post('/ubah-password', [Controllers\Frontend\DashboardController::class, 'updatePassword'])->name('frontend.dashboard.update-password');
+    Route::get('/profil', [Controllers\Frontend\DashboardController::class, 'profile'])->name('frontend.dashboard.profile');
+    Route::post('/profil', [Controllers\Frontend\DashboardController::class, 'updateProfile'])->name('frontend.dashboard.profile.update');
 });
 
 #admin
