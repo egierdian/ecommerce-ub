@@ -37,7 +37,7 @@ class IndexController extends Controller
         $sliders = Slider::where('status', 1)->get();
 
         $popularKeywords = DB::table('search_logs')
-            ->select('keyword', DB::raw('COUNT(*) as total'))
+            ->select('keyword', DB::raw('COUNT(DISTINCT ip_address) as total'))
             ->groupBy('keyword')
             ->orderByDesc('total')
             ->limit(20)
