@@ -141,7 +141,7 @@
                       </svg>
                     </button>
                     <figure>
-                      <a href="#" title="{{$product->name}}">
+                      <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" title="{{$product->name}}">
                         <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
                       </a>
                     </figure>
@@ -171,7 +171,7 @@
                         <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
                       </svg></button>
                     <figure>
-                      <a href="#" title="{{$product->name}}">
+                      <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" title="{{$product->name}}">
                         <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
                       </a>
                     </figure>
