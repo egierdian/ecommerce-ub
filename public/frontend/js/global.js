@@ -47,14 +47,14 @@ $(document).ready(function() {
               
               btn.removeClass("active");
               btn.html(`
-                    <svg width="24" height="24">
+                    <svg width="14" height="14">
                       <use xlink:href="#heart"></use>
                     </svg>
               `)
             } else {
               btn.addClass("active");
               btn.html(`
-                    <svg width="24" height="24">
+                    <svg width="14" height="14">
                       <use xlink:href="#trash"></use>
                     </svg>
               `);

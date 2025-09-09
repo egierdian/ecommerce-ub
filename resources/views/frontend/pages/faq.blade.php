@@ -111,7 +111,7 @@
     </div>
 </section>
 
-<section class="py-3">
+<section class="py-5">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
