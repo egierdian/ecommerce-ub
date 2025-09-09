@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Faq;
 use App\Models\Product;
 use App\Models\SearchLog;
 use App\Models\Slider;
@@ -220,5 +221,12 @@ class IndexController extends Controller
     public function contactUs()
     {
         return view('frontend.pages.contact');
+    }
+
+    public function faq()
+    {
+        $faqs = Faq::where('status', 1)->orderBy('order', 'asc')->get();
+        
+        return view('frontend.pages.faq', compact('faqs'));
     }
 }

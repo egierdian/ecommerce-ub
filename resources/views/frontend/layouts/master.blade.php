@@ -413,13 +413,10 @@
                         <h5 class="widget-title">Customer Service</h5>
                         <ul class="menu-list list-unstyled">
                             <li class="menu-item">
-                                <a href="#" class="nav-link">FAQ</a>
+                                <a href="{{route('frontend.faq')}}" class="nav-link">FAQ</a>
                             </li>
                             <li class="menu-item">
                                 <a href="{{route('frontend.contact')}}" class="nav-link">Contact</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#" class="nav-link">Privacy Policy</a>
                             </li>
                         </ul>
                     </div>

@@ -23,6 +23,7 @@ Route::post('/wishlist/{productId}', [Controllers\Frontend\WishlistController::c
 
 Route::get('/tentang-kami', [Controllers\Frontend\IndexController::class, 'aboutUs'])->name('frontend.about-us');
 Route::get('/kontak', [Controllers\Frontend\IndexController::class, 'contactUs'])->name('frontend.contact');
+Route::get('/faq', [Controllers\Frontend\IndexController::class, 'faq'])->name('frontend.faq');
 #end frontend
 
 #frontend auth
@@ -89,6 +90,16 @@ Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(functi
         Route::post('/update', [Controllers\Admin\SettingController::class, 'update'])->name('admin.setting.update');
     });
 
+    
+    Route::group((['prefix' => 'faq']), function () {
+        Route::get('/', [Controllers\Admin\FaqController::class, 'index'])->name('admin.faq');
+        Route::get('/create', [Controllers\Admin\FaqController::class, 'create'])->name('admin.faq.create');
+        Route::get('/edit/{id}', [Controllers\Admin\FaqController::class, 'edit'])->name('admin.faq.edit');
+        Route::post('/store', [Controllers\Admin\FaqController::class, 'store'])->name('admin.faq.store');
+        Route::post('/update/{id}', [Controllers\Admin\FaqController::class, 'update'])->name('admin.faq.update');
+        Route::get('/delete/{id}', [Controllers\Admin\FaqController::class, 'destroy'])->name('admin.faq.delete');
+    });
+    
 });
 
 Route::get('/masuk', [Controllers\AuthController::class, 'showLogin'])->name('login');
