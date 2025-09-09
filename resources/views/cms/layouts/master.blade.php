@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>UB E-commerce</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="{{asset('assets/img/favicon.png')}}" type="image/x-icon"/>
+	<link rel="icon" href="{{asset('assets/img/favicon.png')}}" type="image/x-icon" />
 	<!-- Fonts and icons -->
 	<script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
 	<script>
 		WebFont.load({
-			google: {"families":["Lato:300,400,700,900"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{asset("assets/css/fonts.min.css")}}']},
+			google: {
+				"families": ["Lato:300,400,700,900"]
+			},
+			custom: {
+				"families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+				urls: ['{{asset("assets/css/fonts.min.css")}}']
+			},
 			active: function() {
 				sessionStorage.fonts = true;
 			}
@@ -19,27 +25,29 @@
 
 	<link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/css/atlantis.css')}}">
-	
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+
+	<!-- DataTables -->
+	<link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 	@yield('style')
 
 	<style>
 		.sidebar.sidebar-style-2 .nav .nav-item a {
-			padding: 8px 15px !important; 
+			padding: 8px 15px !important;
 		}
+
 		#table-data {
 			width: 100% !important;
 		}
 	</style>
 </head>
+
 <body>
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
 			<div class="logo-header" data-background-color="blue">
-				
+
 				<a href="{{route('admin.dashboard')}}" class="logo">
 					<img src="{{asset('assets/img/icon-ubakrie.png')}}" width="60" alt="navbar brand" class="navbar-brand">
 					{{$title}}
@@ -60,7 +68,7 @@
 
 			<!-- Navbar Header -->
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
-				
+
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item dropdown hidden-caret">
@@ -103,7 +111,7 @@
 		</div>
 
 		<!-- Sidebar -->
-		<div class="sidebar sidebar-style-2">			
+		<div class="sidebar sidebar-style-2">
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<ul class="nav nav-primary">
@@ -125,33 +133,37 @@
 							</span>
 							<h4 class="text-section">Master Data</h4>
 						</li>
-						<li class="nav-item {{request()->is('admin/category*') ? 'active' : ''}}">
-							<a href="{{route('admin.category')}}">
-								<i class="fas fa-folder"></i>
+						<li class="nav-item {{ request()->is('admin/category*') ? 'active' : '' }}">
+							<a href="{{ route('admin.category') }}">
+								<i class="fas fa-list"></i>
 								<p>Category</p>
 							</a>
 						</li>
-						<li class="nav-item {{request()->is('admin/product*') ? 'active' : ''}}">
-							<a href="{{route('admin.product')}}">
-								<i class="fas fa-folder"></i>
+
+						<li class="nav-item {{ request()->is('admin/product*') ? 'active' : '' }}">
+							<a href="{{ route('admin.product') }}">
+								<i class="fas fa-box"></i>
 								<p>Product</p>
 							</a>
 						</li>
-						<li class="nav-item {{request()->is('admin/rental-price*') ? 'active' : ''}}">
-							<a href="{{route('admin.rental-price')}}">
-								<i class="fas fa-folder"></i>
+
+						<li class="nav-item {{ request()->is('admin/rental-price*') ? 'active' : '' }}">
+							<a href="{{ route('admin.rental-price') }}">
+								<i class="fas fa-dollar-sign"></i>
 								<p>Rent Price</p>
 							</a>
 						</li>
-						<li class="nav-item {{request()->is('admin/slider*') ? 'active' : ''}}">
-							<a href="{{route('admin.slider')}}">
-								<i class="fas fa-folder"></i>
+
+						<li class="nav-item {{ request()->is('admin/slider*') ? 'active' : '' }}">
+							<a href="{{ route('admin.slider') }}">
+								<i class="fas fa-images"></i>
 								<p>Slider</p>
 							</a>
 						</li>
-						<li class="nav-item {{request()->is('admin/faq*') ? 'active' : ''}}">
-							<a href="{{route('admin.faq')}}">
-								<i class="fas fa-folder"></i>
+
+						<li class="nav-item {{ request()->is('admin/faq*') ? 'active' : '' }}">
+							<a href="{{ route('admin.faq') }}">
+								<i class="fas fa-question-circle"></i>
 								<p>Faq</p>
 							</a>
 						</li>
@@ -161,12 +173,14 @@
 							</span>
 							<h4 class="text-section">Transactional</h4>
 						</li>
-						<li class="nav-item {{request()->is('admin/transaction') ? 'active' : ''}}">
-							<a href="{{route('admin.transaction')}}">
-								<i class="fas fa-folder"></i>
+
+						<li class="nav-item {{ request()->is('admin/transaction') ? 'active' : '' }}">
+							<a href="{{ route('admin.transaction') }}">
+								<i class="fas fa-receipt"></i>
 								<p>Transaction</p>
 							</a>
 						</li>
+
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
@@ -192,8 +206,8 @@
 			<footer class="footer">
 				<div class="container-fluid">
 					<div class="copyright ml-auto">
-						UB E-commerce	
-					</div>				
+						UB E-commerce
+					</div>
 				</div>
 			</footer>
 		</div>
@@ -211,17 +225,18 @@
 	<script src="{{asset('assets/js/plugin/chart-circle/circles.min.js')}}"></script>
 	<script src="{{asset('assets/js/atlantis.js')}}"></script>
 	<script src="{{asset('assets/js/global.js')}}?v={{env('APP_VERSION') }}"></script>
-	
+
 	<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.min.js')}}"></script>
 
 	<!-- DataTables -->
-    <script src="{{asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-	
+	<script src="{{asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+	<script src="{{asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+	<script src="{{asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+	<script src="{{asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+
 	<!-- Chart JS -->
 	<script src="{{asset('assets/js/plugin/chart.js/chart.min.js')}}"></script>
 	@yield('script')
 </body>
+
 </html>
