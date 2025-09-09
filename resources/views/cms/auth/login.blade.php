@@ -7,7 +7,7 @@
 		<img class="mx-auto" src="{{asset('assets/img/icon-ubakrie.png')}}" width="110" alt="">
         </a>
         <br>
-		<span class="text-muted mt-2">Daftar E-Commerce UBakrie</span>
+		<span class="text-muted mt-2">Masuk E-Commerce UBakrie</span>
 	</div>
     <form method="POST" action="{{ route('login.post') }}">
         @csrf
