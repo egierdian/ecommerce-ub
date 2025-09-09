@@ -35,7 +35,6 @@
                                     <th scope="col" style="width: 100px;">No</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Order</th>
-                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -81,12 +80,6 @@
                     data: 'order',
                     name: 'order',
                     searchable: true
-                },
-                {
-                    data: 'status',
-                    name: 'status',
-                    searchable: false,
-                    orderable: false
                 },
                 {
                     data: 'action',
