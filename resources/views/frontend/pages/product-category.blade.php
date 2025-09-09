@@ -12,7 +12,7 @@
 
 @section('content')
 
-<section class="py-3">
+<section class="py-5">
   <div class="container-fluid">
 
     <div class="row">
@@ -27,7 +27,7 @@
             </p>
             @else
             <h3>
-              {{ $dataCategory->name ?? '' }}
+              Kategori {{ $dataCategory->name ?? '' }}
             </h3>
             @endif
           </div>
