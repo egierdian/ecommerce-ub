@@ -81,7 +81,7 @@ class ProductController extends Controller
             'images.*' => 'image|mimes:jpg,jpeg,svg,png|max:5120',
         ]);
 
-        $validator->sometimes('price', 'required|numeric|min:1000', function ($input) {
+        $validator->sometimes('price', 'required|numeric|min:0', function ($input) {
             return $input->type == 2;
         });
         
@@ -160,7 +160,7 @@ class ProductController extends Controller
             'images.*' => 'image|mimes:jpg,jpeg,svg,png|max:5120',
         ]);
 
-        $validator->sometimes('price', 'required|numeric|min:1000', function ($input) {
+        $validator->sometimes('price', 'required|numeric|min:0', function ($input) {
             return $input->type == 2;
         });
 

@@ -89,6 +89,9 @@
       text-align: center;
     }
   }
+  table {
+    width: 100% !important;
+  }
 </style>
 <section class="py-3">
   <div class="container-fluid">
