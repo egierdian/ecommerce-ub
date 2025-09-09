@@ -45,7 +45,11 @@ class CartController extends Controller
                 ]);
             }
 
-            return redirect()->route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])->with('success', 'Success add to cart!');
+            return redirect()->route(
+                'frontend.product.category', 
+                ['category' => $product->category->slug, 'product' => $product->slug]
+            )->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+
         } catch (\Exception $e) {
             // dd($e->getMessage());
             return redirect()->back()
@@ -62,7 +66,7 @@ class CartController extends Controller
             if (!$cart) {
                 return response()->json([
                     'status'  => false,
-                    'message' => 'Cart tidak ditemukan!'
+                    'message' => 'Produk tidak ada di keranjang!'
                 ]);
             }
 
@@ -78,7 +82,7 @@ class CartController extends Controller
 
             return response()->json([
                 'status'  => true,
-                'message' => 'Cart berhasil dihapus!',
+                'message' => 'Produk berhasil dihapus dari keranjang!',
                 'total'   => number_format($total, 0, ',', '.'),
                 'count'   => $count
             ]);
