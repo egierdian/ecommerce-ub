@@ -98,7 +98,7 @@
 
 <section class="bg-light py-5">
     <div class="container text-center">
-        <h1 class="display-4 fw-bold text-primary">Frequently Asked Questions</h1>
+        <h1 class="display-5 fw-bold text-primary">Frequently Asked Questions</h1>
         <p class="lead text-muted">
             Temukan jawaban atas pertanyaan yang sering ditanyakan, atau gunakan kolom pencarian di bawah ini.
         </p>

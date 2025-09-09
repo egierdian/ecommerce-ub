@@ -11,7 +11,7 @@
 <!-- Hero -->
 <section class=" py-5">
     <div class="container text-center">
-        <h1 class="display-4 fw-bold text-primary">Hubungi Kami</h1>
+        <h1 class="display-5 fw-bold text-primary">Hubungi Kami</h1>
         <p class="lead text-muted">Kami siap membantu pertanyaan dan kebutuhan Anda</p>
     </div>
 </section>

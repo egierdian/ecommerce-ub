@@ -11,7 +11,7 @@
 <!-- Hero Section -->
 <section class="bg-light py-5">
     <div class="container text-center">
-        <h1 class="display-4 fw-bold text-primary">Tentang {{$webSettings['title_website']??''}}</h1>
+        <h1 class="display-5 fw-bold text-primary">Tentang {{$webSettings['title_website']??''}}</h1>
         <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit necessitatibus aspernatur qui consectetur fuga officia voluptas nihil odio, voluptatum numquam magni eaque, omnis, voluptatibus pariatur dolorem facere temporibus voluptatem blanditiis?</p>
     </div>
 </section>
