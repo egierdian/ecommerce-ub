@@ -8,9 +8,6 @@
 <style>
 </style>
 <div class="page-inner">
-    <div class="page-header">
-        <h4 class="page-title">{{ isset($data) ? 'Edit' : 'Create' }} Category</h4>
-    </div>
     @if(session('success'))
     <div class="alert alert-success d-flex justify-content-between align-items-center" id="successAlert">
         {{ session('success') }}
@@ -32,6 +29,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">{{ isset($data) ? 'Edit' : 'Create' }} Category</h4>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">

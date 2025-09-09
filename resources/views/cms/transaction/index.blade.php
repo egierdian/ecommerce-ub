@@ -21,18 +21,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="d-flex align-items-center mb-1">
-                                <div class="page-header">
-                                    <h4 class="page-title">Transaction</h4>
-                                </div>
-                            </div>
-                        </div>
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">Transaction</h4>
                     </div>
+                </div>
+                <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-sm mt-3" id="table-data">
+                        <table class="table table-striped" id="table-data">
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 100px;">No</th>
