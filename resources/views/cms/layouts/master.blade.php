@@ -149,6 +149,12 @@
 								<p>Slider</p>
 							</a>
 						</li>
+						<li class="nav-item {{request()->is('admin/faq*') ? 'active' : ''}}">
+							<a href="{{route('admin.faq')}}">
+								<i class="fas fa-folder"></i>
+								<p>Faq</p>
+							</a>
+						</li>
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
