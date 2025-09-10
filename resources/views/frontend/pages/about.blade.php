@@ -12,7 +12,7 @@
 <section class="bg-light py-5">
     <div class="container text-center">
         <h1 class="display-5 fw-bold text-primary">Tentang {{$webSettings['title_website']??''}}</h1>
-        <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit necessitatibus aspernatur qui consectetur fuga officia voluptas nihil odio, voluptatum numquam magni eaque, omnis, voluptatibus pariatur dolorem facere temporibus voluptatem blanditiis?</p>
+        <p class="lead text-muted">Dari Kata Menjadi Karya, Dari Karya Menjadi Warisan Tak terlupakan Untuk Perkembangan Peradaban</p>
     </div>
 </section>
 
@@ -25,12 +25,15 @@
                      alt="Foodmart Fresh" class="img-fluid rounded-3 shadow">
             </div>
             <div class="col-lg-6">
-                <h2 class="fw-bold text-primary mb-3">Siapa Kami?</h2>
+                <h2 class="fw-bold text-primary mb-3">Latar Belakang</h2>
                 <p class="text-muted">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo fugit perferendis ratione blanditiis porro exercitationem saepe expedita. Accusamus, animi, eos iste excepturi at autem quo iusto, delectus ducimus enim placeat?
+                    Universitas Bakrie Press adalah usaha penerbitan yang dikelola dibawah UPT Penerbitan Universitas Bakrie. Universitas Bakrie Press didirikkan sejak tahun 2012 dan terus melakukan berbagai upaya perbaikan untuk mencapai visi dan misi yang ditetapkan.
                 </p>
                 <p class="text-muted">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, dolorem quidem nulla, soluta enim voluptatem quo dignissimos voluptates illo, reiciendis impedit accusamus deleniti similique suscipit excepturi odio et pariatur eos.
+                    Mutu dan jumlah terbitan pada dasarnya merupakan salah satu tolok ukur dari peradaban dan tingkat kecerdasan sebuah bangsa. Suatu karya tulis adalah gambaran dari lautan ilmu pengetahuan, pemikiran dan pengalaman yang dimiliki setiap penulisnya. Suatu tulisan juga bisa memberikan dampak yang begitu besar bagi setiap pembacanya. Karena itu, kehadiran penerbit merupakan keniscayaan dan menjadi bagian dari proses kemajuan sebuah peradaban.
+                </p>
+                <p class="text-muted">
+                    Di antara berbagai jenis dan karakter penerbit, Penerbit Perguruan Tinggi (University Press) memiliki keutamaan tersendiri karena bergulat dalam bidang penerbitan buku ilmiah yang bisa berkontribusi besar terhadap upaya mencerdaskan bangsa dan mendukung perkembangan ilmu pengetahuan maupun teknologi. Karena itu, setiap perguruan tinggi diharapkan memiliki lembaga penerbitan yang akan menjadi icon dan tanda kemajuan universitas tersebut, dan juga ukuran kemajuan Ilmu Pengetahuan dan Teknologi bangsa kita.
                 </p>
             </div>
         </div>

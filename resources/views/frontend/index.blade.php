@@ -133,7 +133,7 @@
 
                 @foreach($products as $product)
                 <div class="col">
-                  <div class="product-item">
+                  <div class="product-item h-100 d-flex flex-column">
                     <span class="badge bg-success position-absolute m-3"></span>
                     <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}">
                       <svg width="14" height="14">
@@ -148,7 +148,9 @@
                     <h3>{{$product->name}}</h3>
                     <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
                     <span class="price">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
-                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-3 rounded-3 w-100">Lihat</a>
+                    <div class="position-absolute bottom-0 start-0 end-0 p-3">
+                      <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-3 rounded-3 w-100">Lihat</a>
+                    </div>
                   </div>
                 </div>
                 @endforeach
@@ -165,7 +167,7 @@
                 @if(count($category->products) > 0)
                 @foreach($category->products as $product)
                 <div class="col">
-                  <div class="product-item">
+                  <div class="product-item h-100 d-flex flex-column">
                     <span class="badge bg-success position-absolute m-3"></span>
                     <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}"><svg width="14" height="14">
                         <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
@@ -178,7 +180,9 @@
                     <h3>{{$product->name}}</h3>
                     <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
                     <span class="price">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
-                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-3 rounded-3 w-100">Lihat</a>
+                    <div class="position-absolute bottom-0 start-0 end-0 p-3">
+                      <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-3 rounded-3 w-100">Lihat</a>
+                    </div>
                   </div>
                 </div>
                 @endforeach
