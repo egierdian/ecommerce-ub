@@ -94,7 +94,7 @@ class IndexController extends Controller
 
                 $query->where('categories.slug', $category);
             }
-            $products = $query->paginate(10);
+            $products = $query->paginate(10)->withQueryString();
 
             return view('frontend.pages.product-category', compact('products', 'dataCategory', 'search'));
         }
