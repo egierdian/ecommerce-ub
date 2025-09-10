@@ -60,7 +60,19 @@ class IndexController extends Controller
                 ->whereIn('a.status', [1]) 
                 ->sum('b.qty');
 
-            return view('frontend.pages.product-detail', compact('product', 'pendingStock'));
+            $relatedProducts = Product::with([
+                    'category', 
+                    'firstImage',
+                    'wishlists' => function($q) {
+                        $q->where('user_id', Auth::id());
+                    }
+                ])->where('category_id', $product->category_id)
+                ->where('id', '!=', $product->id)
+                ->inRandomOrder() // ambil acak
+                ->take(5)
+                ->get();
+
+            return view('frontend.pages.product-detail', compact('product', 'pendingStock', 'relatedProducts'));
         } else {
             $dataCategory = null;
             $search = null;
