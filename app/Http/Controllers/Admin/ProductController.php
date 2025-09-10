@@ -85,7 +85,7 @@ class ProductController extends Controller
             return $input->type == 2;
         });
         
-        $validator->sometimes('qty', 'required|numeric|min:1', function ($input) {
+        $validator->sometimes('qty', 'required|numeric|min:0', function ($input) {
             return $input->type == 2;
         });
 
@@ -164,7 +164,7 @@ class ProductController extends Controller
             return $input->type == 2;
         });
 
-        $validator->sometimes('qty', 'required|numeric|min:1', function ($input) {
+        $validator->sometimes('qty', 'required|numeric|min:0', function ($input) {
             return $input->type == 2;
         });
 
