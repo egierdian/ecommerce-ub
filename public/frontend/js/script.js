@@ -102,6 +102,29 @@
         },
       }
     });
+
+    // mitra
+    var mitra_swiper = new Swiper(".mitra-carousel", {
+      slidesPerView:6,
+      spaceBetween: 50,
+      speed: 500,
+      loop: true,
+      autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: ".mitra-carousel-next",
+        prevEl: ".mitra-carousel-prev",
+      },
+      breakpoints: {
+        0: { slidesPerView: 3 },
+        768: { slidesPerView: 4 },
+        991: { slidesPerView: 6 },
+        1500: { slidesPerView: 6 },
+      },
+    });
+
   }
 
   var initProductQty = function(){
