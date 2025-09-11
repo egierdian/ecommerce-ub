@@ -39,6 +39,7 @@
                     <th>Tanggal</th>
                     <th>Status</th>
                     <th>Total</th>
+                    <th>Bukti Bayar</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -51,6 +52,11 @@
                         {!! paymentStatusBadge($trans->status) !!}
                     </td>
                     <td>Rp {{number_format($trans->total, 0, ',', '.')}}</td>
+                    <td>
+                        @if($trans->file)
+                        <a href="{{asset($trans->file)}}" target="_blank">Lihat</a>
+                        @endif
+                    </td>
                     <td><a href="{{route('frontend.invoice', ['code' => $trans->code])}}" class="btn btn-sm btn-primary" target="_blank">Invoice</a></td>
                 </tr>
                 @endforeach

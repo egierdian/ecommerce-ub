@@ -112,4 +112,49 @@ class DashboardController extends Controller
         }
     }
 
+    
+    public function paymentUpload(Request $request)
+    {
+        $fileSize = 1024 * 2;
+        $validator = Validator::make($request->all(), [
+            'file' => "required|image|mimes:jpg,jpeg,svg,png|max:$fileSize"     
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('frontend.dashboard.my-order')->with('error', 'Bukti bayar gagal diupload!'); 
+        }
+
+        try {
+            $id = decrypt($request->id);
+            $data = Transaction::findOrFail($id);
+            $param = ['remark' => $request->remark ?? ''];
+            
+            $file = $data->file;
+            if($request->hasFile('file'))
+            {
+                if(isset($file) && file_exists(public_path($file)))
+                {
+                    unlink(public_path($file)); 
+                    $file = $request->file('file');
+                    $fileName = 'bukti-bayar-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
+                    $base_path = 'uploads/payment';
+                    $path = public_path($base_path);
+                    $file->move($path, $fileName);
+                } else {
+                    $file = $request->file('file');
+                    $fileName = 'bukti-bayar-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
+                    $base_path = 'uploads/payment';
+                    $path = public_path($base_path);
+                    $file->move($path, $fileName);
+                }
+                $param['file'] = $base_path .'/'.$fileName;
+            }
+            $data->update($param);
+
+            return redirect()->route('frontend.dashboard.my-order')->with('success', 'Bukti bayar berhasil diupload!');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect()->route('frontend.dashboard.my-order')->with('error', 'Bukti bayar gagal diupload!');
+        }
+    }
 }

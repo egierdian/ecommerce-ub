@@ -36,6 +36,7 @@
                                     <th scope="col">Customer</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Total Price</th>
+                                    <th scope="col">Bukti Bayar</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -49,6 +50,7 @@
 </div>
 @endsection
 @section('script')
+<script src="{{asset('assets/plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         loadData()
@@ -56,6 +58,10 @@
             $('#table-data').DataTable().destroy();
             loadData()
         })
+
+        $('.image-popup').magnificPopup({
+            type: 'image'
+        });
     });
 
     function loadData() {
@@ -93,9 +99,16 @@
                     searchable: true
                 },
                 {
+                    data: 'file',
+                    name: 'file',
+                    orderable: false,
+                    searchable: false
+                },
+                {
                     data: 'status',
                     name: 'status',
-                    searchable: true
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: 'action',

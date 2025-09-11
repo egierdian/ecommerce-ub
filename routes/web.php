@@ -35,6 +35,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('dashboard')->group(functio
     Route::post('/ubah-password', [Controllers\Frontend\DashboardController::class, 'updatePassword'])->name('frontend.dashboard.update-password');
     Route::get('/profil', [Controllers\Frontend\DashboardController::class, 'profile'])->name('frontend.dashboard.profile');
     Route::post('/profil', [Controllers\Frontend\DashboardController::class, 'updateProfile'])->name('frontend.dashboard.profile.update');
+    Route::post('/payment/upload', [Controllers\Frontend\DashboardController::class, 'paymentUpload'])->name('frontend.dashboard.payment.upload');
 });
 
 #admin

@@ -47,6 +47,10 @@ class TransactionController extends Controller
 
                     return $btnDetail . $btnApprove . $btnReject;
                 })
+                ->addColumn('file', function ($row) {
+                    if($row->file) return '<a href="'.asset($row->file).'" target="_blank">Lihat</a>';
+                    return '';
+                })
                 ->filterColumn('customer', function ($query, $keyword) {
                     $query->where(function ($q) use ($keyword) {
                         $q->where('users.name', 'like', "%{$keyword}%")
@@ -56,7 +60,7 @@ class TransactionController extends Controller
                 ->filterColumn('created_at', function ($query, $keyword) {
                     $query->whereRaw("DATE(transactions.created_at) like ?", ["%$keyword%"]);
                 })
-                ->rawColumns(['action', 'status'])
+                ->rawColumns(['action', 'status','file'])
                 ->make(true);
         }
         return view('cms.transaction.index');

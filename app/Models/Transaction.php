@@ -20,7 +20,9 @@ class Transaction extends Model
         'payment_method',
         'status',
         'payment_status',
-        'code'
+        'code',
+        'file',
+        'remark'
     ];
     public $timestamps = true;
 
