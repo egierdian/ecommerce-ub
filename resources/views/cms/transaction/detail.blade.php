@@ -19,7 +19,7 @@
                     <p><strong>Status:</strong> 
                         {!! paymentStatusBadge($transaction->status) !!}
                     </p>
-                    <p><strong>Pelanggan:</strong> {{ $transaction->user->name }} ({{ $transaction->user->address }})</p>
+                    <p><strong>Pelanggan:</strong> {{ $transaction->name }} ({{ $transaction->address }})</p>
                 </div>
             </div>
         </div>
