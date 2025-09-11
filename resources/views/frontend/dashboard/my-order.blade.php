@@ -7,7 +7,7 @@
 <div>
     <h4>Riwayat Pesanan</h4>
     <div class="table-responsive">
-        <table class="table table-hover align-middle" id="datatableCustomer">
+        <table class="table table-hover align-middle datatableCustomer">
             <thead class="table-dark">
                 <tr>
                     <th>Kode</th>

@@ -7,7 +7,7 @@
 <div>
     <h4>Wishlist</h4>
     <div class="table-responsive">
-        <table class="table table-hover align-middle">
+        <table class="table table-hover align-middle datatableCustomer">
             <thead class="table-dark">
                 <tr>
                     <th>Produk</th>

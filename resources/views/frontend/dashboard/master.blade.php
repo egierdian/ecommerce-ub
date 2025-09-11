@@ -126,7 +126,7 @@
 <script src="{{asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script>
     $(document).ready(function() {
-        $("#datatableCustomer").DataTable()
+        $(".datatableCustomer").DataTable()
     })
 </script>
 @endsection
