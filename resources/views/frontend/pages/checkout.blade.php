@@ -115,7 +115,6 @@
                                     @enderror
                                 </div>
                             </div>
-
                             <div class="mt-5">
                                 <h5 class="mb-3">💳 Metode Pembayaran</h5>
                                 <div class="list-group">
@@ -131,6 +130,12 @@
                                         <span>COD (Bayar di Tempat)</span>
                                         <input class="form-check-input" type="radio" name="payment_method" value="3" required>
                                     </label>
+                                </div>
+
+                                <!-- Info pembayaran -->
+                                <div id="payment-info" class="mt-3 p-3 border rounded bg-light">
+                                    <p class="mb-1 fw-bold">Nomor Pembayaran:</p>
+                                    <p class="mb-0" id="payment-detail">BCA - 1234567890 a.n Universitas Bakrie</p>
                                 </div>
                             </div>
 
@@ -180,7 +185,20 @@
 @section('script')
 <script>
     $(document).ready(function() {
-        console.log('test')
+        const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+        const paymentDetail = document.getElementById('payment-detail');
+
+        const paymentMethods = {
+            1: "BCA - 1234567890 a.n Universitas Bakrie",
+            2: "OVO/Gopay/Dana - 0812 3456 7890 a.n Universitas Bakrie",
+            3: "Bayar langsung ke kurir saat barang diterima"
+        };
+
+        paymentRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                paymentDetail.textContent = paymentMethods[this.value];
+            });
+        });
     })
 </script>
 @endsection
