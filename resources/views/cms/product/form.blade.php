@@ -190,11 +190,11 @@
 
     function checkType() {
         let type = $("[name=type]").val()
-        $('.view-type').show()
+        $('.view-type').show(400)
         if (type == '1') {
-            $('.view-product').hide()
+            $('.view-product').hide(400)
         } else {
-            $('.view-sewa').hide()
+            $('.view-sewa').hide(400)
         }
     }
 
