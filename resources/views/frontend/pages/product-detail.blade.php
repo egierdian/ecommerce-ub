@@ -107,6 +107,14 @@
     margin-top: 30px;
     padding-bottom: 40px;
   }
+  /* HEADING TITLE */
+  h1 { font-size: 1.6rem; font-weight: 700; }
+  h2 { font-size: 1.4rem; font-weight: 600; margin-top: 1rem; }
+  h3 { font-size: 1.2rem; font-weight: 500; margin-top: 0.8rem; }
+  h4 { font-size: 1.05rem; font-weight: 500; }
+  h5 { font-size: 1rem; font-weight: 500; }
+  h6 { font-size: 0.9rem; font-weight: 500; }
+  p, ul, li { font-size: 0.9rem; line-height: 1.5; }
 </style>
 <section class="pt-5 content-section">
   <div class="container-fluid">
@@ -168,7 +176,7 @@
 
       <!-- Product Details -->
       <div class="col-md-6 mb-2">
-        <h2>{{$product->name}}</h2>
+        <h1>{{$product->name}}</h1>
         <p>
           <span class="badge bg-secondary">
             <i class="bi bi-tag me-1"></i> {{$product->category->name}}
@@ -230,7 +238,8 @@
           @csrf
           <div class="section-add-cart">
             @if($product->type == 2)
-            <div class="input-group product-qty" style="margin-right: 20px;">
+            <div class="d-flex align-items-center gap-3">
+            <div class="input-group product-qty">
               <span class="input-group-btn">
                 <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
                   <svg width="16" height="16">
@@ -247,7 +256,10 @@
                 </button>
               </span>
             </div>
-            <button href="#" class="nav-link ml-2 mt-2" type="submit"><b>Tambahkan ke Keranjang</b></button>
+            <button type="submit" class="btn btn-outline-primary  d-flex align-items-center gap-2 shadow-sm" style="border-radius: 25px; padding: 10px 25px;font-size:12px;">
+              <i class="fa fa-cart-plus"></i> <b>Tambahkan ke Keranjang</b>
+            </button>
+            </div>
             @else
             <p class="fw-bold">For more information please contact admin!</p>
             @endif
