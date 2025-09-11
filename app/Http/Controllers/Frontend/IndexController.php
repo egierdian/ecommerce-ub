@@ -44,7 +44,23 @@ class IndexController extends Controller
             ->limit(20)
             ->get();
 
-        return view('frontend.index', compact('categories', 'products', 'sliders','popularKeywords'));
+        $topSelling = Product::with([
+                'category', 
+                'firstImage',
+                'wishlists' => function($q) {
+                    $q->where('user_id', Auth::id());
+                }
+            ])
+            ->select('products.id', 'products.category_id',  'products.slug', 'products.name', 'products.slug', 'products.price', 'products.type', DB::raw('SUM(transaction_items.qty) as total_sold'))
+            ->join('transaction_items', 'products.id', '=', 'transaction_items.product_id')
+            ->join('transactions', 'transactions.id', '=', 'transaction_items.transaction_id')
+            ->where('transactions.status', 2)
+            ->groupBy('products.id')
+            ->orderByDesc('total_sold')
+            ->take(10)
+            ->get();
+
+        return view('frontend.index', compact('categories', 'products', 'sliders','popularKeywords', 'topSelling'));
     }
 
     public function showProduct(Request $request, $category, $product = null)

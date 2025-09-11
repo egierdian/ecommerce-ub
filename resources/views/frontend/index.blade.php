@@ -157,9 +157,9 @@
 
               </div>
               <div class="text-center mt-4">
-                  <a href="{{route('frontend.product.category', ['category' => 'all'])}}" class="btn btn-primary px-4 py-2">
-                      Lihat Semua Produk
-                  </a>
+                <a href="{{route('frontend.product.category', ['category' => 'all'])}}" class="btn btn-primary px-4 py-2">
+                  Lihat Semua Produk
+                </a>
               </div>
               <!-- / product-grid -->
 
@@ -200,7 +200,7 @@
               @if(count($category->products) > 0)
               <div class="text-center mt-4">
                 <a href="{{route('frontend.product.category', ['category' => $category->slug])}}" class="btn btn-primary px-4 py-2">
-                Lihat Semua Produk {{$category->name}}
+                  Lihat Semua Produk {{$category->name}}
                 </a>
               </div>
               @endif
@@ -216,17 +216,82 @@
   </div>
 </section>
 
+<!-- paling laku -->
+<section class="py-5 overflow-hidden">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="section-header d-flex flex-wrap justify-content-between my-5">
+
+          <h2 class="section-title">Produk Terlaris</h2>
+
+          <div class="d-flex align-items-center">
+            <a href="#" class="btn-link text-decoration-none"> →</a>
+            <div class="swiper-buttons">
+              <button class="swiper-prev products-carousel-prev btn btn-primary" tabindex="0" aria-label="Previous slide" aria-controls="swiper-wrapper-6197efd36115bc78" aria-disabled="false">❮</button>
+              <button class="swiper-next products-carousel-next btn btn-primary swiper-button-disabled" tabindex="-1" aria-label="Next slide" aria-controls="swiper-wrapper-6197efd36115bc78" aria-disabled="true" disabled="">❯</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <style>
+          .products-carousel .swiper-slide {
+            height: auto;
+            display: flex;
+          }
+        </style>
+        <div class="products-carousel swiper">
+          <div class="swiper-wrapper">
+            @foreach($topSelling as $product)
+            <div class="swiper-slide">
+              <div class="col">
+                <div class="product-item h-100 d-flex flex-column">
+                  <span class="badge bg-success position-absolute m-3"></span>
+                  <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}">
+                    <svg width="14" height="14">
+                      <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
+                    </svg>
+                  </button>
+                  <figure>
+                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" title="{{$product->name}}">
+                      <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
+                    </a>
+                  </figure>
+                  <h3>{{$product->name}}</h3>
+                  <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
+                  <div class="position-absolute bottom-0 start-0 end-0 p-3">
+                    <span class="price fw-bold fs-5 text-primary">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
+                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-outline-primary btn-sm mt-2 w-100 fw-semibold">Lihat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endforeach
+          </div>
+        </div>
+        <!-- / products-carousel -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="py-5">
   <div class="container-fluid">
     <h2 class="my-5">Pencarian Populer</h2>
     @foreach($popularKeywords as $v)
-      <a href="{{ route('frontend.product.category', ['category' => 'all', 'q' => $v->keyword]) }}" 
-         class="btn btn-warning position-relative me-2 mb-2">
-         {{ $v->keyword }}
-         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-           {{ $v->total }}
-         </span>
-      </a>
+    <a href="{{ route('frontend.product.category', ['category' => 'all', 'q' => $v->keyword]) }}"
+      class="btn btn-warning position-relative me-2 mb-2">
+      {{ $v->keyword }}
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {{ $v->total }}
+      </span>
+    </a>
     @endforeach
   </div>
 </section>
@@ -236,32 +301,32 @@
     <div class="mitra-carousel swiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-1.webp')}}" 
-               alt="Mitra" class="img-fluid mb-2">
+          <img src="{{asset('frontend/images/mitra/clients-1.webp')}}"
+            alt="Mitra" class="img-fluid mb-2">
         </div>
         <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-2.webp')}}" 
-               alt="Mitra" class="img-fluid mb-2">
+          <img src="{{asset('frontend/images/mitra/clients-2.webp')}}"
+            alt="Mitra" class="img-fluid mb-2">
         </div>
         <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-3.webp')}}" 
-               alt="Mitra" class="img-fluid mb-2">
+          <img src="{{asset('frontend/images/mitra/clients-3.webp')}}"
+            alt="Mitra" class="img-fluid mb-2">
         </div>
         <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-4.webp')}}" 
-               alt="Mitra" class="img-fluid mb-2">
+          <img src="{{asset('frontend/images/mitra/clients-4.webp')}}"
+            alt="Mitra" class="img-fluid mb-2">
         </div>
         <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-5.webp')}}" 
-               alt="Mitra" class="img-fluid mb-2">
+          <img src="{{asset('frontend/images/mitra/clients-5.webp')}}"
+            alt="Mitra" class="img-fluid mb-2">
         </div>
         <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-6.webp')}}" 
-               alt="Mitra" class="img-fluid mb-2">
+          <img src="{{asset('frontend/images/mitra/clients-6.webp')}}"
+            alt="Mitra" class="img-fluid mb-2">
         </div>
         <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-7.webp')}}" 
-               alt="Mitra" class="img-fluid mb-2">
+          <img src="{{asset('frontend/images/mitra/clients-7.webp')}}"
+            alt="Mitra" class="img-fluid mb-2">
         </div>
       </div>
     </div>
@@ -273,7 +338,6 @@
 
 @section('script')
 <script>
-  $(document).ready(function() {
-  })
+  $(document).ready(function() {})
 </script>
 @endsection
