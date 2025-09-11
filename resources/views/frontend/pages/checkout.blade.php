@@ -98,7 +98,7 @@
                                     <small class="form-text text-muted">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <label class="form-label">Kota</label>
                                     <input type="text" class="form-control form-control"
                                         placeholder="Jakarta" name="city" required>
@@ -113,7 +113,7 @@
                                     @error('postal_code')
                                     <small class="form-text text-muted">{{ $message }}</small>
                                     @enderror
-                                </div>
+                                </div> -->
                             </div>
                             <div class="mt-5">
                                 <h5 class="mb-3">💳 Metode Pembayaran</h5>

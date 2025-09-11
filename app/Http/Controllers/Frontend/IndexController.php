@@ -155,8 +155,8 @@ class IndexController extends Controller
             'name' => 'required|max:150',
             'phone' => 'required|max:20',
             'address' => 'required',
-            'city' => 'required|max:50',
-            'postal_code' => 'required|max:5',
+            // 'city' => 'required|max:50',
+            // 'postal_code' => 'required|max:5',
         ]);
         $validator->validate();
 
@@ -190,8 +190,8 @@ class IndexController extends Controller
                 'name'           => $request->name,
                 'phone'          => $request->phone,
                 'address'        => $request->address,
-                'city'           => $request->city,
-                'postal_code'    => $request->postal_code,
+                // 'city'           => $request->city,
+                // 'postal_code'    => $request->postal_code,
                 'payment_method' => $request->payment_method,
                 'total'          => 0,
                 'status'         => 1,
