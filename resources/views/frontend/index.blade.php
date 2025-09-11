@@ -245,6 +245,7 @@
             display: flex;
           }
         </style>
+        @if(count($topSelling) > 0)
         <div class="products-carousel swiper">
           <div class="swiper-wrapper">
             @foreach($topSelling as $product)
@@ -274,6 +275,9 @@
             @endforeach
           </div>
         </div>
+        @else
+        <p class="text-center">Data tidak ditemukan</p>
+        @endif
         <!-- / products-carousel -->
 
       </div>
