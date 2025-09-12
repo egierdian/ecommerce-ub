@@ -102,19 +102,52 @@
     border-bottom: 2px solid #f1f1f1;
     padding-bottom: 30px;
   }
+
   .related-section {
     border-bottom: 2px solid #f1f1f1;
     margin-top: 30px;
     padding-bottom: 40px;
   }
+
   /* HEADING TITLE */
-  h1 { font-size: 1.6rem; font-weight: 700; }
-  h2 { font-size: 1.4rem; font-weight: 600; margin-top: 1rem; }
-  h3 { font-size: 1.2rem; font-weight: 500; margin-top: 0.8rem; }
-  h4 { font-size: 1.05rem; font-weight: 500; }
-  h5 { font-size: 1rem; font-weight: 500; }
-  h6 { font-size: 0.9rem; font-weight: 500; }
-  p, ul, li { font-size: 0.9rem; line-height: 1.5; }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 0.8rem;
+  }
+
+  h4 {
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  h5 {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  h6 {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  p,
+  ul,
+  li {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
 </style>
 <section class="pt-5 content-section">
   <div class="container-fluid">
@@ -239,26 +272,26 @@
           <div class="section-add-cart">
             @if($product->type == 2)
             <div class="d-flex align-items-center gap-3">
-            <div class="input-group product-qty">
-              <span class="input-group-btn">
-                <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
-                  <svg width="16" height="16">
-                    <use xlink:href="#minus"></use>
-                  </svg>
-                </button>
-              </span>
-              <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
-              <span class="input-group-btn">
-                <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
-                  <svg width="16" height="16">
-                    <use xlink:href="#plus"></use>
-                  </svg>
-                </button>
-              </span>
-            </div>
-            <button type="submit" class="btn btn-outline-primary  d-flex align-items-center gap-2 shadow-sm" style="border-radius: 25px; padding: 10px 25px;font-size:12px;">
-              <i class="fa fa-cart-plus"></i> <b>Tambahkan ke Keranjang</b>
-            </button>
+              <div class="input-group product-qty">
+                <span class="input-group-btn">
+                  <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
+                    <svg width="16" height="16">
+                      <use xlink:href="#minus"></use>
+                    </svg>
+                  </button>
+                </span>
+                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
+                <span class="input-group-btn">
+                  <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
+                    <svg width="16" height="16">
+                      <use xlink:href="#plus"></use>
+                    </svg>
+                  </button>
+                </span>
+              </div>
+              <button type="submit" class="btn btn-outline-primary  d-flex align-items-center gap-2 shadow-sm" style="border-radius: 25px; padding: 10px 25px;font-size:12px;">
+                <i class="fa fa-cart-plus"></i> <b>Tambahkan ke Keranjang</b>
+              </button>
             </div>
             @else
             <p class="fw-bold">For more information please contact admin!</p>
@@ -277,31 +310,68 @@
 </section>
 @if(count($relatedProducts) > 0)
 <section class="related-section">
+  
   <div class="container-fluid">
-    <h4 class="mb-4">Produk Terkait</h4>
-    <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-      @forelse($relatedProducts as $product)
-      <div class="col">
-        <div class="product-item h-100 d-flex flex-column">
-          <span class="badge bg-success position-absolute m-3"></span>
-          <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}"><svg width="14" height="14">
-              <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
-            </svg></button>
-          <figure>
-            <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" title="{{$product->name}}">
-              <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
-            </a>
-          </figure>
-          <h3>{{$product->name}}</h3>
-          <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
-          <div class="position-absolute bottom-0 start-0 end-0 p-3">
-            <span class="price">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
-            <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-outline-primary btn-sm mt-2 w-100 fw-semibold">Lihat</a>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="section-header d-flex flex-wrap justify-content-between">
+
+          <h2 class="section-title">Produk Terkait</h2>
+
+          <div class="d-flex align-items-center">
+            <a href="#" class="btn-link text-decoration-none"> </a>
+            <div class="swiper-buttons">
+              <button class="swiper-prev products-carousel-prev btn btn-primary" tabindex="0" aria-label="Previous slide" aria-controls="swiper-wrapper-6197efd36115bc78" aria-disabled="false">❮</button>
+              <button class="swiper-next products-carousel-next btn btn-primary swiper-button-disabled" tabindex="-1" aria-label="Next slide" aria-controls="swiper-wrapper-6197efd36115bc78" aria-disabled="true" disabled="">❯</button>
+            </div>
           </div>
         </div>
+
       </div>
-      @empty
-      @endforelse
+    </div>
+    <div class="row">
+        <style>
+          .products-carousel .swiper-slide {
+            height: auto;
+            display: flex;
+          }
+        </style>
+        @if(count($relatedProducts) > 0)
+        <div class="products-carousel swiper">
+          <div class="swiper-wrapper">
+            @foreach($relatedProducts as $product)
+            <div class="swiper-slide">
+              <div class="col mb-5">
+                <div class="product-item h-100 d-flex flex-column">
+                  <span class="badge bg-success position-absolute m-3"></span>
+                  <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}">
+                    <svg width="14" height="14">
+                      <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
+                    </svg>
+                  </button>
+                  <figure>
+                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" title="{{$product->name}}">
+                      <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
+                    </a>
+                  </figure>
+                  <h3>{{$product->name}}</h3>
+                  <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
+                  <div class="position-absolute bottom-0 start-0 end-0 p-3">
+                    <span class="price fw-bold fs-5 text-primary">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
+                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-outline-primary btn-sm mt-2 w-100 fw-semibold">Lihat</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endforeach
+          </div>
+        </div>
+        @else
+        <p class="text-center">Data tidak ditemukan</p>
+        @endif
+        <!-- / products-carousel -->
+
     </div>
   </div>
 </section>

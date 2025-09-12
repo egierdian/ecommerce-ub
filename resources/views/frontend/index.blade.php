@@ -108,7 +108,7 @@
   </div>
 </section>
 
-<section class="py-5">
+<section class="pb-5">
   <div class="container-fluid">
 
     <div class="row">
@@ -217,17 +217,17 @@
 </section>
 
 <!-- paling laku -->
-<section class="py-5 overflow-hidden">
+<section class="pt-5 overflow-hidden">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
 
-        <div class="section-header d-flex flex-wrap justify-content-between my-5">
+        <div class="section-header d-flex flex-wrap justify-content-between">
 
           <h2 class="section-title">Produk Terlaris</h2>
 
           <div class="d-flex align-items-center">
-            <a href="#" class="btn-link text-decoration-none"> →</a>
+            <a href="#" class="btn-link text-decoration-none"> </a>
             <div class="swiper-buttons">
               <button class="swiper-prev products-carousel-prev btn btn-primary" tabindex="0" aria-label="Previous slide" aria-controls="swiper-wrapper-6197efd36115bc78" aria-disabled="false">❮</button>
               <button class="swiper-next products-carousel-next btn btn-primary swiper-button-disabled" tabindex="-1" aria-label="Next slide" aria-controls="swiper-wrapper-6197efd36115bc78" aria-disabled="true" disabled="">❯</button>
@@ -238,7 +238,6 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
         <style>
           .products-carousel .swiper-slide {
             height: auto;
@@ -250,7 +249,7 @@
           <div class="swiper-wrapper">
             @foreach($topSelling as $product)
             <div class="swiper-slide">
-              <div class="col">
+              <div class="col mb-5">
                 <div class="product-item h-100 d-flex flex-column">
                   <span class="badge bg-success position-absolute m-3"></span>
                   <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}">
@@ -281,11 +280,10 @@
         <!-- / products-carousel -->
 
       </div>
-    </div>
   </div>
 </section>
 
-<section class="py-5">
+<section class="pb-5 pt-2">
   <div class="container-fluid">
     <h2 class="my-5">Pencarian Populer</h2>
     @foreach($popularKeywords as $v)

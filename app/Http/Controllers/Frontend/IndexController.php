@@ -85,7 +85,7 @@ class IndexController extends Controller
                 ])->where('category_id', $product->category_id)
                 ->where('id', '!=', $product->id)
                 ->inRandomOrder() // ambil acak
-                ->take(5)
+                ->take(7)
                 ->get();
 
             return view('frontend.pages.product-detail', compact('product', 'pendingStock', 'relatedProducts'));
