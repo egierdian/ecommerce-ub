@@ -126,11 +126,11 @@
                     </tr>
                     <tr class="summary">
                         <td colspan="3" class="item-price">Ongkos Kirim</td>
-                        <td class="item-price">Rp 20.000</td>
+                        <td class="item-price">Rp 0</td>
                     </tr>
                     <tr class="summary total">
                         <td colspan="3" class="item-price">Total</td>
-                        <td class="item-price">Rp {{number_format($subtotal + 20000, 0, ',', '.')}}</td>
+                        <td class="item-price">Rp {{number_format($subtotal, 0, ',', '.')}}</td>
                     </tr>
                 </tbody>
             </table>
