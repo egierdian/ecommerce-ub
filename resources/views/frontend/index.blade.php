@@ -47,7 +47,7 @@
                     <div class="content-wrapper col-md-7">
                       <h3 class="display-4">{{$slider->title}}</h3>
                       <p>{{$slider->description}}</p>
-                      <a href="{{$slider->url}}" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">More Detail</a>
+                      <a href="{{$slider->url}}" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 mb-4">Belanja Sekarang </a>
                     </div>
                     <div class="img-wrapper col-md-5">
                       <img src="{{asset($slider->image)}}" class="img-fluid">
@@ -147,9 +147,18 @@
                     </figure>
                     <h3>{{$product->name}}</h3>
                     <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
+                    
+                    {{-- Rating --}}
+                    <div class="rating my-1">
+                        @php $rating = $product->rating ?? 4; @endphp
+                        @for($i = 1; $i <= 5; $i++)
+                            <i class="fa{{ $i <= $rating ? 's' : 'r' }} fa-star text-warning"></i>
+                        @endfor
+                        <span class="small text-muted">({{$product->reviews_count ?? rand(5, 50)}})</span>
+                    </div>
                     <div class="position-absolute bottom-0 start-0 end-0 p-3">
-                      <span class="price fw-bold fs-5 text-primary">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
-                      <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-outline-primary btn-sm mt-2 w-100 fw-semibold">Lihat</a>
+                      <span class="price">Rp. {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
+                      <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Lihat</a>
                     </div>
                   </div>
                 </div>
@@ -157,7 +166,7 @@
 
               </div>
               <div class="text-center mt-4">
-                <a href="{{route('frontend.product.category', ['category' => 'all'])}}" class="btn btn-primary px-4 py-2">
+                <a href="{{route('frontend.product.category', ['category' => 'all'])}}" class="btn btn-outline-primary px-4 py-2">
                   Lihat Semua Produk
                 </a>
               </div>
@@ -186,7 +195,7 @@
                     <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
                     <div class="position-absolute bottom-0 start-0 end-0 p-3">
                       <span class="price">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
-                      <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-outline-primary btn-sm mt-2 w-100 fw-semibold">Lihat</a>
+                      <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Lihat</a>
                     </div>
                   </div>
                 </div>
@@ -199,7 +208,7 @@
               </div>
               @if(count($category->products) > 0)
               <div class="text-center mt-4">
-                <a href="{{route('frontend.product.category', ['category' => $category->slug])}}" class="btn btn-primary px-4 py-2">
+                <a href="{{route('frontend.product.category', ['category' => $category->slug])}}" class="btn btn-outlite-primary px-4 py-2">
                   Lihat Semua Produk {{$category->name}}
                 </a>
               </div>
@@ -266,7 +275,7 @@
                   <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
                   <div class="position-absolute bottom-0 start-0 end-0 p-3">
                     <span class="price fw-bold fs-5 text-primary">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
-                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-outline-primary btn-sm mt-2 w-100 fw-semibold">Lihat</a>
+                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Lihat</a>
                   </div>
                 </div>
               </div>

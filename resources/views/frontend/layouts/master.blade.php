@@ -312,34 +312,43 @@
 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h5 class="widget-title">Ultras</h5>
+                        <h5 class="widget-title">Informasi</h5>
                         <ul class="menu-list list-unstyled">
                             <li class="menu-item">
-                                <a href="{{route('frontend.about-us')}}" class="nav-link">About us</a>
+                                <a href="{{route('frontend.about-us')}}" class="nav-link">Tentang Kami</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{route('login')}}" class="nav-link">Masuk</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{route('register')}}" class="nav-link">Daftar</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h5 class="widget-title">Customer Service</h5>
+                        <h5 class="widget-title">Layanan Pelanggan</h5>
                         <ul class="menu-list list-unstyled">
                             <li class="menu-item">
                                 <a href="{{route('frontend.faq')}}" class="nav-link">FAQ</a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{route('frontend.contact')}}" class="nav-link">Contact</a>
+                                <a href="{{route('frontend.contact')}}" class="nav-link">Kontak</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer-menu">
-                        <h5 class="widget-title">Subscribe Us</h5>
-                        <p>Subscribe to our newsletter to get updates about our grand offers.</p>
+                        <h5 class="widget-title">Berlangganan</h5>
+                        <p>Daftar untuk menerima berita terbaru dan penawaran menarik dari kami.</p>
                         <form class="d-flex mt-3 gap-0" role="newsletter">
-                            <input class="form-control rounded-start rounded-0 bg-light" type="email" placeholder="Email Address" aria-label="Email Address">
-                            <button class="btn btn-dark rounded-end rounded-0" type="submit">Subscribe</button>
+                            <input class="form-control rounded-start rounded-0 bg-light" 
+                                type="email" 
+                                placeholder="Alamat Email" 
+                                aria-label="Alamat Email">
+                            <button class="btn btn-dark rounded-end rounded-0" type="button">Daftar</button>
                         </form>
                     </div>
                 </div>

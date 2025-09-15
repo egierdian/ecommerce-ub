@@ -56,6 +56,14 @@
                     </figure>
                     <h3>{{$product->name}}</h3>
                     <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
+                    {{-- Rating --}}
+                    <div class="rating my-1">
+                        @php $rating = $product->rating ?? 4; @endphp
+                        @for($i = 1; $i <= 5; $i++)
+                            <i class="fa{{ $i <= $rating ? 's' : 'r' }} fa-star text-warning"></i>
+                        @endfor
+                        <span class="small text-muted">({{$product->reviews_count ?? rand(5, 50)}})</span>
+                    </div>
                     <div class="position-absolute bottom-0 start-0 end-0 p-3">
                       <span class="price">Rp. {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
                       <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Lihat</a>
