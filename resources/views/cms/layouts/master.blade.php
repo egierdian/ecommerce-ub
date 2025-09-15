@@ -174,7 +174,7 @@
 							<h4 class="text-section">Transactional</h4>
 						</li>
 
-						<li class="nav-item {{ request()->is('admin/transaction') ? 'active' : '' }}">
+						<li class="nav-item {{ request()->is('admin/transaction*') ? 'active' : '' }}">
 							<a href="{{ route('admin.transaction') }}">
 								<i class="fas fa-receipt"></i>
 								<p>Transaction</p>
