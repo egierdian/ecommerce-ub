@@ -48,7 +48,8 @@
                                 @foreach($transaction->transactionItems as $i => $item)
                                 <tr>
                                     <td>{{ $i+1 }}</td>
-                                    <td>{{ $item->product->name }}</td>
+                                    <td>
+                                        {{ $item->product->name }} <span class='text-muted m-0'>{{$item->product->type == 1 ? '('.$item->start_date.' - '.$item->end_date.')' : ''}}</span></</td>
                                     <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>Rp {{ number_format($item->subtotal, 0, ',', '.') }}</td>

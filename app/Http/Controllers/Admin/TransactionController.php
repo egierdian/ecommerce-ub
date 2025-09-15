@@ -92,11 +92,13 @@ class TransactionController extends Controller
                 foreach ($transactionItems as $item) {
                     $product = Product::findOrFail($item->product_id);
 
-                    if ($product->qty < $item->qty) {
-                        throw new \Exception("Stok produk {$product->name} tidak mencukupi.");
-                    }
+                    if($product->type != 1) {
+                        if ($product->qty < $item->qty) {
+                            throw new \Exception("Stok produk {$product->name} tidak mencukupi.");
+                        }
 
-                    $product->decrement('qty', $item->qty);
+                        $product->decrement('qty', $item->qty);
+                    }
                 }
             }
 
