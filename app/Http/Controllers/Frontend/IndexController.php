@@ -11,6 +11,8 @@ use App\Models\SearchLog;
 use App\Models\Slider;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +25,7 @@ class IndexController extends Controller
     {
         $categories = Category::with([
             'products' => function ($query) {
-                $query->limit(10)->with(['firstImage','category','wishlists']);
+                $query->where('type', 2)->limit(10)->with(['firstImage','category','wishlists']);
             }
         ])->where('status', 1)->get();
 
@@ -33,7 +35,7 @@ class IndexController extends Controller
             'wishlists' => function($q) {
                 $q->where('user_id', Auth::id());
             }
-        ])->where('status', 1)->limit(10)->get();
+        ])->where('type', 2)->where('status', 1)->limit(10)->get();
 
         $sliders = Slider::where('status', 1)->get();
 
@@ -60,7 +62,15 @@ class IndexController extends Controller
             ->take(10)
             ->get();
 
-        return view('frontend.index', compact('categories', 'products', 'sliders','popularKeywords', 'topSelling'));
+        $rentProducts = Product::with([
+            'category', 
+            'firstImage',
+            'wishlists' => function($q) {
+                $q->where('user_id', Auth::id());
+            }
+        ])->where('status', 1)->where('type', 1)->limit(10)->get();
+
+        return view('frontend.index', compact('categories', 'products', 'sliders','popularKeywords', 'topSelling', 'rentProducts'));
     }
 
     public function showProduct(Request $request, $category, $product = null)
@@ -70,6 +80,65 @@ class IndexController extends Controller
 
             if (!$product) return redirect()->route('frontend.index');
             
+            $rent_product = [];
+            if ($request->filled('param')) {
+                try {
+                    $decryptParam = decrypt($request->param);
+                    $param = json_decode($decryptParam, true);
+
+                    $startDate = Carbon::parse($param['start_date']);
+                    $endDate   = Carbon::parse($param['end_date']);
+
+                    $exists = TransactionItem::where('product_id', $product->id)
+                        ->whereHas('transaction', function ($q) {
+                            $q->whereIn('status', [1, 2]); // hanya transaksi aktif/selesai
+                        })
+                        ->where(function ($q) use ($startDate, $endDate) {
+                            $q->whereBetween('start_date', [$startDate, $endDate])
+                            ->orWhereBetween('end_date', [$startDate, $endDate])
+                            ->orWhere(function ($q2) use ($startDate, $endDate) {
+                                $q2->where('start_date', '<=', $startDate)
+                                    ->where('end_date', '>=', $endDate);
+                            });
+                        })
+                        ->exists();
+
+                    if ($exists) {
+                        return redirect('/');
+                    }
+                        
+                    $weekdayHours = 0;
+                    $weekendHours = 0;
+
+                    // Loop tiap jam dalam periode
+                    $period = CarbonPeriod::create($startDate, '1 hour', $endDate)->excludeEndDate();
+
+                    foreach ($period as $dateTime) {
+                        $hour = (int)$dateTime->format('H');
+
+                        // Hitung hanya jam kerja 08:00–17:00
+                        if ($hour >= 8 && $hour < 17) {
+                            if ($dateTime->isWeekend()) {
+                                $weekendHours++;
+                            } else {
+                                $weekdayHours++;
+                            }
+                        }
+                    }
+                    $rent_product = [
+                        'weekday_hours' => $weekdayHours,
+                        'weekend_hours' => $weekendHours,
+                        'total_hours'   => $weekdayHours + $weekendHours,
+                        'start_date' => $startDate,
+                        'end_date' => $endDate,
+                        'total_price' => ($weekdayHours * $product->base_price_per_hour)+ ($weekendHours*$product->holiday_price_per_hour)
+                    ];
+                } catch (\Exception $e) {
+                    return redirect()->route('frontend.index');
+                }
+
+            }
+
             $pendingStock = DB::table('transactions as a')
                 ->leftJoin('transaction_items as b', 'a.id', '=', 'b.transaction_id')
                 ->where('b.product_id', $product->id)
@@ -88,7 +157,7 @@ class IndexController extends Controller
                 ->take(7)
                 ->get();
 
-            return view('frontend.pages.product-detail', compact('product', 'pendingStock', 'relatedProducts'));
+            return view('frontend.pages.product-detail', compact('product', 'pendingStock', 'relatedProducts', 'rent_product'));
         } else {
             $dataCategory = null;
             $search = null;
@@ -170,17 +239,19 @@ class IndexController extends Controller
 
                 $stock = $cart->product->qty;
 
-                $pendingStock = DB::table('transactions as a')
-                    ->leftJoin('transaction_items as b', 'a.id', '=', 'b.transaction_id')
-                    ->where('b.product_id', $cart->product_id)
-                    ->whereIn('a.status', [1]) 
-                    ->sum('b.qty');
+                if($cart->product->type != 1) {
+                    $pendingStock = DB::table('transactions as a')
+                        ->leftJoin('transaction_items as b', 'a.id', '=', 'b.transaction_id')
+                        ->where('b.product_id', $cart->product_id)
+                        ->whereIn('a.status', [1]) 
+                        ->sum('b.qty');
 
-                $availableStock = $stock - $pendingStock;
+                    $availableStock = $stock - $pendingStock;
 
-                if ($cart->qty > $availableStock) {
-                    DB::rollBack();
-                    return redirect()->back()->with('error', 'Stok produk tidak mencukupi.');
+                    if ($cart->qty > $availableStock) {
+                        DB::rollBack();
+                        return redirect()->back()->with('error', 'Stok produk tidak mencukupi.');
+                    }
                 }
             }
 
@@ -208,6 +279,8 @@ class IndexController extends Controller
                     'price'          => $cart->price,
                     'qty'            => $cart->qty,
                     'subtotal'       => $cart->subtotal,
+                    'start_date'     => $cart->start_date,
+                    'end_date'       => $cart->end_date,
                 ]);
 
                 $total += $cart->subtotal;
@@ -256,5 +329,40 @@ class IndexController extends Controller
         $faqs = Faq::where('status', 1)->orderBy('order', 'asc')->get();
         
         return view('frontend.pages.faq', compact('faqs'));
+    }
+
+    public function searchRentProduct(Request $request) {
+        $startDate = $request->start_datetime;//'2025-09-15 09:00:00';
+        $endDate   = $request->end_datetime;//'2025-09-15 10:00:00';
+
+        try {
+            $products = Product::whereDoesntHave('transactionDetails', function ($q) use ($startDate, $endDate) {
+                $q->where('start_date', '<', $endDate)
+                ->where('end_date', '>', $startDate)
+                ->whereHas('transaction', function($t) {
+                    $t->whereIn('status', [1, 2]);
+                });
+            })->with([
+                'category', 
+                'firstImage',
+                'wishlists' => function($q) {
+                    $q->where('user_id', Auth::id());
+                }
+            ])->where('products.type', 1)->get();
+
+            return response()->json([
+                'status' => true,
+                'data' => $products,
+                'param' => encrypt(json_encode(['start_date' => $startDate, 'end_date' => $endDate]))
+            ]);
+        } catch (\Exception $e) {
+        
+            return response()->json([
+                'status' => false,
+                'data' => [
+                    'error' => $e->getMessage()
+                ]
+            ]);
+        }
     }
 }

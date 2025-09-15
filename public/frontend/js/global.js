@@ -34,7 +34,8 @@ $(document).ready(function() {
     let productId = $(this).data('id');
     let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     
-    let btn = $(this);
+    // let btn = $(this);
+    let btn = $('.btn-wishlist[data-id="' + productId + '"]'); 
     $.ajax({
         url: '/wishlist/' + productId,
         type: 'POST',

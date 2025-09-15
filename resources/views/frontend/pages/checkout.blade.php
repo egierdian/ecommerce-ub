@@ -154,7 +154,8 @@
                                 <li class="list-group-item d-flex justify-content-between">
                                     <div>
                                         <input type="hidden" name="carts[]" value="{{encrypt($cart->id)}}">
-                                        <h6 class="my-0">{{$cart->product->name}}</h6>
+                                        <h6 class="my-0">{{$cart->product->name}} </h6>
+                                        <span class='text-muted m-0'>{{$cart->product->type == 1 ? '('.$cart->start_date.' - '.$cart->end_date.')' : ''}}</span>
                                         <small class="text-muted">x{{$cart->qty}}</small>
                                     </div>
                                     <span>Rp {{number_format($cart->subtotal, 0, ',', '.')}}</span>

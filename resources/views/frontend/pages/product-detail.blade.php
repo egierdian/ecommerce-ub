@@ -269,6 +269,23 @@
         {!! $product->description !!}
         <form action="{{route('frontend.cart.add', ['productId' => encrypt($product->id)])}}" method="POST" class="flex items-center gap-2">
           @csrf
+          
+          <input type="hidden" name="type" value="{{$product->type}}">
+          @if($product->type == 1)
+          <input type="hidden" name="param" value="{{encrypt($rent_product)}}">
+          <div class="py-3">
+              <p class="m-0">
+                  📅 Tanggal Booking: 
+                  {{ \Carbon\Carbon::parse($rent_product['start_date'] ?? '')->format('d M Y H:i') ?? '' }} 
+                  - 
+                  {{ \Carbon\Carbon::parse($rent_product['end_date'] ?? '')->format('d M Y H:i') ?? '' }}
+              </p>
+            <p class="m-0">
+              💰 Total Biaya:
+              Rp {{ number_format($rent_product['total_price'] ?? 0, 0, ',', '.') }}
+            </p>
+          </div>
+          @endif
           <div class="section-add-cart">
             @if($product->type == 2)
             <div class="d-flex align-items-center gap-3">
@@ -294,7 +311,14 @@
               </button>
             </div>
             @else
-            <p class="fw-bold">For more information please contact admin!</p>
+            @if(session('success')) 
+            <a href="{{route('frontend.index')}}" class="btn btn-primary">Kembali</a>
+            @else 
+            <!-- <p class="fw-bold">For more information please contact admin!</p> -->
+            <button type="submit" class="btn btn-outline-primary  d-flex align-items-center gap-2 shadow-sm" style="border-radius: 25px; padding: 10px 25px;font-size:12px;">
+              <i class="fa fa-cart-plus"></i> <b>Tambahkan ke Keranjang</b>
+            </button>
+            @endif
             @endif
           </div>
         </form>
@@ -310,7 +334,7 @@
 </section>
 @if(count($relatedProducts) > 0)
 <section class="related-section">
-  
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
@@ -331,46 +355,46 @@
       </div>
     </div>
     <div class="row">
-        <style>
-          .products-carousel .swiper-slide {
-            height: auto;
-            display: flex;
-          }
-        </style>
-        @if(count($relatedProducts) > 0)
-        <div class="products-carousel swiper">
-          <div class="swiper-wrapper">
-            @foreach($relatedProducts as $product)
-            <div class="swiper-slide">
-              <div class="col mb-5">
-                <div class="product-item h-100 d-flex flex-column">
-                  <span class="badge bg-success position-absolute m-3"></span>
-                  <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{encrypt($product->id)}}">
-                    <svg width="14" height="14">
-                      <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
-                    </svg>
-                  </button>
-                  <figure>
-                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" title="{{$product->name}}">
-                      <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
-                    </a>
-                  </figure>
-                  <h3>{{$product->name}}</h3>
-                  <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
-                  <div class="position-absolute bottom-0 start-0 end-0 p-3">
-                    <span class="price fw-bold fs-5 text-primary">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
-                    <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Lihat</a>
-                  </div>
+      <style>
+        .products-carousel .swiper-slide {
+          height: auto;
+          display: flex;
+        }
+      </style>
+      @if(count($relatedProducts) > 0)
+      <div class="products-carousel swiper">
+        <div class="swiper-wrapper">
+          @foreach($relatedProducts as $product)
+          <div class="swiper-slide">
+            <div class="col mb-5">
+              <div class="product-item h-100 d-flex flex-column">
+                <span class="badge bg-success position-absolute m-3"></span>
+                <button href="#" class="btn-wishlist {{ $product->wishlists->isNotEmpty() ? 'active' : '' }}" data-id="{{($product->id)}}">
+                  <svg width="14" height="14">
+                    <use xlink:href="{{ $product->wishlists->isNotEmpty() ? '#trash' : '#heart' }}"></use>
+                  </svg>
+                </button>
+                <figure>
+                  <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" title="{{$product->name}}">
+                    <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
+                  </a>
+                </figure>
+                <h3>{{$product->name}}</h3>
+                <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
+                <div class="position-absolute bottom-0 start-0 end-0 p-3">
+                  <span class="price fw-bold fs-5 text-primary">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
+                  <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Lihat</a>
                 </div>
               </div>
             </div>
-            @endforeach
           </div>
+          @endforeach
         </div>
-        @else
-        <p class="text-center">Data tidak ditemukan</p>
-        @endif
-        <!-- / products-carousel -->
+      </div>
+      @else
+      <p class="text-center">Data tidak ditemukan</p>
+      @endif
+      <!-- / products-carousel -->
 
     </div>
   </div>

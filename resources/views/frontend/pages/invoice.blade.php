@@ -112,7 +112,9 @@
                     @foreach($invoice->transactionItems as $item)
                     @php $subtotal += $item->subtotal; @endphp
                     <tr>
-                        <td>{{$item->product->name}}</td>
+                        <td>
+                            <p class="m-0">{{$item->product->name}}</p>
+                            <span class='text-muted m-0'>{{$item->product->type == 1 ? '('.$item->start_date.' - '.$item->end_date.')' : ''}}</span></td>
                         <td>{{$item->qty}}</td>
                         <td class="item-price">Rp {{number_format($item->price, 0, ',', '.')}}</td>
                         <td class="item-price">Rp {{number_format($item->subtotal, 0, ',', '.')}}</td>

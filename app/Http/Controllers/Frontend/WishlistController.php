@@ -35,7 +35,7 @@ class WishlistController extends Controller
             ]);
         }
         try {
-            $productId = decrypt($productId);
+            $productId = ($productId);
             $userId = Auth::user()->id;
 
             $exists = Wishlist::where('user_id', $userId)

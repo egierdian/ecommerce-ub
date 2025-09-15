@@ -24,6 +24,8 @@ Route::post('/wishlist/{productId}', [Controllers\Frontend\WishlistController::c
 Route::get('/tentang-kami', [Controllers\Frontend\IndexController::class, 'aboutUs'])->name('frontend.about-us');
 Route::get('/kontak', [Controllers\Frontend\IndexController::class, 'contactUs'])->name('frontend.contact');
 Route::get('/faq', [Controllers\Frontend\IndexController::class, 'faq'])->name('frontend.faq');
+
+Route::post('/rent-product/search', [Controllers\Frontend\IndexController::class, 'searchRentProduct'])->name('frontend.product.rent');
 #end frontend
 
 #frontend auth
