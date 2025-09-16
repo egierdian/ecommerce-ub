@@ -431,7 +431,7 @@
                               <span class="product-category">${product.type == 1 ? 'Sewa' : 'Produk'} - ${product.category.name}</span>
                               <div class="position-absolute bottom-0 start-0 end-0 p-3">
                                 <span class="price">Rp. ${Number(product.type == 1 ? product.base_price_per_hour : product.price).toLocaleString('id-ID')}</span>
-                                <a href="/product/${product.category.slug}/${product.slug}?param=${res.param}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Lihat</a>
+                                <a href="/product/${product.category.slug}/${product.slug}?param=${res.param}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Sewa</a>
                               </div>
                             </div>
                           </div>`;
