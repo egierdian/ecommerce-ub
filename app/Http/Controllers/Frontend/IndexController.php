@@ -57,6 +57,7 @@ class IndexController extends Controller
             ->join('transaction_items', 'products.id', '=', 'transaction_items.product_id')
             ->join('transactions', 'transactions.id', '=', 'transaction_items.transaction_id')
             ->where('transactions.status', 2)
+            ->where('products.type', 2)
             ->groupBy('products.id')
             ->orderByDesc('total_sold')
             ->take(10)
