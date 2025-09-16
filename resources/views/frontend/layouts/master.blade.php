@@ -320,6 +320,13 @@
                             <li class="menu-item">
                                 <a href="{{route('frontend.product.rental')}}" class="nav-link">Produk Sewa</a>
                             </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h5 class="widget-title">Akun</h5>
+                        <ul class="menu-list list-unstyled">
                             <li class="menu-item">
                                 <a href="{{route('login')}}" class="nav-link">Masuk</a>
                             </li>
@@ -342,7 +349,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="col-lg-3 col-md-6 col-sm-6" hidden>
                     <div class="footer-menu">
                         <h5 class="widget-title">Berlangganan</h5>
                         <p>Daftar untuk menerima berita terbaru dan penawaran menarik dari kami.</p>

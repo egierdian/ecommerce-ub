@@ -392,7 +392,10 @@
 @section('script')
 <script>
   $(document).ready(function() {
+    const baseUrl = window.location.origin + '/' + window.location.pathname.split('/')[1] + '/public';
+    // const baseUrl = window.location.origin 
     $('#buttonFilter').on('click', function(e) {
+      console.log(baseUrl)
       let start = $('#start_datetime').val();
       let end = $('#end_datetime').val();
       $.ajax({
@@ -423,15 +426,15 @@
                           <div class="col">
                             <div class="product-item h-100 d-flex flex-column">
                               <figure>
-                                <a href="/product/${product.category.slug}/${product.slug}?param=${res.param}" title="${product.name}">
-                                  <img src="/${product.first_image?.path ?? ''}" class="tab-image" width="100%">
+                                <a href="${baseUrl}/product/${product.category.slug}/${product.slug}?param=${res.param}" title="${product.name}">
+                                  <img src="${baseUrl}/${product.first_image?.path ?? ''}" class="tab-image" width="100%">
                                 </a>
                               </figure>
                               <h3>${product.name}</h3>
                               <span class="product-category">${product.type == 1 ? 'Sewa' : 'Produk'} - ${product.category.name}</span>
                               <div class="position-absolute bottom-0 start-0 end-0 p-3">
                                 <span class="price">Rp. ${Number(product.type == 1 ? product.base_price_per_hour : product.price).toLocaleString('id-ID')}</span>
-                                <a href="/product/${product.category.slug}/${product.slug}?param=${res.param}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Sewa</a>
+                                <a href="${baseUrl}/product/${product.category.slug}/${product.slug}?param=${res.param}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Sewa</a>
                               </div>
                             </div>
                           </div>`;

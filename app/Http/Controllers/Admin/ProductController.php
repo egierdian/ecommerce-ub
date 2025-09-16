@@ -74,7 +74,7 @@ class ProductController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:products,name',
-            'type' => 'required|in:1,2',
+            'type' => 'required|in:1,2,3',
             'category' => 'required',
             'holiday_price_per_hour' => 'nullable|numeric',
             'images' => 'nullable|array',
@@ -100,6 +100,7 @@ class ProductController extends Controller
                 'type' => $request->type,
                 'category_id' => $request->category,
                 'description' => $request->description,
+                'url' => $request->url,
                 'status' => 1,
                 'slug' => Str::slug($request->name),
             ];
@@ -153,7 +154,7 @@ class ProductController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:products,name,' . $id,
-            'type' => 'required|in:1,2',
+            'type' => 'required|in:1,2,3',
             'category' => 'required',
             'holiday_price_per_hour' => 'nullable|numeric',
             'images' => 'nullable|array',
@@ -181,6 +182,7 @@ class ProductController extends Controller
                 'type' => $request->type,
                 'category_id' => $request->category,
                 'description' => $request->description,
+                'url' => $request->url,
                 'slug' => Str::slug($request->name),
             ];
             $price = null;
@@ -276,7 +278,8 @@ class ProductController extends Controller
     private function type() {
         return [
             '1' => 'Sewa',
-            '2' => 'Produk'
+            '2' => 'Produk',
+            '3' => 'Digital'
         ];
     }
 }

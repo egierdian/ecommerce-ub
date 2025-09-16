@@ -34,7 +34,8 @@ class DashboardController extends Controller
     public function myOrder()
     {
         $userId = Auth::user()->id;
-        $transactions = Transaction::where('user_id', $userId)->get();
+        $transactions = Transaction::where('user_id', $userId)
+            ->orderBy('transactions.created_at', 'desc')->get();
 
         return view('frontend.dashboard.my-order', compact('transactions'));
     }

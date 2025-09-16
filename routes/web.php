@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers;
+use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 
 #start frontend
@@ -27,7 +28,11 @@ Route::get('/faq', [Controllers\Frontend\IndexController::class, 'faq'])->name('
 
 Route::post('/rental/search', [Controllers\Frontend\IndexController::class, 'searchRentals'])->name('frontend.product.rental.search');
 Route::get('/sewa', [Controllers\Frontend\IndexController::class, 'productRentalPage'])->name('frontend.product.rental');
-#end frontend
+
+Route::get('/read-book', [Controllers\Frontend\IndexController::class, 'readBook'])->name('frontend.read-book');
+
+
+Route::get('/pdf/view', [PdfController::class, 'stream'])->name('pdf.view');#end frontend
 
 #frontend auth
 Route::middleware(['auth', 'role:customer'])->prefix('dashboard')->group(function () {

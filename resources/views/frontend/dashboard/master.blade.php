@@ -126,7 +126,15 @@
 <script src="{{asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script>
     $(document).ready(function() {
-        $(".datatableCustomer").DataTable()
+        $(".datatableCustomer").DataTable({
+            order: [[1, "desc"]]
+        });
     })
+    function showModalUpload(e) {
+        let data = $(e).data()
+
+        $("#modalUpload").modal("show")
+        $("#modalUpload [name=id]").val(data.id)
+    }
 </script>
 @endsection

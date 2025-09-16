@@ -109,6 +109,15 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-12 view-type view-digital">
+                                <div class="form-group @error('url') has-error @enderror">
+                                    <label>Url</label>
+                                    <input type="text" name="url" class="form-control" value="{{ isset($data) ? $data->url : old('url') }}">
+                                    @error('url')
+                                    <small class="form-text text-muted">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -193,6 +202,10 @@
         $('.view-type').show(400)
         if (type == '1') {
             $('.view-product').hide(400)
+            $('.view-digital').hide(400)
+        } else if(type == '2') {
+            $('.view-sewa').hide(400)
+            $('.view-digital').hide(400)
         } else {
             $('.view-sewa').hide(400)
         }

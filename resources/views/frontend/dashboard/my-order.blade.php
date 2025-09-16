@@ -87,13 +87,3 @@
 </div>
 
 @endsection
-@section('script')
-<script>
-    function showModalUpload(e) {
-        let data = $(e).data()
-
-        $("#modalUpload").modal("show")
-        $("#modalUpload [name=id]").val(data.id)
-    }
-</script>
-@endsection

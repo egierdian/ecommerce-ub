@@ -21,7 +21,7 @@ class CartController extends Controller
             return redirect()->back()->with(['error' => 'Hanya customer yang bisa menambahkan ke keranjang.']);
         }
         $id = decrypt($id);
-        if($request->type != 1) {
+        if($request->type == 2) {
             $validator = Validator::make($request->all(), [
                 'quantity' => 'required|numeric|min:1',
             ]);
@@ -57,6 +57,9 @@ class CartController extends Controller
                     return redirect()->route('frontend.index');
                 }
             } else { #product
+                if ($product->type == 3) {
+                    $request->merge(['quantity' => 1]);
+                }
                 if ($cart) {
                     $cart->qty += $request->quantity;
                     $cart->subtotal = $cart->qty * $cart->price;

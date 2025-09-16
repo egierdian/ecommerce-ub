@@ -25,7 +25,7 @@ class IndexController extends Controller
     {
         $categories = Category::with([
             'products' => function ($query) {
-                $query->where('type', 2)->limit(10)->with(['firstImage','category','wishlists']);
+                $query->whereIn('type', [2,3])->limit(10)->with(['firstImage','category','wishlists']);
             }
         ])->where('status', 1)->get();
 
@@ -35,7 +35,7 @@ class IndexController extends Controller
             'wishlists' => function($q) {
                 $q->where('user_id', Auth::id());
             }
-        ])->where('type', 2)->where('status', 1)->limit(10)->get();
+        ])->whereIn('type', [2,3])->where('status', 1)->limit(10)->get();
 
         $sliders = Slider::where('status', 1)->get();
 
@@ -57,7 +57,7 @@ class IndexController extends Controller
             ->join('transaction_items', 'products.id', '=', 'transaction_items.product_id')
             ->join('transactions', 'transactions.id', '=', 'transaction_items.transaction_id')
             ->where('transactions.status', 2)
-            ->where('products.type', 2)
+            ->whereIn('products.type', [2,3])
             ->groupBy('products.id')
             ->orderByDesc('total_sold')
             ->take(10)
@@ -171,7 +171,7 @@ class IndexController extends Controller
                 ])
                 ->select('products.*')
                 ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
-                ->where('products.type', 2)
+                ->whereIn('products.type', [2,3])
                 ->where('products.status', 1);
 
             if ($category == 'all') {
@@ -371,5 +371,10 @@ class IndexController extends Controller
     public function productRentalPage()
     {
         return view('frontend.pages.rental');
+    }
+
+    public function readBook()
+    {
+        return view('frontend.pages.read-book');
     }
 }
