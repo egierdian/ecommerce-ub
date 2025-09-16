@@ -29,6 +29,11 @@
         el: ".swiper-pagination",
         clickable: true,
       },
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      loop: true,
     });
 
     var category_swiper = new Swiper(".category-carousel", {
