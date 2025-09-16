@@ -396,7 +396,7 @@
       let start = $('#start_datetime').val();
       let end = $('#end_datetime').val();
       $.ajax({
-        url: "{{ route('frontend.product.rent') }}",
+        url: "{{ route('frontend.product.rental.search') }}",
         type: "POST",
         data: {
           _token: "{{ csrf_token() }}",

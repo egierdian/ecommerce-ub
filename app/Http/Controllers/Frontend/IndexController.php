@@ -332,7 +332,7 @@ class IndexController extends Controller
         return view('frontend.pages.faq', compact('faqs'));
     }
 
-    public function searchRentProduct(Request $request) {
+    public function searchRentals(Request $request) {
         $startDate = $request->start_datetime;//'2025-09-15 09:00:00';
         $endDate   = $request->end_datetime;//'2025-09-15 10:00:00';
 
@@ -365,5 +365,10 @@ class IndexController extends Controller
                 ]
             ]);
         }
+    }
+
+    public function productRentalPage()
+    {
+        return view('frontend.pages.rental');
     }
 }

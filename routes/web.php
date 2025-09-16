@@ -25,7 +25,8 @@ Route::get('/tentang-kami', [Controllers\Frontend\IndexController::class, 'about
 Route::get('/kontak', [Controllers\Frontend\IndexController::class, 'contactUs'])->name('frontend.contact');
 Route::get('/faq', [Controllers\Frontend\IndexController::class, 'faq'])->name('frontend.faq');
 
-Route::post('/rent-product/search', [Controllers\Frontend\IndexController::class, 'searchRentProduct'])->name('frontend.product.rent');
+Route::post('/rental/search', [Controllers\Frontend\IndexController::class, 'searchRentals'])->name('frontend.product.rental.search');
+Route::get('/sewa', [Controllers\Frontend\IndexController::class, 'productRentalPage'])->name('frontend.product.rental');
 #end frontend
 
 #frontend auth
