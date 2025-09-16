@@ -170,6 +170,7 @@ class IndexController extends Controller
                 ])
                 ->select('products.*')
                 ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
+                ->where('products.type', 2)
                 ->where('products.status', 1);
 
             if ($category == 'all') {
