@@ -318,6 +318,9 @@
                                 <a href="{{route('frontend.about-us')}}" class="nav-link">Tentang Kami</a>
                             </li>
                             <li class="menu-item">
+                                <a href="{{route('frontend.product.rental')}}" class="nav-link">Produk Sewa</a>
+                            </li>
+                            <li class="menu-item">
                                 <a href="{{route('login')}}" class="nav-link">Masuk</a>
                             </li>
                             <li class="menu-item">
