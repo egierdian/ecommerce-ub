@@ -271,6 +271,7 @@ class ProductController extends Controller
 
             return redirect()->route('admin.product')->with('success', 'Success updated!');
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return redirect()->back()->withInput();
         }
     }
