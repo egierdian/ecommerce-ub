@@ -163,15 +163,20 @@ class DashboardController extends Controller
     public function productPaid()
     {
         $userId = Auth::user()->id;
-        $products = TransactionItem::with('product')
+        $products = TransactionItem::with(['product', 'transaction'])
             ->whereHas('transaction', function ($q) {
                 $q->where('user_id', Auth::id())
                 ->where('status', 2);
             })
-            ->select('product_id')
-            ->groupBy('product_id')
+            ->select('product_id', 'transaction_id')
+            ->groupBy('product_id', 'transaction_id')
             ->get()
-            ->pluck('product'); 
+            ->map(function ($item) {
+                return [
+                    'product' => $item->product,
+                    'transaction_updated_at' => $item->transaction->updated_at ?? null
+                ];
+            });
 
         return view('frontend.dashboard.product-paid', compact('products'));
     }
