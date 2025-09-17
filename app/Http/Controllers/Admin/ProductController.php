@@ -233,6 +233,11 @@ class ProductController extends Controller
             ];
             $data->update($param);
 
+            $images = ProductImage::where('product_id', $id)->get();
+            foreach ($images as $img) {
+                $this->deleteImageFile($img->path);
+                $img->delete();
+            }
 
             return redirect()->route('admin.product')->with('success', 'Success deleted!');
         } catch (\Exception $e) {
