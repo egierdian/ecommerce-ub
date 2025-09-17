@@ -159,6 +159,13 @@
 								<p>Faq</p>
 							</a>
 						</li>
+
+						<li class="nav-item {{ request()->is('admin/rental-price*') ? 'active' : '' }}">
+							<a href="{{ route('admin.rental-price') }}">
+								<i class="fas fa-dollar-sign"></i>
+								<p>Rent Price</p>
+							</a>
+						</li>
 						@endif
 
 						<li class="nav-item {{ request()->is('admin/product*') ? 'active' : '' }}">
@@ -168,13 +175,6 @@
 							</a>
 						</li>
 
-
-						<li class="nav-item {{ request()->is('admin/rental-price*') ? 'active' : '' }}">
-							<a href="{{ route('admin.rental-price') }}">
-								<i class="fas fa-dollar-sign"></i>
-								<p>Rent Price</p>
-							</a>
-						</li>
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
