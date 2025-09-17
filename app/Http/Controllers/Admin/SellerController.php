@@ -49,7 +49,7 @@ class SellerController extends Controller
             'name' => 'required',     
             'password'  => 'required',   
             'email'  => 'required|unique:users,email',
-            'phone' => ['required', 'regex:/^0[0-9]{0,15}$/', 'max:16'],
+            'phone' => ['required', 'regex:/^0[0-9]{0,15}$/'],
         ]);
 
         $validator->validate();
@@ -77,7 +77,7 @@ class SellerController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email'  => 'required|unique:users,email,' . $id,
-            'phone' => ['required', 'regex:/^0[0-9]{0,15}$/', 'max:16'],
+            'phone' => ['required', 'regex:/^0[0-9]{0,15}$/'],
         ]);
         $validator->validate();
 
