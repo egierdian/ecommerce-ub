@@ -48,7 +48,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('dashboard')->group(functio
 });
 
 #admin
-Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:administrator|seller'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
     
     Route::group((['prefix' => 'product']), function () {
@@ -70,16 +70,6 @@ Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(functi
         Route::get('/delete/{id}', [Controllers\Admin\RentalPriceController::class, 'destroy'])->name('admin.rental-price.delete');
     });
 
-    
-    Route::group((['prefix' => 'category']), function () {
-        Route::get('/', [Controllers\Admin\CategoryController::class, 'index'])->name('admin.category');
-        Route::get('/create', [Controllers\Admin\CategoryController::class, 'create'])->name('admin.category.create');
-        Route::get('/edit/{id}', [Controllers\Admin\CategoryController::class, 'edit'])->name('admin.category.edit');
-        Route::post('/store', [Controllers\Admin\CategoryController::class, 'store'])->name('admin.category.store');
-        Route::post('/update/{id}', [Controllers\Admin\CategoryController::class, 'update'])->name('admin.category.update');
-        Route::get('/delete/{id}', [Controllers\Admin\CategoryController::class, 'destroy'])->name('admin.category.delete');
-    });
-    
     Route::group((['prefix' => 'slider']), function () {
         Route::get('/', [Controllers\Admin\SliderController::class, 'index'])->name('admin.slider');
         Route::get('/create', [Controllers\Admin\SliderController::class, 'create'])->name('admin.slider.create');
@@ -94,13 +84,24 @@ Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(functi
         Route::get('/approval/{id}', [Controllers\Admin\TransactionController::class, 'approval'])->name('admin.transaction.approval');
         Route::get('/detail/{id}', [Controllers\Admin\TransactionController::class, 'detail'])->name('admin.transaction.detail');
     });
+});
 
+
+Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(function () { 
+    Route::group((['prefix' => 'category']), function () {
+        Route::get('/', [Controllers\Admin\CategoryController::class, 'index'])->name('admin.category');
+        Route::get('/create', [Controllers\Admin\CategoryController::class, 'create'])->name('admin.category.create');
+        Route::get('/edit/{id}', [Controllers\Admin\CategoryController::class, 'edit'])->name('admin.category.edit');
+        Route::post('/store', [Controllers\Admin\CategoryController::class, 'store'])->name('admin.category.store');
+        Route::post('/update/{id}', [Controllers\Admin\CategoryController::class, 'update'])->name('admin.category.update');
+        Route::get('/delete/{id}', [Controllers\Admin\CategoryController::class, 'destroy'])->name('admin.category.delete');
+    });
+    
     Route::group((['prefix' => 'setting']), function () {
         Route::get('/', [Controllers\Admin\SettingController::class, 'index'])->name('admin.setting');
         Route::post('/update', [Controllers\Admin\SettingController::class, 'update'])->name('admin.setting.update');
     });
 
-    
     Route::group((['prefix' => 'faq']), function () {
         Route::get('/', [Controllers\Admin\FaqController::class, 'index'])->name('admin.faq');
         Route::get('/create', [Controllers\Admin\FaqController::class, 'create'])->name('admin.faq.create');
@@ -110,6 +111,14 @@ Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(functi
         Route::get('/delete/{id}', [Controllers\Admin\FaqController::class, 'destroy'])->name('admin.faq.delete');
     });
     
+    Route::group((['prefix' => 'seller']), function () {
+        Route::get('/', [Controllers\Admin\SellerController::class, 'index'])->name('admin.seller');
+        Route::get('/create', [Controllers\Admin\SellerController::class, 'create'])->name('admin.seller.create');
+        Route::get('/edit/{id}', [Controllers\Admin\SellerController::class, 'edit'])->name('admin.seller.edit');
+        Route::post('/store', [Controllers\Admin\SellerController::class, 'store'])->name('admin.seller.store');
+        Route::post('/update/{id}', [Controllers\Admin\SellerController::class, 'update'])->name('admin.seller.update');
+        Route::get('/delete/{id}', [Controllers\Admin\SellerController::class, 'destroy'])->name('admin.seller.delete');
+    });
 });
 
 Route::get('/masuk', [Controllers\AuthController::class, 'showLogin'])->name('login');

@@ -207,7 +207,7 @@
                     <ul class="d-flex justify-content-end list-unstyled m-0">
                         @if(Auth::check())
                         <li>
-                            <a href="{{Auth::user()->role == 'administrator' ? route('admin.dashboard') : route('frontend.dashboard')}}" class="rounded-circle bg-light p-2 mx-1">
+                            <a href="{{Auth::user()->role == 'customer' ? route('frontend.dashboard') : route('admin.dashboard')}}" class="rounded-circle bg-light p-2 mx-1">
                                 <svg width="24" height="24" viewBox="0 0 24 24">
                                     <use xlink:href="#user"></use>
                                 </svg>

@@ -133,27 +133,19 @@
 							</span>
 							<h4 class="text-section">Master Data</h4>
 						</li>
+						@if(Auth::user()->role == 'administrator')
 						<li class="nav-item {{ request()->is('admin/category*') ? 'active' : '' }}">
 							<a href="{{ route('admin.category') }}">
 								<i class="fas fa-list"></i>
 								<p>Category</p>
 							</a>
 						</li>
-
-						<li class="nav-item {{ request()->is('admin/product*') ? 'active' : '' }}">
-							<a href="{{ route('admin.product') }}">
-								<i class="fas fa-box"></i>
-								<p>Product</p>
+						<li class="nav-item {{ request()->is('admin/seller*') ? 'active' : '' }}">
+							<a href="{{ route('admin.seller') }}">
+								<i class="fas fa-user-tie"></i>
+								<p>Seller</p>
 							</a>
 						</li>
-
-						<li class="nav-item {{ request()->is('admin/rental-price*') ? 'active' : '' }}">
-							<a href="{{ route('admin.rental-price') }}">
-								<i class="fas fa-dollar-sign"></i>
-								<p>Rent Price</p>
-							</a>
-						</li>
-
 						<li class="nav-item {{ request()->is('admin/slider*') ? 'active' : '' }}">
 							<a href="{{ route('admin.slider') }}">
 								<i class="fas fa-images"></i>
@@ -165,6 +157,22 @@
 							<a href="{{ route('admin.faq') }}">
 								<i class="fas fa-question-circle"></i>
 								<p>Faq</p>
+							</a>
+						</li>
+						@endif
+
+						<li class="nav-item {{ request()->is('admin/product*') ? 'active' : '' }}">
+							<a href="{{ route('admin.product') }}">
+								<i class="fas fa-box"></i>
+								<p>Product</p>
+							</a>
+						</li>
+
+
+						<li class="nav-item {{ request()->is('admin/rental-price*') ? 'active' : '' }}">
+							<a href="{{ route('admin.rental-price') }}">
+								<i class="fas fa-dollar-sign"></i>
+								<p>Rent Price</p>
 							</a>
 						</li>
 						<li class="nav-section">
@@ -181,6 +189,7 @@
 							</a>
 						</li>
 
+						@if(Auth::user()->role == 'administrator')
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
@@ -193,6 +202,7 @@
 								<p>Setting</p>
 							</a>
 						</li>
+						@endif
 					</ul>
 				</div>
 			</div>

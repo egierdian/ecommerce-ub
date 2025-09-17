@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -16,11 +17,17 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Transaction::query()
+            $query = Transaction::query()
                 ->select('transactions.*', 'users.name as customer_name', 'users.email as customer_email')
-                ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-                ->latest();
+                ->leftJoin('users', 'users.id', '=', 'transactions.user_id');
 
+            if(Auth::user()->role != 'administrator') {
+                $query->whereHas('transactionItems.product', function ($q) {
+                    $q->where('products.user_id', Auth::user()->id);
+                });
+            }
+
+            $data = $query->latest();
 
             return Datatables::of($data)
                 ->addIndexColumn()

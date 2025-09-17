@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Product::query()->where("status", 1);
+            $query = Product::query()->where("status", 1);
+
+            if(Auth::user()->role != 'administrator') $query->where('user_id', Auth::user()->id);
+            $data = $query;
 
             return Datatables::of($data)
                 ->addIndexColumn()
@@ -113,6 +117,7 @@ class ProductController extends Controller
                 // 'url' => $request->url,
                 'status' => 1,
                 'slug' => Str::slug($request->name),
+                'user_id' => Auth::user()->id
             ];
             $price = null;
             $base_price_per_hour = null;
