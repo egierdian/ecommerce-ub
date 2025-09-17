@@ -29,10 +29,10 @@ Route::get('/faq', [Controllers\Frontend\IndexController::class, 'faq'])->name('
 Route::post('/rental/search', [Controllers\Frontend\IndexController::class, 'searchRentals'])->name('frontend.product.rental.search');
 Route::get('/sewa', [Controllers\Frontend\IndexController::class, 'productRentalPage'])->name('frontend.product.rental');
 
-Route::get('/read-book', [Controllers\Frontend\IndexController::class, 'readBook'])->name('frontend.read-book');
+Route::get('/read-book/{slug}', [Controllers\Frontend\IndexController::class, 'readBook'])->name('frontend.read-book');
 
 
-Route::get('/pdf/view', [PdfController::class, 'stream'])->name('pdf.view');#end frontend
+Route::get('/pdf/view/{product_id}', [PdfController::class, 'stream'])->name('pdf.view');#end frontend
 
 #frontend auth
 Route::middleware(['auth', 'role:customer'])->prefix('dashboard')->group(function () {
@@ -44,6 +44,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('dashboard')->group(functio
     Route::get('/profil', [Controllers\Frontend\DashboardController::class, 'profile'])->name('frontend.dashboard.profile');
     Route::post('/profil', [Controllers\Frontend\DashboardController::class, 'updateProfile'])->name('frontend.dashboard.profile.update');
     Route::post('/payment/upload', [Controllers\Frontend\DashboardController::class, 'paymentUpload'])->name('frontend.dashboard.payment.upload');
+    Route::get('/produk', [Controllers\Frontend\DashboardController::class, 'productPaid'])->name('frontend.dashboard.product-paid');
 });
 
 #admin

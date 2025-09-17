@@ -11,6 +11,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -73,7 +74,12 @@ class ProductController extends Controller
         ]);
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:products,name',
+            'name' => [
+                'required',
+                Rule::unique('products', 'name')->where(function ($query) {
+                    return $query->where('status', 1);
+                }),
+            ],
             'type' => 'required|in:1,2,3',
             'category' => 'required',
             'holiday_price_per_hour' => 'nullable|numeric',
@@ -92,6 +98,10 @@ class ProductController extends Controller
         $validator->sometimes('base_price_per_hour', 'required|numeric|min:100', function ($input) {
             return $input->type == 1;
         });
+
+        $validator->sometimes('file', 'required|mimes:pdf|max:10240', function ($input) {
+            return $input->type == 3;
+        });
         $validator->validate();
 
         try {
@@ -100,7 +110,7 @@ class ProductController extends Controller
                 'type' => $request->type,
                 'category_id' => $request->category,
                 'description' => $request->description,
-                'url' => $request->url,
+                // 'url' => $request->url,
                 'status' => 1,
                 'slug' => Str::slug($request->name),
             ];
@@ -119,6 +129,15 @@ class ProductController extends Controller
             $param['holiday_price_per_hour'] = $holiday_price_per_hour;
             $param['price'] =  $price;
             $param['qty'] =  $qty;
+            if ($request->hasFile('file') && $request->type == 3) {
+                $file = $request->file('file');
+                $fileName = 'product-digital-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
+                $base_path = 'uploads/product';
+                $path = public_path($base_path);
+                $file->move($path, $fileName);
+
+                $param['file'] = $base_path .'/'.$fileName;
+            }
             $product = Product::create($param);
 
             $productId = $product->id;
@@ -140,6 +159,7 @@ class ProductController extends Controller
 
             return redirect()->route('admin.product')->with('success', 'Success created!');
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return redirect()->back()->withInput();
         }
     }
@@ -153,7 +173,12 @@ class ProductController extends Controller
         ]);
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:products,name,' . $id,
+            'name' => [
+                'required',
+                Rule::unique('products', 'name')
+                    ->where(fn($query) => $query->where('status', 1))
+                    ->ignore($id),
+            ],
             'type' => 'required|in:1,2,3',
             'category' => 'required',
             'holiday_price_per_hour' => 'nullable|numeric',
@@ -173,6 +198,9 @@ class ProductController extends Controller
             return $input->type == 1;
         });
 
+        $validator->sometimes('file', 'mimes:pdf|max:10240', function ($input) {
+            return $input->type == 3;
+        });
         $validator->validate();
 
         try {
@@ -182,7 +210,7 @@ class ProductController extends Controller
                 'type' => $request->type,
                 'category_id' => $request->category,
                 'description' => $request->description,
-                'url' => $request->url,
+                // 'url' => $request->url,
                 'slug' => Str::slug($request->name),
             ];
             $price = null;
@@ -200,6 +228,29 @@ class ProductController extends Controller
             $data['holiday_price_per_hour'] = $holiday_price_per_hour;
             $data['price'] =  $price;
             $data['qty'] =  $qty;
+
+
+            #update file product digital
+            $file = $data->file;
+            if($request->hasFile('file') && $request->type == 3)
+            {
+                if(isset($file) && file_exists(public_path($file)))
+                {
+                    $file = $request->file('file');
+                    $fileName = 'product-digital-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
+                    unlink(public_path($file)); 
+                    $base_path = 'uploads/product';
+                    $path = public_path($base_path);
+                    $file->move($path, $fileName);
+                } else {
+                    $file = $request->file('file');
+                    $fileName = 'product-digital-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
+                    $base_path = 'uploads/product';
+                    $path = public_path($base_path);
+                    $file->move($path, $fileName);
+                }
+                $param['file'] = $base_path .'/'.$fileName;
+            }
             $data->update($param);
 
             if ($request->hasFile('images')) {
@@ -232,6 +283,8 @@ class ProductController extends Controller
                 'status' => 0
             ];
             $data->update($param);
+            
+            $this->deleteImageFile($data->file);
 
             $images = ProductImage::where('product_id', $id)->get();
             foreach ($images as $img) {

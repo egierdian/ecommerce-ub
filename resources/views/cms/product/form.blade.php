@@ -110,10 +110,10 @@
                                 </div>
                             </div>
                             <div class="col-md-12 view-type view-digital">
-                                <div class="form-group @error('url') has-error @enderror">
-                                    <label>Url</label>
-                                    <input type="text" name="url" class="form-control" value="{{ isset($data) ? $data->url : old('url') }}">
-                                    @error('url')
+                                <div class="form-group @error('file') has-error @enderror">
+                                    <label>File PDF</label>
+                                    <input type="file" name="file" class="form-control">
+                                    @error('file')
                                     <small class="form-text text-muted">{{ $message }}</small>
                                     @enderror
                                 </div>

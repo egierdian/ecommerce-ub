@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\TransactionItem;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -158,4 +159,21 @@ class DashboardController extends Controller
             return redirect()->route('frontend.dashboard.my-order')->with('error', 'Bukti bayar gagal diupload!');
         }
     }
+
+    public function productPaid()
+    {
+        $userId = Auth::user()->id;
+        $products = TransactionItem::with('product')
+            ->whereHas('transaction', function ($q) {
+                $q->where('user_id', Auth::id())
+                ->where('status', 2);
+            })
+            ->select('product_id')
+            ->groupBy('product_id')
+            ->get()
+            ->pluck('product'); 
+
+        return view('frontend.dashboard.product-paid', compact('products'));
+    }
+
 }

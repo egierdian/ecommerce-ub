@@ -373,8 +373,12 @@ class IndexController extends Controller
         return view('frontend.pages.rental');
     }
 
-    public function readBook()
+    public function readBook($slug)
     {
-        return view('frontend.pages.read-book');
+        $product = Product::where('slug', $slug)->first();
+
+        if(!$product) redirect()->route('frontend.index');
+
+        return view('frontend.pages.read-book', compact('product'));
     }
 }
