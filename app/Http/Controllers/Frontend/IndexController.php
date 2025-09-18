@@ -25,7 +25,7 @@ class IndexController extends Controller
     {
         $categories = Category::with([
             'products' => function ($query) {
-                $query->whereIn('type', [2,3])->limit(10)->with(['firstImage','category','wishlists'])
+                $query->whereIn('type', [2,3])->where('status', 1)->limit(10)->with(['firstImage','category','wishlists'])
                 ->withAvg('reviews', 'rating')->withCount('reviews');
             }
         ])->where('status', 1)->get();
@@ -162,6 +162,7 @@ class IndexController extends Controller
                     }
                 ])->where('category_id', $product->category_id)
                 ->where('id', '!=', $product->id)
+                ->where('products.status', 1)
                 ->inRandomOrder() // ambil acak
                 ->take(7)
                 ->get();
