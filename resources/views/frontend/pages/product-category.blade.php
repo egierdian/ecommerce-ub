@@ -97,7 +97,6 @@
 @section('script')
 <script>
   $(document).ready(function() {
-    console.log('test')
   })
 </script>
 @endsection
