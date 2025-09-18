@@ -60,8 +60,6 @@
             const context = canvas.getContext('2d');
             canvas.height = viewport.height;
             canvas.width = viewport.width;
-            console.log(viewport.height)
-            console.log(viewport.width)
             canvas.style.boxShadow = "0 4px 12px rgba(0,0,0,0.3)";
             canvas.style.background = "#fff";
             canvas.style.borderRadius = "4px";
