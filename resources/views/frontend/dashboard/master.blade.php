@@ -66,16 +66,59 @@
         <div class="row">
 
             <!-- Sidebar for desktop -->
-            <nav class="col-md-3 col-lg-2 d-none d-md-block sidebar p-3">
+            <nav class="col-md-4 col-lg-3 d-none d-md-block sidebar p-3">
                 <div class="d-flex flex-column h-100">
                     <h4 class="px-2 text-white mb-3">👤 Pembeli</h4>
                     <ul class="nav flex-column mb-auto">
-                        <li><a href="{{route('frontend.dashboard')}}" class="nav-link {{ request()->routeIs('frontend.dashboard') ? 'active' : '' }}"><i class="bi bi-house-door me-2"></i>Dashboard</a></li>
-                        <li><a href="{{route('frontend.dashboard.my-order')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}"><i class="bi bi-basket me-2"></i>Pesanan Saya</a></li>
-                        <li><a href="{{route('frontend.dashboard.product-paid')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.product-paid') ? 'active' : '' }}"><i class="bi bi-basket me-2"></i>Produk terbeli</a></li>
-                        <li><a href="{{route('frontend.dashboard.wishlist')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.wishlist') ? 'active' : '' }}"><i class="bi bi-heart me-2"></i>Wishlist</a></li>
-                        <li><a href="{{route('frontend.dashboard.change-password')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.change-password') ? 'active' : '' }}"><i class="bi bi-gear me-2"></i>Password</a></li>
-                        <li><a href="{{route('frontend.dashboard.profile')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.profile') ? 'active' : '' }}"><i class="bi bi-gear me-2"></i>Profil</a></li>
+                        <li>
+                            <a href="{{route('frontend.dashboard')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard') ? 'active' : '' }}">
+                                <i class="fas fa-home me-2"></i> Dashboard
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.my-order')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}">
+                                <i class="fas fa-shopping-basket me-2"></i> Pesanan Saya
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.product-paid')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.product-paid') ? 'active' : '' }}">
+                                <i class="fas fa-box-open me-2"></i> Produk Terbeli
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.review')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.review') ? 'active' : '' }}">
+                                <i class="fas fa-star me-2"></i> Penilaian
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.wishlist')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.wishlist') ? 'active' : '' }}">
+                                <i class="fas fa-heart me-2"></i> Wishlist
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.change-password')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.change-password') ? 'active' : '' }}">
+                                <i class="fas fa-key me-2"></i> Password
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.profile')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.profile') ? 'active' : '' }}">
+                                <i class="fas fa-user me-2"></i> Profil
+                            </a>
+                        </li>
+
                     </ul>
                     <div class="px-2 mt-auto">
                         <a href="{{route('logout')}}" class="btn btn-outline-light w-100"><i class="bi bi-box-arrow-right me-1"></i> Logout</a>
@@ -91,12 +134,54 @@
                 </div>
                 <div class="offcanvas-body d-flex flex-column">
                     <ul class="nav flex-column mb-auto">
-                        <li><a href="{{route('frontend.dashboard')}}" class="nav-link {{ request()->routeIs('frontend.dashboard') ? 'active' : '' }}"><i class="bi bi-house-door me-2"></i>Dashboard</a></li>
-                        <li><a href="{{route('frontend.dashboard.my-order')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}"><i class="bi bi-basket me-2"></i>Pesanan Saya</a></li>
-                        <li><a href="{{route('frontend.dashboard.product-paid')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.product-paid') ? 'active' : '' }}"><i class="bi bi-basket me-2"></i>Produk terbeli</a></li>
-                        <li><a href="{{route('frontend.dashboard.wishlist')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.wishlist') ? 'active' : '' }}"><i class="bi bi-heart me-2"></i>Wishlist</a></li>
-                        <li><a href="{{route('frontend.dashboard.change-password')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.change-password') ? 'active' : '' }}"><i class="bi bi-gear me-2"></i>Password</a></li>
-                        <li><a href="{{route('frontend.dashboard.profile')}}" class="nav-link {{ request()->routeIs('frontend.dashboard.profile') ? 'active' : '' }}"><i class="bi bi-gear me-2"></i>Profil</a></li>
+                        <li>
+                            <a href="{{route('frontend.dashboard')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard') ? 'active' : '' }}">
+                                <i class="fas fa-home me-2"></i> Dashboard
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.my-order')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}">
+                                <i class="fas fa-shopping-basket me-2"></i> Pesanan Saya
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.product-paid')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.product-paid') ? 'active' : '' }}">
+                                <i class="fas fa-box-open me-2"></i> Produk Terbeli
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.review')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.review') ? 'active' : '' }}">
+                                <i class="fas fa-star me-2"></i> Penilaian
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.wishlist')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.wishlist') ? 'active' : '' }}">
+                                <i class="fas fa-heart me-2"></i> Wishlist
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.change-password')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.change-password') ? 'active' : '' }}">
+                                <i class="fas fa-key me-2"></i> Password
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.dashboard.profile')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.profile') ? 'active' : '' }}">
+                                <i class="fas fa-user me-2"></i> Profil
+                            </a>
+                        </li>
                     </ul>
                     <div class="mt-auto">
                         <a href="#" class="btn btn-outline-light w-100"><i class="bi bi-box-arrow-right me-1"></i> Logout</a>
@@ -105,7 +190,7 @@
             </div>
 
             <!-- Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-3">
+            <main class="col-md-8 ms-sm-auto col-lg-9 px-md-4 py-3">
                 <!-- Mobile topbar with menu button -->
                 <div class="d-md-none mb-3">
                     <button class="btn btn-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar">
@@ -129,9 +214,23 @@
 <script>
     $(document).ready(function() {
         $(".datatableCustomer").DataTable({
-            order: [[1, "desc"]]
+            order: [
+                [1, "desc"]
+            ]
+        });
+
+        
+        $('.btn-review').click(function(){
+            let productId = $(this).data('product-id');
+            let productName = $(this).data('product-name');
+
+            $('#reviewModalLabel').text('Beri Penilaian untuk ' + productName);
+            $('#product_id').val(productId);
+
+            $('#reviewModal').modal('show');
         });
     })
+
     function showModalUpload(e) {
         let data = $(e).data()
 

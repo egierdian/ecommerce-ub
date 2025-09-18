@@ -44,4 +44,9 @@ class Product extends Model
         return $this->belongsToMany(User::class, 'wishlists', 'product_id', 'user_id')
                     ->withTimestamps();
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

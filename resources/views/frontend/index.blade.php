@@ -152,11 +152,11 @@
 
                     {{-- Rating --}}
                     <div class="rating my-1">
-                      @php $rating = $product->rating ?? 4; @endphp
+                      @php $rating = $product->reviews_avg_rating; @endphp
                       @for($i = 1; $i <= 5; $i++)
                         <i class="fa{{ $i <= $rating ? 's' : 'r' }} fa-star text-warning"></i>
                         @endfor
-                        <span class="small text-muted">({{$product->reviews_count ?? rand(5, 50)}})</span>
+                        <span class="small text-muted">({{$product->reviews_count ?? ''}})</span>
                     </div>
                     <div class="position-absolute bottom-0 start-0 end-0 p-3">
                       <span class="price">Rp. {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
@@ -195,6 +195,14 @@
                     </figure>
                     <h3>{{$product->name}}</h3>
                     <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
+                    {{-- Rating --}}
+                    <div class="rating my-1">
+                      @php $rating = $product->reviews_avg_rating; @endphp
+                      @for($i = 1; $i <= 5; $i++)
+                        <i class="fa{{ $i <= $rating ? 's' : 'r' }} fa-star text-warning"></i>
+                        @endfor
+                        <span class="small text-muted">({{$product->reviews_count ?? ''}})</span>
+                    </div>
                     <div class="position-absolute bottom-0 start-0 end-0 p-3">
                       <span class="price">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
                       <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Lihat</a>
@@ -275,6 +283,14 @@
                 </figure>
                 <h3>{{$product->name}}</h3>
                 <span class="product-category">{{$product->type=='1'?'Sewa':'Produk'}} - {{$product->category->name}}</span>
+                {{-- Rating --}}
+                <div class="rating my-1">
+                  @php $rating = $product->reviews_avg_rating; @endphp
+                  @for($i = 1; $i <= 5; $i++)
+                    <i class="fa{{ $i <= $rating ? 's' : 'r' }} fa-star text-warning"></i>
+                  @endfor
+                  <span class="small text-muted">({{$product->reviews_count ?? ''}})</span>
+                </div>
                 <div class="position-absolute bottom-0 start-0 end-0 p-3">
                   <span class="price fw-bold fs-5 text-primary">Rp {{number_format(($product->type == 1 ? $product->base_price_per_hour : $product->price), 0, ',', '.')}}</span>
                   <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Lihat</a>
@@ -392,10 +408,7 @@
 @section('script')
 <script>
   $(document).ready(function() {
-    const baseUrl = window.location.origin + '/' + window.location.pathname.split('/')[1] + '/public';
-    // const baseUrl = window.location.origin 
     $('#buttonFilter').on('click', function(e) {
-      console.log(baseUrl)
       let start = $('#start_datetime').val();
       let end = $('#end_datetime').val();
       $.ajax({
@@ -426,15 +439,15 @@
                           <div class="col">
                             <div class="product-item h-100 d-flex flex-column">
                               <figure>
-                                <a href="${baseUrl}/product/${product.category.slug}/${product.slug}?param=${res.param}" title="${product.name}">
-                                  <img src="${baseUrl}/${product.first_image?.path ?? ''}" class="tab-image" width="100%">
+                                <a href="/product/${product.category.slug}/${product.slug}?param=${res.param}" title="${product.name}">
+                                  <img src="/${product.first_image?.path ?? ''}" class="tab-image" width="100%">
                                 </a>
                               </figure>
                               <h3>${product.name}</h3>
                               <span class="product-category">${product.type == 1 ? 'Sewa' : 'Produk'} - ${product.category.name}</span>
                               <div class="position-absolute bottom-0 start-0 end-0 p-3">
                                 <span class="price">Rp. ${Number(product.type == 1 ? product.base_price_per_hour : product.price).toLocaleString('id-ID')}</span>
-                                <a href="${baseUrl}/product/${product.category.slug}/${product.slug}?param=${res.param}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Sewa</a>
+                                <a href="/product/${product.category.slug}/${product.slug}?param=${res.param}" class="btn btn-primary btn-sm mt-2 rounded-3 w-100 fw-semibold">Sewa</a>
                               </div>
                             </div>
                           </div>`;

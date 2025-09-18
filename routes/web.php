@@ -45,6 +45,8 @@ Route::middleware(['auth', 'role:customer'])->prefix('dashboard')->group(functio
     Route::post('/profil', [Controllers\Frontend\DashboardController::class, 'updateProfile'])->name('frontend.dashboard.profile.update');
     Route::post('/payment/upload', [Controllers\Frontend\DashboardController::class, 'paymentUpload'])->name('frontend.dashboard.payment.upload');
     Route::get('/produk', [Controllers\Frontend\DashboardController::class, 'productPaid'])->name('frontend.dashboard.product-paid');
+    Route::get('/penilaian', [Controllers\Frontend\DashboardController::class, 'review'])->name('frontend.dashboard.review');
+    Route::post('/penilaian', [Controllers\Frontend\DashboardController::class, 'reviewStore'])->name('frontend.dashboard.review.store');
 });
 
 #admin

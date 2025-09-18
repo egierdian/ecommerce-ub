@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use App\Models\User;
@@ -179,6 +180,64 @@ class DashboardController extends Controller
             });
 
         return view('frontend.dashboard.product-paid', compact('products'));
+    }
+
+    public function review()
+    {
+        $userId = Auth::user()->id;
+        $products = TransactionItem::with(['product', 'transaction'])
+            ->whereHas('transaction', function ($q) {
+                $q->where('user_id', Auth::id())
+                ->where('status', 2);
+            })
+            ->select('product_id', 'transaction_id')
+            ->groupBy('product_id', 'transaction_id')
+            ->get()
+            ->map(function ($item) {
+                $review = Review::where('product_id', $item->product_id)
+                                ->where('user_id', Auth::id())
+                                ->first();
+
+                return [
+                    'product' => $item->product,
+                    'rating' => $review->rating ?? null,
+                    'review' => $review->comment ?? null,
+                    'review_date' => $review->created_at ?? null,
+                    'review_id' => $review->id ?? null,
+                ];
+            });
+
+        return view('frontend.dashboard.review', compact('products'));
+    }
+
+    public function reviewStore(Request $request)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:1000',
+        ]);
+
+        try {
+            $existing = Review::where('user_id', Auth::user()->id)
+                            ->where('product_id', $request->product_id)
+                            ->first();
+
+            if ($existing) {
+                return redirect()->back()->with('error', 'Anda sudah memberi review untuk produk ini.');
+            }
+
+            Review::create([
+                'user_id' => Auth::user()->id,
+                'product_id' => $request->product_id,
+                'rating' => $request->rating,
+                'comment' => $request->comment,
+            ]);
+
+            return redirect()->back()->with('success', 'Review berhasil dikirim!');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect()->back()->with('error', 'Silahkan coba beberapa saat lagi.');
+        }
     }
 
 }

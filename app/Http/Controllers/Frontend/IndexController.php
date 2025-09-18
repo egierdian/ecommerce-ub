@@ -25,7 +25,8 @@ class IndexController extends Controller
     {
         $categories = Category::with([
             'products' => function ($query) {
-                $query->whereIn('type', [2,3])->limit(10)->with(['firstImage','category','wishlists']);
+                $query->whereIn('type', [2,3])->limit(10)->with(['firstImage','category','wishlists'])
+                ->withAvg('reviews', 'rating')->withCount('reviews');
             }
         ])->where('status', 1)->get();
 
@@ -35,7 +36,9 @@ class IndexController extends Controller
             'wishlists' => function($q) {
                 $q->where('user_id', Auth::id());
             }
-        ])->whereIn('type', [2,3])->where('status', 1)->limit(10)->get();
+        ])->whereIn('type', [2,3])->where('status', 1)
+        ->withAvg('reviews', 'rating')
+        ->withCount('reviews')->limit(10)->get();
 
         $sliders = Slider::where('status', 1)->get();
 
@@ -53,10 +56,15 @@ class IndexController extends Controller
                     $q->where('user_id', Auth::id());
                 }
             ])
-            ->select('products.id', 'products.category_id',  'products.slug', 'products.name', 'products.slug', 'products.price', 'products.type', DB::raw('SUM(transaction_items.qty) as total_sold'))
+            ->select('products.id', 'products.category_id',  'products.slug', 'products.name', 'products.slug', 'products.price', 'products.type', DB::raw('SUM(transaction_items.qty) as total_sold'),
+            
+                DB::raw('(SELECT AVG(rating) FROM reviews WHERE reviews.product_id = products.id) as reviews_avg_rating'),
+                DB::raw('(SELECT COUNT(*) FROM reviews WHERE reviews.product_id = products.id) as reviews_count')
+            )
             ->join('transaction_items', 'products.id', '=', 'transaction_items.product_id')
             ->join('transactions', 'transactions.id', '=', 'transaction_items.transaction_id')
             ->where('transactions.status', 2)
+            ->where('products.status', 1)
             ->whereIn('products.type', [2,3])
             ->groupBy('products.id')
             ->orderByDesc('total_sold')
