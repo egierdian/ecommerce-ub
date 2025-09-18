@@ -377,8 +377,11 @@ class IndexController extends Controller
     {
         $product = Product::where('slug', $slug)->first();
 
-        if(!$product) redirect()->route('frontend.index');
+        if(!$product) abort(404);
 
-        return view('frontend.pages.read-book', compact('product'));
+        $token = Str::random(40);
+        session(['pdf_token' => $token]);
+
+        return view('frontend.pages.read-book', compact('product', 'token'));
     }
 }

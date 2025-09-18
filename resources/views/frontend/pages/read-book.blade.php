@@ -40,7 +40,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
 <script>
-    const url = "{{ route('pdf.view', ['product_id' => encrypt($product->id)]) }}";
+    const url = "{{ route('pdf.view', ['product_id' => encrypt($product->id), 'pdf_token' => $token]) }}";
 
     let pdfDoc = null;
     let currentPage = 1;

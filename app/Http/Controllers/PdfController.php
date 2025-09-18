@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PdfController extends Controller
 {
-    public function stream($product_id = null)
+    public function stream(Request $request, $product_id = null)
     {
         try {
             $id = decrypt($product_id);
@@ -40,6 +40,12 @@ class PdfController extends Controller
             if (!file_exists($path)) {
                 abort(403, 'Forbidden');
             }
+            
+            if ($request->pdf_token !== session('pdf_token')) {
+                abort(403, 'Invalid or expired link.');
+            }
+
+            session()->forget('pdf_token');
 
             return new StreamedResponse(function () use ($path) {
                 $stream = fopen($path, 'rb');
