@@ -253,7 +253,7 @@
     </div>
 
     <div id="google_translate_element" style="display:none;"></div>
-    <header>
+    <header id="headerSection">
         <div class="container-fluid">
             <div class="row py-3 border-bottom">
 
@@ -588,7 +588,7 @@
         if (selectField) {
             selectField.value = lang;
             selectField.dispatchEvent(new Event("change"));
-            document.getElementById("header").style.paddingTop = "40px"; // tambah padding ketika aktif
+            document.getElementById("headerSection").style.paddingTop = "40px"; // tambah padding ketika aktif
         }
         }
 
@@ -596,7 +596,7 @@
         const observer = new MutationObserver(() => {
         let iframe = document.querySelector(".goog-te-banner-frame");
         if (!iframe) {
-            document.getElementById("header").style.paddingTop = "0px"; // hapus padding ketika translate hilang
+            document.getElementById("headerSection").style.paddingTop = "0px"; // hapus padding ketika translate hilang
         }
         });
 
