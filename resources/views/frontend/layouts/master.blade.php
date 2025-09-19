@@ -495,7 +495,7 @@
 
     <script src="{{asset('frontend/js/bootstrap.bundle.min.js')}}" ></script>
     <script src="{{asset('frontend/js/plugins.js')}}"></script>
-    <script src="{{asset('frontend/js/script.js')}}"></script>
+    <script src="{{asset('frontend/js/script.js')}}?v={{ filemtime(public_path('frontend/js/script.js')) }}"></script>
     <script src="{{asset('frontend/js/global.js')}}?v={{ filemtime(public_path('frontend/js/global.js')) }}"></script>
 
     <script>
