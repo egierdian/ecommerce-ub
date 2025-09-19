@@ -69,7 +69,7 @@ $(document).ready(function() {
     e.preventDefault();
     let cartId = $(this).data('id');
     let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
+    console.log('test')
     $('.section-message').html('')
     $.ajax({
         url: '/cart/update/' + cartId,
