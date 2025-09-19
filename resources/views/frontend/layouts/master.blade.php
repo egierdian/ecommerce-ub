@@ -136,11 +136,11 @@
                     <div class="section-message"></div>
                     @foreach($carts as $cart)
                     <li class="list-group-item d-flex justify-content-between lh-sm align-items-center" id="cart-item-{{($cart->id)}}">
-                        <div>
+                        <div style="width:65%;">
                             <h6 class="my-0">{{$cart->product->name}}</h6>
                             <small class="text-body-secondary">Jumlah : {{$cart->qty}}</small>
                         </div>
-                        <div style="text-align: right;">
+                        <div style="text-align: right;width: 35%;">
                             <p class="text-body-secondary m-0">Rp {{number_format($cart->price, 0, ',', '.')}}</p>
                             <button class="btn btn-sm btn-delete-cart" style="padding: 0 7px;" data-id="{{$cart->id}}"><i class="fa fa-trash"></i></button>
                         </div>
