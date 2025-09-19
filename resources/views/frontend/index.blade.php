@@ -370,31 +370,7 @@
     <div class="mitra-carousel swiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-1.webp')}}"
-            alt="Mitra" class="img-fluid mb-2">
-        </div>
-        <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-2.webp')}}"
-            alt="Mitra" class="img-fluid mb-2">
-        </div>
-        <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-3.webp')}}"
-            alt="Mitra" class="img-fluid mb-2">
-        </div>
-        <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-4.webp')}}"
-            alt="Mitra" class="img-fluid mb-2">
-        </div>
-        <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-5.webp')}}"
-            alt="Mitra" class="img-fluid mb-2">
-        </div>
-        <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-6.webp')}}"
-            alt="Mitra" class="img-fluid mb-2">
-        </div>
-        <div class="swiper-slide text-center">
-          <img src="{{asset('frontend/images/mitra/clients-7.webp')}}"
+          <img src="{{asset('frontend/images/mitra/press.png')}}"
             alt="Mitra" class="img-fluid mb-2">
         </div>
       </div>
