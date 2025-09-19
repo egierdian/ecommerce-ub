@@ -135,13 +135,15 @@
                 <ul class="list-group mb-3">
                     <div class="section-message"></div>
                     @foreach($carts as $cart)
-                    <li class="list-group-item d-flex justify-content-between lh-sm" id="cart-item-{{($cart->id)}}">
+                    <li class="list-group-item d-flex justify-content-between lh-sm align-items-center" id="cart-item-{{($cart->id)}}">
                         <div>
                             <h6 class="my-0">{{$cart->product->name}}</h6>
                             <small class="text-body-secondary">Jumlah : {{$cart->qty}}</small>
-                            <button class="btn btn-sm btn-delete-cart" data-id="{{$cart->id}}"><i class="fa fa-trash"></i></button>
                         </div>
-                        <span class="text-body-secondary">Rp {{number_format($cart->price, 0, ',', '.')}}</span>
+                        <div style="text-align: right;">
+                            <p class="text-body-secondary m-0">Rp {{number_format($cart->price, 0, ',', '.')}}</p>
+                            <button class="btn btn-sm btn-delete-cart" style="padding: 0 7px;" data-id="{{$cart->id}}"><i class="fa fa-trash"></i></button>
+                        </div>
                     </li>
                     @endforeach
                     <li class="list-group-item d-flex justify-content-between">
