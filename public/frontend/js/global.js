@@ -28,6 +28,36 @@ $(document).ready(function() {
     });
   });
 
+
+  $('.btn-update-cart').click(function (e) {
+    e.preventDefault();
+    let cartId = $(this).data('id');
+    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    console.log('test')
+    $('.section-message').html('')
+    $.ajax({
+        url: '/cart/update/' + cartId,
+        type: 'POST',
+        data: {
+          _token: csrfToken,
+          quantity: $(`.item-quantity-cart-${cartId} [name=quantityCart]`).val()
+        },
+        success: function (response) {
+          let msgAlert = 'danger'
+          if(response.status) {
+            $('.cart-total').text(`Rp ${response.total}`)
+            $('.count-cart').text(`${response.count}`)
+            $(`#item-quantity-cart-${cartId} [name=quantityCart]`).val(response.quantity)
+            msgAlert = 'success'
+          } else {
+          }
+          $('.section-message').append(`<div class="alert alert-${msgAlert} d-flex justify-content-between align-items-center" id="msgCartError" style="display: none;">
+                        <span class="message">${response.message}</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`)
+        }
+    });
+  });
     
   $('.btn-wishlist').click(function (e) {
     e.preventDefault();
@@ -61,36 +91,6 @@ $(document).ready(function() {
               `);
             }
           }
-        }
-    });
-  });
-
-  $('.btn-update-cart').click(function (e) {
-    e.preventDefault();
-    let cartId = $(this).data('id');
-    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    console.log('test')
-    $('.section-message').html('')
-    $.ajax({
-        url: '/cart/update/' + cartId,
-        type: 'POST',
-        data: {
-          _token: csrfToken,
-          quantity: $(`.item-quantity-cart-${cartId} [name=quantityCart]`).val()
-        },
-        success: function (response) {
-          let msgAlert = 'danger'
-          if(response.status) {
-            $('.cart-total').text(`Rp ${response.total}`)
-            $('.count-cart').text(`${response.count}`)
-            $(`#item-quantity-cart-${cartId} [name=quantityCart]`).val(response.quantity)
-            msgAlert = 'success'
-          } else {
-          }
-          $('.section-message').append(`<div class="alert alert-${msgAlert} d-flex justify-content-between align-items-center" id="msgCartError" style="display: none;">
-                        <span class="message">${response.message}</span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>`)
         }
     });
   });
