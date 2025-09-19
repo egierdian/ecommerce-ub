@@ -51,6 +51,10 @@
             height: 40px !important; /* tetap hitung tinggi biar observer detect */
             visibility: visible !important;
         }
+        .change-language {
+            padding: 10px; 
+            border: 1px solid #f2f2f2;
+        }
     </style>
     @yield('style')
 </head>
@@ -211,7 +215,7 @@
                     <div class="support-box text-end">
                         <!-- <span class="fs-6 text-muted">Butuh Bantuan?</span>
                         <h5 class="mb-0">{{$webSettings['contact_phone']??''}}</h5> -->
-                        <div class="d-flex gap-3">
+                        <div class="d-flex gap-3 change-language">
                             <img src="https://flagcdn.com/w40/id.png" class="flag-icon" onclick="translatePage('id')" title="Bahasa Indonesia" width="30">
                             <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" onclick="translatePage('en')" title="English" width="30">
                         </div>
