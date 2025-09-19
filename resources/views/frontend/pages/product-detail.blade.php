@@ -45,51 +45,6 @@
     margin: 0 8px;
   }
 
-  .section-add-cart {
-    display: flex;
-    align-items: center;
-    border-top: 1px solid #F7F7F7;
-    margin-top: 10px;
-    padding-top: 10px;
-  }
-
-  .section-add-cart .product-qty {
-    width: 85px;
-  }
-
-  .section-add-cart #quantity {
-    height: auto;
-    width: 28px;
-    text-align: center;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
-    margin: 0px;
-    padding: 0px;
-  }
-
-  .section-add-cart .btn-number {
-    width: 26px;
-    height: 26px;
-    line-height: 1;
-    text-align: center;
-    background: #FFFFFF;
-    border: 1px solid #E2E2E2;
-    border-radius: 6px;
-    color: #222;
-    padding: 0;
-  }
-
-  @media (max-width: 768px) {
-    .section-add-cart {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-  }
-
   table {
     width: 100% !important;
   }

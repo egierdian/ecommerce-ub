@@ -123,4 +123,42 @@ class CartController extends Controller
             ]);
         }
     }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $cart = Cart::where('id', $id)->first();
+
+            if (!$cart) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Produk tidak ada di keranjang!'
+                ]);
+            }
+            $subtotal = $cart->price * $request->quantity;
+
+            $cart->update(['qty' => $request->quantity, 'subtotal' => $subtotal]);
+
+            // Hitung ulang total cart user
+            $carts = Cart::where('user_id', Auth::id())
+                ->with('product')
+                ->get();
+
+            $total = $carts->sum(fn($c) => $c->product->price * $c->qty);
+            $count = $carts->sum('qty');
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Produk berhasil diperbarui!',
+                'total'   => number_format($total, 0, ',', '.'),
+                'count'   => $count
+            ]);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return response()->json([
+                'status'  => false,
+                'message' => 'Terjadi kesalahan!',
+            ]);
+        }
+    }
 }

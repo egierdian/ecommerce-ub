@@ -55,6 +55,52 @@
             padding: 10px; 
             border: 1px solid #f2f2f2;
         }
+        
+
+        .section-add-cart {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #F7F7F7;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .section-add-cart .product-qty {
+            width: 85px;
+        }
+
+        .section-add-cart #quantity {
+            height: auto;
+            width: 28px;
+            text-align: center;
+            border-width: initial;
+            border-style: none;
+            border-color: initial;
+            border-image: initial;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .section-add-cart .btn-number {
+            width: 26px;
+            height: 26px;
+            line-height: 1;
+            text-align: center;
+            background: #FFFFFF;
+            border: 1px solid #E2E2E2;
+            border-radius: 6px;
+            color: #222;
+            padding: 0;
+        }
+
+        @media (max-width: 768px) {
+            .section-add-cart {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            }
+        }
     </style>
     @yield('style')
 </head>
@@ -138,7 +184,36 @@
                     <li class="list-group-item d-flex justify-content-between lh-sm align-items-center" id="cart-item-{{($cart->id)}}">
                         <div style="width:65%;">
                             <h6 class="my-0">{{$cart->product->name}}</h6>
-                            <small class="text-body-secondary">Jumlah : {{$cart->qty}}</small>
+                            @if($cart->product->type != 1)
+                            <div class="section-add-cart" style="margin: 0px; padding: 0px; border: none;">
+                                <div class="d-flex align-items-center gap-3">
+                                <div class="input-group product-qty item-quantity-cart-{{$cart->id}}">
+                                    <span class="input-group-btn">
+                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
+                                        <svg width="16" height="16">
+                                        <use xlink:href="#minus"></use>
+                                        </svg>
+                                    </button>
+                                    </span>
+                                    <input type="text" id="quantity" name="quantityCart" class="form-control input-number" value="{{$cart->qty}}">
+                                    <span class="input-group-btn">
+                                    <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
+                                        <svg width="16" height="16">
+                                        <use xlink:href="#plus"></use>
+                                        </svg>
+                                    </button>
+                                    </span>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-outline-secondary rounded-3 btn-update-cart" data-id="{{$cart->id}}">
+                                    Perbarui
+                                </button>
+                                </div>
+                            </div>
+                            @else
+                            <div>
+                                <span class="m-0">Jumlah 1</span>
+                            </div>
+                            @endif
                         </div>
                         <div style="text-align: right;width: 35%;">
                             <p class="text-body-secondary m-0">Rp {{number_format($cart->price, 0, ',', '.')}}</p>

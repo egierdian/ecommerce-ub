@@ -12,6 +12,7 @@ Route::get('/product/{category}/{product?}', [Controllers\Frontend\IndexControll
 Route::group((['prefix' => 'cart']), function () {
     Route::post('/add/{productId}', [Controllers\Frontend\CartController::class, 'add'])->name('frontend.cart.add');
     Route::post('/delete/{productId}', [Controllers\Frontend\CartController::class, 'delete'])->name('frontend.cart.delete');
+    Route::post('/update/{productId}', [Controllers\Frontend\CartController::class, 'update'])->name('frontend.cart.update');
 });
 
 Route::get('/checkout', [Controllers\Frontend\IndexController::class, 'checkout'])->name('frontend.checkout');
