@@ -44,6 +44,14 @@
 		});
 	</script>
 
+    <style>
+        
+        .goog-te-banner-frame.skiptranslate {
+            margin-top: 0 !important;
+            height: 40px !important; /* tetap hitung tinggi biar observer detect */
+            visibility: visible !important;
+        }
+    </style>
     @yield('style')
 </head>
 
@@ -163,6 +171,7 @@
         </div>
     </div>
 
+    <div id="google_translate_element" style="display:none;"></div>
     <header>
         <div class="container-fluid">
             <div class="row py-3 border-bottom">
@@ -199,9 +208,13 @@
                 </div>
 
                 <div class="col-sm-8 col-lg-5 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
-                    <div class="support-box text-end d-none d-xl-block">
-                        <span class="fs-6 text-muted">Butuh Bantuan?</span>
-                        <h5 class="mb-0">{{$webSettings['contact_phone']??''}}</h5>
+                    <div class="support-box text-end">
+                        <!-- <span class="fs-6 text-muted">Butuh Bantuan?</span>
+                        <h5 class="mb-0">{{$webSettings['contact_phone']??''}}</h5> -->
+                        <div class="d-flex gap-3">
+                            <img src="https://flagcdn.com/w40/id.png" class="flag-icon" onclick="translatePage('id')" title="Bahasa Indonesia" width="30">
+                            <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" onclick="translatePage('en')" title="English" width="30">
+                        </div>
                     </div>
 
                     <ul class="d-flex justify-content-end list-unstyled m-0">
@@ -481,6 +494,34 @@
         });
     })();
     </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            { pageLanguage: 'id', includedLanguages: 'id,en' },
+            'google_translate_element'
+        );
+        }
+
+        function translatePage(lang) {
+        var selectField = document.querySelector("select.goog-te-combo");
+        if (selectField) {
+            selectField.value = lang;
+            selectField.dispatchEvent(new Event("change"));
+            document.getElementById("header").style.paddingTop = "40px"; // tambah padding ketika aktif
+        }
+        }
+
+        // Deteksi jika user menutup translate bar
+        const observer = new MutationObserver(() => {
+        let iframe = document.querySelector(".goog-te-banner-frame");
+        if (!iframe) {
+            document.getElementById("header").style.paddingTop = "0px"; // hapus padding ketika translate hilang
+        }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     @yield('script')
 </body>
 
