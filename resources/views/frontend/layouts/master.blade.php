@@ -130,7 +130,7 @@
             <div class="order-md-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-primary">Keranjang</span>
-                    <span class="badge bg-primary rounded-pill count-cart">{{count($carts)}}</span>
+                    <span class="badge bg-primary rounded-pill count-cart">{{count($carts)}} Item</span>
                 </h4>
                 <ul class="list-group mb-3">
                     <div class="section-message"></div>
