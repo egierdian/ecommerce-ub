@@ -4,6 +4,15 @@
 
 @section('style')
 <style>
+        .fa-tiktok {
+            display: inline-block;
+            width: 0.8em;    /* ikut font-size */
+            height: 0.8em;
+            background: url('/frontend/images/icon/tiktok.svg') no-repeat center;
+            background-size: contain; /* biar fit */
+            vertical-align: middle;   /* biar sejajar teks */
+            margin-top: -5px;
+        }
 </style>
 @endsection
 
@@ -54,10 +63,11 @@
 
                         <h5 class="fw-bold text-primary mb-3">Ikuti Kami</h5>
                         <div class="d-flex gap-3 fs-4">
-                            <a href="{{$webSettings['facebook']??''}}" class="text-primary"><i class="fab fa-facebook-f"></i></a>
+                            <!-- <a href="{{$webSettings['facebook']??''}}" class="text-primary"><i class="fab fa-facebook-f"></i></a> -->
                             <a href="{{$webSettings['instagram']??''}}" class="text-primary"><i class="fab fa-instagram"></i></a>
                             <a href="{{$webSettings['linkedin']??''}}" class="text-primary"><i class="fab fa-linkedin"></i></a>
                             <a href="{{$webSettings['youtube']??''}}" class="text-primary"><i class="fab fa-youtube"></i></a>
+                            <a href="{{$webSettings['tiktok']??''}}" class="text-primary"><i class="fa fa-tiktok"></i></a>
                         </div>
 
                     </div>
