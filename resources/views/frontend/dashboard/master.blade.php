@@ -184,7 +184,7 @@
                         </li>
                     </ul>
                     <div class="mt-auto">
-                        <a href="#" class="btn btn-outline-light w-100"><i class="bi bi-box-arrow-right me-1"></i> Logout</a>
+                        <a href="{{route('logout')}}" class="btn btn-outline-light w-100"><i class="bi bi-box-arrow-right me-1"></i> Logout</a>
                     </div>
                 </div>
             </div>
