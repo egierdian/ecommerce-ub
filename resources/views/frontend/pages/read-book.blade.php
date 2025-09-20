@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title', 'Tentang kami')
+@section('title', $product->name ?? '')
 
 @section('style')
 <style>
