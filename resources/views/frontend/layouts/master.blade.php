@@ -372,11 +372,14 @@
         <div class="container-fluid text-white">
             <div class="row">
 
-                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="col-md-6 col-sm-6">
                     <div class="footer-menu">
                         <!-- <img src="{{asset($webSettings['logo_footer']??'')}}" alt="logo" height="60"> -->
-
-                        <div class="social-links">
+                        <div class="d-grid gap-2" style="grid-template-columns: 30px auto;">
+                            <div class="text-white fs-6 text-center"><i class="fas fa-map-marker-alt"></i></div>
+                            <p>{{$webSettings['address'] ?? ''}}</p>
+                        </div>
+                        <div class="social-links mt-1">
                             <h5 class="text-white">Follow us on</h5>
                             <ul class="d-flex list-unstyled gap-2">
                                 <!-- <li>
@@ -442,7 +445,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-2 col-sm-6">
                     <div class="footer-menu">
                         <h5 class="widget-title text-white">Informasi</h5>
                         <ul class="menu-list list-unstyled">
@@ -455,7 +458,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-1 col-sm-6 px-md-0">
                     <div class="footer-menu">
                         <h5 class="widget-title text-white">Akun</h5>
                         <ul class="menu-list list-unstyled">
