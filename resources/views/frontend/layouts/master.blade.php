@@ -484,7 +484,7 @@
             <i class="fab fa-whatsapp"></i>
         </a>
 
-        <a href="mailto:{{$webSettings['contact_email'??'']}}" 
+        <a href="mailto:{{$webSettings['contact_email']??''}}" 
         class="contact-item" title="Email">
             <i class="fa fa-envelope"></i>
         </a>
