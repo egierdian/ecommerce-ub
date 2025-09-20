@@ -306,7 +306,7 @@
     {{-- Form Filter Tanggal & Jam --}}
     <div class="card shadow-sm border-0 rounded-3 mb-4">
       <div class="card-body">
-        <p class="m-0">📅 Periksa jadwal ketersediaan sebelum melakukan pemesanan.</p>
+        <p class="m-0">Periksa jadwal ketersediaan sebelum melakukan pemesanan.</p>
         <form class="row g-3 align-items-end" id="#filterForm">
           <div class="col-md-5">
             <label for="start_datetime" class="form-label fw-semibold small text-muted">Mulai</label>
