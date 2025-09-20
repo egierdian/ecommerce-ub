@@ -257,7 +257,7 @@
         <div class="container-fluid">
             <div class="row py-3 border-bottom">
 
-                <div class="col-sm-3 col-lg-2 text-center text-sm-start">
+                <div class="col-sm-4 col-lg-3 text-center text-sm-start">
                     <div class="main-logo">
                         <a href="{{route('frontend.index')}}">
                             <img src="{{asset($webSettings['logo_website'] ?? '')}}" alt="logo" height="70">
@@ -288,7 +288,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-9 col-lg-6 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
+                <div class="col-sm-8 col-lg-5 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
                     <div class="support-box text-end d-none d-xl-block">
                         <span class="fs-6 text-muted">Butuh Bantuan?</span>
                         <h5 class="mb-0">{{$webSettings['contact_phone']??''}}</h5>
