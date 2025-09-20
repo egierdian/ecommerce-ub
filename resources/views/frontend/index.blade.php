@@ -350,7 +350,7 @@
 </section>
 
 
-<section class="pb-5 pt-2">
+<section class="pb-5 pt-2" style="border-bottom: 1px solid #f2f2f2">
   <div class="container-fluid">
     <h2 class="my-5">Pencarian Populer</h2>
     @foreach($popularKeywords as $v)
@@ -365,7 +365,7 @@
   </div>
 </section>
 
-<section class="py-5 bg-light">
+<section class="py-5 bg-light" hidden>
   <div class="container">
     <div class="mitra-carousel swiper">
       <div class="swiper-wrapper">

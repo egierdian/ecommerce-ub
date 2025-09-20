@@ -362,7 +362,10 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer-menu">
                         <img src="{{asset($webSettings['logo_footer']??'')}}" alt="logo" height="60">
+
+                        
                         <div class="social-links mt-5">
+                            <h5>Follow us on</h5>
                             <ul class="d-flex list-unstyled gap-2">
                                 <!-- <li>
                                     <a href="{{$webSettings['facebook']??''}}" class="btn btn-outline-light">

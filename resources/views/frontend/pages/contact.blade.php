@@ -32,36 +32,21 @@
                 <div class="row">
                     <div class="col-md-5 p-5">
                         <h4 class="fw-bold text-primary mb-4">Informasi Kontak</h4>
-                        <div class="d-flex mb-3">
-                            <div class="me-3 text-primary fs-6">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <p class="mb-0">{{$webSettings['address']??''}}</p>
-                        </div>
+                        <div class="d-grid gap-2" style="grid-template-columns: 30px auto;">
+                            <div class="text-primary fs-6 text-center"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>{{$webSettings['address'] ?? ''}}</div>
 
-                        <div class="d-flex mb-3">
-                            <div class="me-3 text-primary fs-6">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <p class="mb-0">{{$webSettings['contact_phone']??''}}</p>
-                        </div>
+                            <div class="text-primary fs-6 text-center"><i class="fas fa-phone"></i></div>
+                            <div>{{$webSettings['contact_phone'] ?? ''}}</div>
 
-                        <div class="d-flex mb-3">
-                            <div class="me-3 text-primary fs-6">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <p class="mb-0">{{$webSettings['contact_email']??''}}</p>
-                        </div>
+                            <div class="text-primary fs-6 text-center"><i class="fas fa-envelope"></i></div>
+                            <div>{{$webSettings['contact_email'] ?? ''}}</div>
 
-                        <div class="d-flex mb-4">
-                            <div class="me-3 text-primary fs-6">
-                                <i class="fas fa-clock"></i>
-                            </div>
+                            <div class="text-primary fs-6 text-center"><i class="fas fa-clock"></i></div>
                             <p class="mb-0">Senin - Minggu: 08.00 - 20.00</p>
                         </div>
 
-
-                        <h5 class="fw-bold text-primary mb-3">Ikuti Kami</h5>
+                        <h5 class="fw-bold text-primary mb-2 mt-4">Follow us on</h5>
                         <div class="d-flex gap-3 fs-4">
                             <!-- <a href="{{$webSettings['facebook']??''}}" class="text-primary"><i class="fab fa-facebook-f"></i></a> -->
                             <a href="{{$webSettings['instagram']??''}}" class="text-primary"><i class="fab fa-instagram"></i></a>
