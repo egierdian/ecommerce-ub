@@ -34,43 +34,23 @@
 @endsection
 
 @section('content')
-<section class="py-3" style="background-image: url('images/background-pattern.jpg');background-repeat: no-repeat;background-size: cover;">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-
-        <div class="banner-blocks">
-          <div class="banner-ad large bg-info block-1">
-            <div class="swiper main-swiper">
-              <div class="swiper-wrapper">
-                @foreach($sliders as $slider)
-                <div class="swiper-slide">
-                  <div class="row banner-content p-5 align-items-center">
-                    <div class="content-wrapper col-md-7">
-                      <h3 class="display-4">{{$slider->title}}</h3>
-                      <p>{{$slider->description}}</p>
-                      <a href="{{$slider->url}}" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 mb-4">Belanja Sekarang </a>
-                    </div>
-                    <div class="img-wrapper col-md-5">
-                      <img src="{{asset($slider->image)}}" class="img-fluid">
-                    </div>
-                  </div>
-                </div>
-                @endforeach
-              </div>
-
-              <div class="swiper-pagination"></div>
-
-            </div>
-          </div>
-
-        </div>
-        <!-- / Banner Blocks -->
-
-      </div>
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    @foreach($sliders as $k => $slider)
+    <div class="carousel-item {{$k == 0 ? 'active' : '' }}">
+      <img src="{{$slider->image}}" class="d-block w-100" alt="...">
     </div>
+    @endforeach
   </div>
-</section>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 
 <section class="py-5 overflow-hidden">
   <div class="container-fluid">
