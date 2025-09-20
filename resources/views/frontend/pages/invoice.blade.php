@@ -101,10 +101,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Produk</th>
-                        <th>Qty</th>
-                        <th class="item-price">Harga</th>
-                        <th class="item-price">Subtotal</th>
+                        <th class="w-50">Produk</th>
+                        <th class="w-10">Qty</th>
+                        <th class="w-20 item-price">Harga</th>
+                        <th class="w-20 item-price">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
