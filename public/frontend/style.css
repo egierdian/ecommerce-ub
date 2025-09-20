@@ -847,3 +847,28 @@ h6 {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
 }
+
+footer {
+    background: #85171a;
+}
+
+.social-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    color: #800000; /* maroon */
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: #600000; /* lebih gelap */
+    color: #fff;
+}
+
+.social-icon svg {
+    fill: currentColor; /* biar warna ikut dari .social-icon */
+}
