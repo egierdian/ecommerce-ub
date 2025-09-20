@@ -25,7 +25,7 @@ class IndexController extends Controller
     {
         $categories = Category::with([
             'products' => function ($query) {
-                $query->whereIn('type', [2,3])->where('status', 1)->limit(10)->with(['firstImage','category','wishlists'])
+                $query->whereIn('type', [1, 2,3])->where('status', 1)->limit(10)->with(['firstImage','category','wishlists'])
                 ->withAvg('reviews', 'rating')->withCount('reviews');
             }
         ])->where('status', 1)->get();
@@ -36,7 +36,7 @@ class IndexController extends Controller
             'wishlists' => function($q) {
                 $q->where('user_id', Auth::id());
             }
-        ])->whereIn('type', [2,3])->where('status', 1)
+        ])->whereIn('type', [1, 2,3])->where('status', 1)
         ->withAvg('reviews', 'rating')
         ->withCount('reviews')->limit(10)->get();
 
@@ -180,7 +180,7 @@ class IndexController extends Controller
                 ])
                 ->select('products.*')
                 ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
-                ->whereIn('products.type', [2,3])
+                // ->whereIn('products.type', [1, 2,3])
                 ->where('products.status', 1);
 
             if ($category == 'all') {
