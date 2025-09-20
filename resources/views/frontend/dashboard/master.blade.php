@@ -66,7 +66,7 @@
         <div class="row">
 
             <!-- Sidebar for desktop -->
-            <nav class="col-md-4 col-lg-3 d-none d-md-block sidebar p-3">
+            <nav class="col-md-4 col-lg-3 d-none d-md-block sidebar p-3 rounded">
                 <div class="d-flex flex-column h-100">
                     <h4 class="px-2 text-white mb-3">👤 Pembeli</h4>
                     <ul class="nav flex-column mb-auto">
