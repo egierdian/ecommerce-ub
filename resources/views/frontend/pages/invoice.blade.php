@@ -81,12 +81,12 @@
         </div>
         <div class="invoice-box">
             <div class="header">
-                <div>
+                <div class="w-50">
                     <h1>INVOICE</h1>
                     <p>No: {{$invoice->code}}<br>Tanggal: {{date('d M Y', strtotime($invoice->created_at))}}</p>
                     {!! paymentStatusBadge($invoice->status) !!}
                 </div>
-                <div class="company">
+                <div class="company w-50">
                     <strong>{{$webSettings['title_website'] ?? ''}}</strong><br>
                     {{$webSettings['address'] ?? ''}} <br />
                     Email: {{$webSettings['contact_email'] ?? ''}}
