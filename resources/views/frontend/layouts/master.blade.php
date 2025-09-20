@@ -257,7 +257,7 @@
         <div class="container-fluid">
             <div class="row py-3 border-bottom">
 
-                <div class="col-sm-4 col-lg-3 text-center text-sm-start">
+                <div class="col-sm-3 col-lg-2 text-center text-sm-start">
                     <div class="main-logo">
                         <a href="{{route('frontend.index')}}">
                             <img src="{{asset($webSettings['logo_website'] ?? '')}}" alt="logo" height="70">
@@ -288,14 +288,14 @@
                     </div>
                 </div>
 
-                <div class="col-sm-8 col-lg-5 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
-                    <div class="support-box text-end">
-                        <!-- <span class="fs-6 text-muted">Butuh Bantuan?</span>
-                        <h5 class="mb-0">{{$webSettings['contact_phone']??''}}</h5> -->
-                        <div class="d-flex gap-3 change-language">
+                <div class="col-sm-9 col-lg-6 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
+                    <div class="support-box text-end d-none d-xl-block">
+                        <span class="fs-6 text-muted">Butuh Bantuan?</span>
+                        <h5 class="mb-0">{{$webSettings['contact_phone']??''}}</h5>
+                        <!-- <div class="d-flex gap-3 change-language">
                             <img src="https://flagcdn.com/w40/id.png" class="flag-icon" onclick="translatePage('id')" title="Bahasa Indonesia" width="30">
                             <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" onclick="translatePage('en')" title="English" width="30">
-                        </div>
+                        </div> -->
                     </div>
 
                     <ul class="d-flex justify-content-end list-unstyled m-0">
@@ -323,6 +323,19 @@
                                 </svg>
                             </a>
                         </li> -->
+                        <li>
+                            <a href="#" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m6.93 6h-2.09a15.74 15.74 0 0 0-1.36-3.19A8.06 8.06 0 0 1 18.93 8M12 4a13.09 13.09 0 0 1 2.17 4H9.83A13.09 13.09 0 0 1 12 4M4.26 14a7.86 7.86 0 0 1 0-4h2.23a15.35 15.35 0 0 0 0 4Zm.81 2h2.09a15.74 15.74 0 0 0 1.36 3.19A8.06 8.06 0 0 1 5.07 16M7.16 8H5.07a8.06 8.06 0 0 1 3.45-3.19A15.74 15.74 0 0 0 7.16 8M12 20a13.09 13.09 0 0 1-2.17-4h4.34A13.09 13.09 0 0 1 12 20m2.83-6H9.17a13.09 13.09 0 0 1 0-4h5.66a13.09 13.09 0 0 1 0 4m.01 5.19A15.74 15.74 0 0 0 16.84 16h2.09a8.06 8.06 0 0 1-3.45 3.19M17.51 14a15.35 15.35 0 0 0 0-4h2.23a7.86 7.86 0 0 1 0 4Z"/>
+                                </svg>
+                            </a>
+
+                            <!-- Dropdown -->
+                            <ul class="dropdown-menu dropdown-menu-end text-center">
+                                <li><a class="dropdown-item" onclick="translatePage('id')">Bahasa Indonesia</a></li>
+                                <li><a class="dropdown-item" onclick="translatePage('en')">English</a></li>
+                            </ul>
+                        </li>
                         <li class="d-lg-none">
                             <a href="#" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                 <svg width="24" height="24" viewBox="0 0 24 24">

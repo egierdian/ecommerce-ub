@@ -872,3 +872,15 @@ footer {
 .social-icon svg {
     fill: currentColor; /* biar warna ikut dari .social-icon */
 }
+
+.dropdown-menu {
+  min-width: 160px;        /* biar lebar cukup */
+  text-align: left;        /* teks rata kiri */
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu {
+    padding: 10px;
+    border: 1px solid #f2f2f2;
+  }
+}
