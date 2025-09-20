@@ -4,15 +4,18 @@
 
 @section('style')
 <style>
-        .fa-tiktok {
-            display: inline-block;
-            width: 0.8em;    /* ikut font-size */
-            height: 0.8em;
-            background: url('/frontend/images/icon/tiktok.svg') no-repeat center;
-            background-size: contain; /* biar fit */
-            vertical-align: middle;   /* biar sejajar teks */
-            margin-top: -5px;
-        }
+    .fa-tiktok {
+        display: inline-block;
+        width: 0.8em;
+        /* ikut font-size */
+        height: 0.8em;
+        background: url('/frontend/images/icon/tiktok.svg') no-repeat center;
+        background-size: contain;
+        /* biar fit */
+        vertical-align: middle;
+        /* biar sejajar teks */
+        margin-top: -5px;
+    }
 </style>
 @endsection
 
@@ -52,7 +55,15 @@
                             <a href="{{$webSettings['instagram']??''}}" class="text-primary"><i class="fab fa-instagram"></i></a>
                             <a href="{{$webSettings['linkedin']??''}}" class="text-primary"><i class="fab fa-linkedin"></i></a>
                             <a href="{{$webSettings['youtube']??''}}" class="text-primary"><i class="fab fa-youtube"></i></a>
-                            <a href="{{$webSettings['tiktok']??''}}" class="text-primary"><i class="fa fa-tiktok"></i></a>
+                            <a href="{{$webSettings['tiktok']??''}}" class="text-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" style="margin-top: -5px"
+                                    viewBox="0 0 448 512" fill="currentColor">
+                                    <path d="M448,209.91c-17.55,0-34.48-2.06-50.86-5.93V358.4
+                                                c0,84.18-68.28,152.46-152.46,152.46S92.22,442.58,92.22,358.4
+                                                c0-71.28,48.94-131.28,115.46-148.17v79.94
+                                                c-22.26,10.14-37.72,32.61-37.72,58.23
+                                                c0,35.67,28.91,64.58,64.58,64.58s64.58-28.91,64.58-64.58V0h84.18
+                                                c0,69.28,56.12,125.46,125.46,125.46V209.91z" />
+                                </svg></a>
                         </div>
 
                     </div>
