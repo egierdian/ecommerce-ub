@@ -287,7 +287,7 @@
 
   </div>
 </section>
-@if(count($relatedProducts) > 0)
+@if(count($relatedProducts) > 0 && $product->type != "1")
 <section class="related-section">
 
   <div class="container-fluid">
