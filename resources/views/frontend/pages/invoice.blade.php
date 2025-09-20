@@ -145,30 +145,45 @@
 @endsection
 
 @section('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 <script>
     $(document).on("click", "#exportPDF", function () {
         const invoice = document.querySelector(".invoice-box");
 
-        html2canvas(invoice, { scale: 2 }).then(canvas => {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF("p", "mm", "a4");
+        // html2canvas(invoice, { scale: 2 }).then(canvas => {
+        //     const { jsPDF } = window.jspdf;
+        //     const doc = new jsPDF("p", "mm", "a4");
 
-            // Konversi canvas ke image base64
-            const imgData = canvas.toDataURL("image/png");
+        //     // Konversi canvas ke image base64
+        //     const imgData = canvas.toDataURL("image/png");
 
-            // Hitung skala agar pas ke A4
-            const imgProps = doc.getImageProperties(imgData);
-            const pdfWidth = doc.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        //     // Hitung skala agar pas ke A4
+        //     const imgProps = doc.getImageProperties(imgData);
+        //     const pdfWidth = doc.internal.pageSize.getWidth();
+        //     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-            // Tambahkan ke PDF
-            doc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        //     // Tambahkan ke PDF
+        //     doc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
-            // Nama file otomatis sesuai kode invoice
-            doc.save("Invoice-{{ $invoice->code }}.pdf");
+        //     // Nama file otomatis sesuai kode invoice
+        //     doc.save("Invoice-{{ $invoice->code }}.pdf");
+        // });
+        $(document).on("click", "#exportPDF", function () {
+            const element = document.querySelector(".invoice-box");
+
+            const opt = {
+                margin:       10,
+                filename:     "Invoice-TRX20250915YVLVFX.pdf",
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'p' }
+            };
+
+            html2pdf().set(opt).from(element).save();
         });
+
     });
 </script>
 
