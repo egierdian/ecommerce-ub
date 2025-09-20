@@ -65,46 +65,46 @@
   }
 
   /* HEADING TITLE */
-  h1 {
+  .product-detail h1 {
     font-size: 1.6rem;
     font-weight: 700;
   }
 
-  h2 {
+  .product-detail h2 {
     font-size: 1.4rem;
     font-weight: 600;
     margin-top: 1rem;
   }
 
-  h3 {
+  .product-detail h3 {
     font-size: 1.2rem;
     font-weight: 500;
     margin-top: 0.8rem;
   }
 
-  h4 {
+  .product-detail h4 {
     font-size: 1.05rem;
     font-weight: 500;
   }
 
-  h5 {
+  .product-detail h5 {
     font-size: 1rem;
     font-weight: 500;
   }
 
-  h6 {
+  .product-detail h6 {
     font-size: 0.9rem;
     font-weight: 500;
   }
 
-  p,
-  ul,
-  li {
+  .product-detail p,
+  .product-detail ul,
+  .product-detail li {
     font-size: 0.9rem;
     line-height: 1.5;
   }
 </style>
-<section class="pt-5 content-section">
+<section class="pt-5 content-section product-detail">
   <div class="container-fluid">
 
     @if(session('success'))
