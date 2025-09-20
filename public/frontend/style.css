@@ -586,7 +586,8 @@ h6 {
     text-align: center;
 }
 .product-item figure img {
-    /* max-height: 210px; */
+    max-height: 220px;
+    object-fit: contain;
     height: auto;
     border-radius: 12px;
 }
