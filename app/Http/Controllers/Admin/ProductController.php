@@ -103,7 +103,7 @@ class ProductController extends Controller
             return $input->type == 1;
         });
 
-        $validator->sometimes('file', 'required|mimes:pdf|max:10240', function ($input) {
+        $validator->sometimes('file', 'mimes:pdf|max:10240', function ($input) {
             return $input->type == 3;
         });
         $validator->validate();
