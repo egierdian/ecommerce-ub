@@ -450,7 +450,7 @@
                         <h5 class="widget-title text-white">Informasi</h5>
                         <ul class="menu-list list-unstyled">
                             <li class="menu-item">
-                                <a href="{{route('frontend.about-us')}}" class="nav-link">Tentang Kami</a>
+                                <a href="https://bakrieuniversity.ac.id/profile#about" class="nav-link">Tentang Kami</a>
                             </li>
                             <li class="menu-item">
                                 <a href="{{route('frontend.product.rental')}}" class="nav-link">Produk Sewa</a>
