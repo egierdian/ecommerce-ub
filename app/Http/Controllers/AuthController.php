@@ -30,7 +30,7 @@ class AuthController extends Controller
             'role' => 'customer',
         ]);
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Success!');
     }
 
     public function showLogin()
