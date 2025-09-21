@@ -61,7 +61,7 @@
           <h2 class="section-title">Kategori</h2>
 
           <div class="d-flex align-items-center">
-            <a href="#" class="btn-link text-decoration-none">Lihat semua kategori →</a>
+            <!-- <a href="#" class="btn-link text-decoration-none">→</a> -->
             <div class="swiper-buttons">
               <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
               <button class="swiper-next category-carousel-next btn btn-yellow">❯</button>
