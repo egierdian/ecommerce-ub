@@ -290,12 +290,8 @@
 
                 <div class="col-sm-8 col-lg-5 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
                     <div class="support-box text-end d-none d-xl-block">
-                        <span class="fs-6 text-muted">Butuh Bantuan?</span>
-                        <h5 class="mb-0">{{$webSettings['contact_phone']??''}}</h5>
-                        <!-- <div class="d-flex gap-3 change-language">
-                            <img src="https://flagcdn.com/w40/id.png" class="flag-icon" onclick="translatePage('id')" title="Bahasa Indonesia" width="30">
-                            <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" onclick="translatePage('en')" title="English" width="30">
-                        </div> -->
+                        <a href="{{route('frontend.faq')}}" class="text-decoration-none">
+                        <span class="fs-6 text-muted">Butuh Bantuan?</span></a>
                     </div>
 
                     <ul class="d-flex justify-content-end list-unstyled m-0">
