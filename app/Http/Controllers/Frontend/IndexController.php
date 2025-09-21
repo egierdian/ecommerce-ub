@@ -179,6 +179,8 @@ class IndexController extends Controller
                     }
                 ])
                 ->select('products.*')
+                ->withAvg('reviews', 'rating')
+                ->withCount('reviews')
                 ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
                 // ->whereIn('products.type', [1, 2,3])
                 ->where('products.status', 1);
