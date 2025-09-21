@@ -79,11 +79,11 @@
 
                         <li>
                             <a href="{{route('frontend.index')}}"
-                                class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}">
+                                class="nav-link">
                                 <i class="fas fa-shopping-basket me-2"></i> Belanja Sekarang
                             </a>
                         </li>
-                        
+
                         <li>
                             <a href="{{route('frontend.dashboard.my-order')}}"
                                 class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}">
@@ -150,7 +150,7 @@
 
                         <li>
                             <a href="{{route('frontend.index')}}"
-                                class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}">
+                                class="nav-link">
                                 <i class="fas fa-shopping-basket me-2"></i> Belanja Sekarang
                             </a>
                         </li>
