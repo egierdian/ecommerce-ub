@@ -78,6 +78,13 @@
                         </li>
 
                         <li>
+                            <a href="{{route('frontend.index')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}">
+                                <i class="fas fa-shopping-basket me-2"></i> Belanja Sekarang
+                            </a>
+                        </li>
+                        
+                        <li>
                             <a href="{{route('frontend.dashboard.my-order')}}"
                                 class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}">
                                 <i class="fas fa-shopping-basket me-2"></i> Pesanan Saya
@@ -138,6 +145,13 @@
                             <a href="{{route('frontend.dashboard')}}"
                                 class="nav-link {{ request()->routeIs('frontend.dashboard') ? 'active' : '' }}">
                                 <i class="fas fa-home me-2"></i> Dashboard
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('frontend.index')}}"
+                                class="nav-link {{ request()->routeIs('frontend.dashboard.my-order') ? 'active' : '' }}">
+                                <i class="fas fa-shopping-basket me-2"></i> Belanja Sekarang
                             </a>
                         </li>
 
