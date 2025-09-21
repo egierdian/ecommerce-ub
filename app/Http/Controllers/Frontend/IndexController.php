@@ -329,6 +329,7 @@ class IndexController extends Controller
 
     public function aboutUs()
     {
+        return redirect()->away('https://bakrieuniversity.ac.id/profile#about');
         return view('frontend.pages.about');
     }
 
