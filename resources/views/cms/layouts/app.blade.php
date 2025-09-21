@@ -33,9 +33,6 @@
 	<div class="wrapper wrapper-login">
 		@yield('content')
 	</div>
-	<a href="https://wa.me/62859106642630" title="hubungi kami" target="new" class="whatsapp-button position-fixed" style="bottom: 60px;right: 40px;">
-		<img src="{{asset('assets/img/wa.png')}}" width="70px">
-	</a>
 	<script src="{{asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
 	<script src="{{asset('assets/js/atlantis.js')}}"></script>
 	@yield('script')
