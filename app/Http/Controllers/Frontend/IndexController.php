@@ -305,7 +305,8 @@ class IndexController extends Controller
 
             DB::commit();
 
-            return redirect()->route('frontend.invoice', ['code' => $code]);
+            return view('frontend.pages.checkout_success', compact('code', 'transaction'));
+            // return redirect()->route('frontend.invoice', ['code' => $code]);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());

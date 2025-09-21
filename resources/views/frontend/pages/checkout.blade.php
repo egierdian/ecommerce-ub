@@ -31,7 +31,7 @@
         border-radius: 10px;
     }
 
-    .btn-primary {
+    .btn-custom-primary {
         border-radius: 12px;
         padding: 14px;
         font-size: 18px;
@@ -64,7 +64,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
-        <form action="{{route('frontend.checkout.process')}}" method="POST">
+        <form action="{{route('frontend.checkout.process')}}" method="POST" id="checkoutForm">
             <div class="row g-4">
                 <!-- Form -->
                 <div class="col-lg-8">
@@ -139,7 +139,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100 mt-4">Bayar Sekarang</button>
+                            <button type="button" class="btn btn-primary btn-custom-primary w-100 mt-4" id="btnCheckout">Bayar Sekarang</button>
                         </div>
                     </div>
                 </div>
@@ -181,6 +181,25 @@
         </form>
     </div>
 </section>
+
+<!-- Modal Konfirmasi -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Pembayaran</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body">
+        Apakah Anda yakin ingin melanjutkan ke pembayaran?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary" id="confirmSubmit">Ya, Bayar</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('script')
@@ -199,6 +218,16 @@
             radio.addEventListener('change', function() {
                 paymentDetail.textContent = paymentMethods[this.value];
             });
+        });
+
+        
+        document.getElementById("btnCheckout").addEventListener("click", function (e) {
+            let modal = new bootstrap.Modal(document.getElementById("confirmModal"));
+            modal.show();
+        });
+
+        document.getElementById("confirmSubmit").addEventListener("click", function () {
+            document.getElementById("checkoutForm").submit();
         });
     })
 </script>

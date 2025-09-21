@@ -16,7 +16,7 @@ Route::group((['prefix' => 'cart']), function () {
 });
 
 Route::get('/checkout', [Controllers\Frontend\IndexController::class, 'checkout'])->name('frontend.checkout');
-Route::post('/checkout/process', [Controllers\Frontend\IndexController::class, 'checkoutProcess'])->name('frontend.checkout.process');
+Route::post('/checkout', [Controllers\Frontend\IndexController::class, 'checkoutProcess'])->name('frontend.checkout.process');
 
 Route::get('/invoice/{code}', [Controllers\Frontend\IndexController::class, 'invoice'])->name('frontend.invoice');
 
