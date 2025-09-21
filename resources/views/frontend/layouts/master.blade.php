@@ -379,7 +379,7 @@
                             <div class="text-white fs-6 text-center"><i class="fas fa-map-marker-alt"></i></div>
                             <p>{{$webSettings['address'] ?? ''}}</p>
                         </div>
-                        <div class="social-links mt-1">
+                        <div class="social-links mt-1 mb-2">
                             <h5 class="text-white">Follow us on</h5>
                             <ul class="d-flex list-unstyled gap-2">
                                 <!-- <li>
