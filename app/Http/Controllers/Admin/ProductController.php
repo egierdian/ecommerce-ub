@@ -229,10 +229,10 @@ class ProductController extends Controller
                 $price =  $request->price;
                 $qty = $request->qty;
             }
-            $data['base_price_per_hour'] = $base_price_per_hour;
-            $data['holiday_price_per_hour'] = $holiday_price_per_hour;
-            $data['price'] =  $price;
-            $data['qty'] =  $qty;
+            $param['base_price_per_hour'] = $base_price_per_hour;
+            $param['holiday_price_per_hour'] = $holiday_price_per_hour;
+            $param['price'] =  $price;
+            $param['qty'] =  $qty;
 
 
             #update file product digital
@@ -241,9 +241,9 @@ class ProductController extends Controller
             {
                 if(isset($file) && file_exists(public_path($file)))
                 {
+                    unlink(public_path($file)); 
                     $file = $request->file('file');
                     $fileName = 'product-digital-'.Str::uuid()->toString().'.'.$file->getClientOriginalExtension();
-                    unlink(public_path($file)); 
                     $base_path = 'uploads/product';
                     $path = public_path($base_path);
                     $file->move($path, $fileName);
