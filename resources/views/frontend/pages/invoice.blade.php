@@ -116,7 +116,7 @@
                         if ($item->product->type == 1) {
                             $productNameDetail = '(' . $item->start_date . ' - ' . $item->end_date . ')';
                         } elseif ($item->product->type == 2) {
-                            $productNameDetail = '(' . $item->variant->variant_name . ')';
+                            $productNameDetail = '(' . $item->variant->variant_name ?? "" . ')';
                         }
                     @endphp
                     <tr>
