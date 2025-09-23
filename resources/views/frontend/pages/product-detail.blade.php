@@ -169,7 +169,7 @@
           <span class="badge bg-secondary">
             <i class="bi bi-tag me-1"></i> {{$product->category->name}}
           </span>
-          @if($product->type == 2)
+          @if($product->type == 5)
           <span class="badge bg-dark">Stok tersedia: {{$product->qty - $pendingStock??0}}</span>
           @endif
         </p>
@@ -217,7 +217,7 @@
             </li>
           </ul>
         </div>
-        @else
+        @elseif($product->type == 3)
         <h4 class="price">Rp {{number_format($product->price, 0, ',', '.')}}</h4>
         @endif
 
@@ -239,6 +239,19 @@
               💰 Total Biaya:
               Rp {{ number_format($rent_product['total_price'] ?? 0, 0, ',', '.') }}
             </p>
+          </div>
+          @elseif($product->type == 2)
+          <div class="mb-3">
+            <label class="form-label fw-bold">Pilih Varian</label>
+            <div class="d-flex flex-wrap gap-2">
+                @foreach($product->variants as $variant)
+                    <input type="radio" class="btn-check" name="variant_id" id="variant-{{ $variant->id }}" value="{{ encrypt($variant->id) }}" required>
+                    <label class="btn btn-outline-primary" for="variant-{{ $variant->id }}">
+                        {{ $variant->variant_name }} <br>
+                        <small>Rp {{ number_format($variant->price,0,',','.') }}</small>
+                    </label>
+                @endforeach
+            </div>
           </div>
           @endif
           <div class="section-add-cart">

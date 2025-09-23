@@ -85,7 +85,7 @@ class IndexController extends Controller
     public function showProduct(Request $request, $category, $product = null)
     {
         if ($product) {
-            $product = Product::with('category', 'images')->where('status', 1)->where('slug', $product)->first();
+            $product = Product::with('category', 'images', 'variants')->where('status', 1)->where('slug', $product)->first();
 
             if (!$product) return redirect()->route('frontend.index');
             
@@ -248,7 +248,8 @@ class IndexController extends Controller
             $total = 0;
 
             foreach ($request->carts as $k => $v) {
-                $cart = Cart::with('product')->where('id', decrypt($v))->first();
+                #PROSES LAMA
+                /*$cart = Cart::with('product')->where('id', decrypt($v))->first();
 
                 $stock = $cart->product->qty;
 
@@ -265,6 +266,52 @@ class IndexController extends Controller
                         DB::rollBack();
                         return redirect()->back()->with('error', 'Stok produk tidak mencukupi.');
                     }
+                }
+                */
+
+                $cart = Cart::with(['product', 'variant'])->where('id', decrypt($v))->first();
+
+                if (!$cart) {
+                    DB::rollBack();
+                    return redirect()->back()->with('error', 'Keranjang tidak ditemukan.');
+                }
+
+                // Default stok = 0
+                $stock = 0;
+
+                if ($cart->product->type == 1) {
+                    continue;
+                } elseif ($cart->product->type == 2) {
+                    if (!$cart->variant) {
+                        DB::rollBack();
+                        return redirect()->back()->with('error', 'Varian produk tidak valid.');
+                    }
+                    $stock = $cart->variant->stock;
+
+                    $pendingStock = DB::table('transactions as a')
+                        ->leftJoin('transaction_items as b', 'a.id', '=', 'b.transaction_id')
+                        ->where('b.product_id', $cart->product_id)
+                        ->where('b.product_variant_id', $cart->product_variant_id) // ✅ ikut filter varian
+                        ->whereIn('a.status', [1]) // pending
+                        ->sum('b.qty');
+
+                } else {
+                    // Produk tanpa varian (type == 3)
+                    $stock = $cart->product->qty;
+
+                    $pendingStock = DB::table('transactions as a')
+                        ->leftJoin('transaction_items as b', 'a.id', '=', 'b.transaction_id')
+                        ->where('b.product_id', $cart->product_id)
+                        ->whereNull('b.product_variant_id') // ✅ filter null varian
+                        ->whereIn('a.status', [1])
+                        ->sum('b.qty');
+                }
+
+                $availableStock = $stock - $pendingStock;
+
+                if ($cart->qty > $availableStock) {
+                    DB::rollBack();
+                    return redirect()->back()->with('error', 'Stok produk tidak mencukupi untuk ' . $cart->product->name);
                 }
             }
 
@@ -289,6 +336,7 @@ class IndexController extends Controller
                 TransactionItem::create([
                     'transaction_id' => $transaction->id,
                     'product_id'     => $cart->product_id,
+                    'product_variant_id'     => $cart->product_variant_id,
                     'price'          => $cart->price,
                     'qty'            => $cart->qty,
                     'subtotal'       => $cart->subtotal,

@@ -154,13 +154,52 @@
                                                 <img class="img-fluid" alt="" src="{{ asset($img->path) }}" width="55" style="display:none">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-											<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-sm btn-danger" data-id={{encrypt($data->id)}} data-imageid="{{$img->id}}" data-name="{{$img->name}}" data-type="single" onclick="deleteImage(this)">
-												<i class="fa fa-times"></i>
-											</button>
-										</div>
+                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-sm btn-danger" data-id={{encrypt($data->id)}} data-imageid="{{$img->id}}" data-name="{{$img->name}}" data-type="single" onclick="deleteImage(this)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     @endforeach
                                     @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row view-type view-product-fisik">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button class="btn btn-sm btn-add-row" type="button">Add</button>
+                                    <table class="table table-hover table-variant">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Variant</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Stock</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if(isset($data))
+                                            @foreach($data->variants as $k => $variant)
+                                            <tr class="tr tr-{{$k}}">
+                                                <td>
+                                                    <input type="hidden" name="variant_id" value="{{$variant->id}}">
+                                                    <input type="text" class="form-control my-2" name="variant_name[]" value="{{$variant->variant_name}}"></td>
+                                                <td><input type="text" class="form-control my-2 format-number" name="variant_price[]" value="{{number_format($variant->price , 0, ',', '.')}}"></td>
+                                                <td><input type="number" class="form-control my-2" name="variant_stock[]" min="0" value="{{number_format($variant->stock , 0, ',', '.') }}"></td>
+                                                <td class="p-2"><button type="button" class="btn btn-sm btn-danger btn-remove-row">Remove</button></td>
+                                            </tr>
+                                            @endforeach
+                                            @else
+                                            <tr class="tr tr-0">
+                                                <td><input type="text" class="form-control my-2" name="variant[]"></td>
+                                                <td><input type="text" class="form-control my-2 format-number" name="price[]"></td>
+                                                <td><input type="number" class="form-control my-2" name="stock[]" min="0"></td>
+                                                <td class="p-2"><button type="button" class="btn btn-sm btn-danger btn-remove-row">Remove</button></td>
+                                            </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -180,6 +219,8 @@
 @section('script')
 <script src="{{asset('assets/plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script>
+
+    let trCount = 1
     $(document).ready(function() {
         $('#description').summernote({
             tabsize: 2,
@@ -194,6 +235,22 @@
         $('.image-popup').magnificPopup({
             type: 'image'
         });
+        $(".btn-add-row").click(function() {
+            let html = `
+                <tr class="tr-row-${trCount}">
+                    <td><input type="text" class="form-control my-2" name="variant_name[]"></td>
+                    <td><input type="text" class="form-control my-2 format-number" name="variant_price[]"></td>
+                    <td><input type="number" class="form-control my-2" name="variant_stock[]" min="0"></td>
+                    <td class="p-2"><button type="button" class="btn btn-sm btn-danger btn-remove-row">Remove</button></td>
+                </tr>`;
+            
+            $(".table-variant tbody").append(html);
+            trCount++;
+        })
+        
+        $(document).on("click", ".btn-remove-row", function () {
+            $(this).closest("tr").remove();
+        });
     })
 
 
@@ -203,23 +260,26 @@
         if (type == '1') {
             $('.view-product').hide(400)
             $('.view-digital').hide(400)
-        } else if(type == '2') {
+            $('.view-product-fisik').hide(400)
+        } else if (type == '2') {
             $('.view-sewa').hide(400)
             $('.view-digital').hide(400)
+            $('.view-product').hide(400)
         } else {
             $('.view-sewa').hide(400)
+            $('.view-product-fisik').hide(400)
         }
     }
 
     function deleteImage(e) {
         let images = $(e).data()
-        
+
         let id = images.id
         let type = images.type
         let title = 'Hapus semua'
-        let imageId = null 
+        let imageId = null
         let name = null
-        if(type != 'all') {
+        if (type != 'all') {
             name = images.name
             title = `Hapus ${images.name}`
             imageId = images.imageid
@@ -236,7 +296,7 @@
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                if(type != 'all') {
+                if (type != 'all') {
                     window.location.href = `/admin/product/delete-image/${id}/${imageId}`
                 } else {
                     window.location.href = `/admin/product/delete-image/${id}`

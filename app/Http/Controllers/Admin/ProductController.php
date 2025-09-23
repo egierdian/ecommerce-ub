@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -56,7 +57,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $data = Product::findOrFail(decrypt($id));
+        $data = Product::with('variants')->findOrFail(decrypt($id));
         $type = $this->type();
 
         $data->price = number_format($data->price, 0, ',', '.');
@@ -91,13 +92,25 @@ class ProductController extends Controller
             'images.*' => 'image|mimes:jpg,jpeg,svg,png|max:5120',
         ]);
 
-        $validator->sometimes('price', 'required|numeric|min:0', function ($input) {
-            return $input->type == 2;
-        });
+        // $validator->sometimes('price', 'required|numeric|min:0', function ($input) {
+        //     return $input->type == 2;
+        // });
         
-        $validator->sometimes('qty', 'required|numeric|min:0', function ($input) {
-            return $input->type == 2;
-        });
+        // $validator->sometimes('qty', 'required|numeric|min:0', function ($input) {
+        //     return $input->type == 2;
+        // });
+        $validator->sometimes(
+            ['variant.*'],
+            'required|string',
+            fn($input) => $input->type == 2
+        );
+
+        $validator->sometimes(
+            ['price.*', 'stock.*'],
+            'required|numeric|min:0',
+            fn($input) => $input->type == 2
+        );
+
 
         $validator->sometimes('base_price_per_hour', 'required|numeric|min:100', function ($input) {
             return $input->type == 1;
@@ -126,7 +139,7 @@ class ProductController extends Controller
             if($request->type == 1) {
                 $base_price_per_hour =  $request->base_price_per_hour;
                 $holiday_price_per_hour =  $request->holiday_price_per_hour;
-            } else {
+            } else if ($request->type == 3){
                 $price =  $request->price;
                 $qty = $request->qty;
             }
@@ -162,6 +175,18 @@ class ProductController extends Controller
                 }
             }
 
+            if($request->type == 2) {
+                foreach($request->variant_name as $k => $v) {
+                    $paramVariant = [
+                        'product_id' => $productId,
+                        'variant_name' => $request->variant_name[$k],
+                        'price' => (int) str_replace('.', '', $request->variant_price[$k]),
+                        'stock' => (int) str_replace('.', '', $request->variant_stock[$k]),
+                    ];
+                    ProductVariant::create($paramVariant);
+                }
+            }
+
             return redirect()->route('admin.product')->with('success', 'Success created!');
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -191,13 +216,24 @@ class ProductController extends Controller
             'images.*' => 'image|mimes:jpg,jpeg,svg,png|max:5120',
         ]);
 
-        $validator->sometimes('price', 'required|numeric|min:0', function ($input) {
-            return $input->type == 2;
-        });
+        // $validator->sometimes('price', 'required|numeric|min:0', function ($input) {
+        //     return $input->type == 2;
+        // });
 
-        $validator->sometimes('qty', 'required|numeric|min:0', function ($input) {
-            return $input->type == 2;
-        });
+        // $validator->sometimes('qty', 'required|numeric|min:0', function ($input) {
+        //     return $input->type == 2;
+        // });
+        $validator->sometimes(
+            ['variant.*'],
+            'required|string',
+            fn($input) => $input->type == 2
+        );
+
+        $validator->sometimes(
+            ['price.*', 'stock.*'],
+            'required|numeric|min:0',
+            fn($input) => $input->type == 2
+        );
 
         $validator->sometimes('base_price_per_hour', 'required|numeric|min:100', function ($input) {
             return $input->type == 1;
@@ -271,6 +307,37 @@ class ProductController extends Controller
                         'path' => $base_path .'/'.$fileName
                     ];
                     ProductImage::create($paramImage);
+                }
+            }
+
+            $productId = $id;
+            #variant
+            if ($request->type == 2) {
+                $oldVariants = ProductVariant::where('product_id', $productId)->pluck('id')->toArray();
+                $newVariants = [];
+
+                foreach ($request->variant_name as $k => $v) {
+                    $variantId = $request->variant_id[$k] ?? null; // hidden input variant_id[]
+
+                    $paramVariant = [
+                        'product_id'   => $productId,
+                        'variant_name' => $request->variant_name[$k],
+                        'price'        => (int) str_replace('.', '', $request->variant_price[$k]),
+                        'stock'        => (int) str_replace('.', '', $request->variant_stock[$k]),
+                    ];
+
+                    if ($variantId) {
+                        ProductVariant::where('id', $variantId)->update($paramVariant);
+                        $newVariants[] = $variantId;
+                    } else {
+                        $variant = ProductVariant::create($paramVariant);
+                        $newVariants[] = $variant->id;
+                    }
+                }
+
+                $toDelete = array_diff($oldVariants, $newVariants);
+                if (!empty($toDelete)) {
+                    ProductVariant::whereIn('id', $toDelete)->delete();
                 }
             }
 

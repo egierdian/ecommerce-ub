@@ -12,6 +12,7 @@ class TransactionItem extends Model
     protected $fillable = [
         'transaction_id',
         'product_id',
+        'product_variant_id',
         'price',
         'qty',
         'subtotal',

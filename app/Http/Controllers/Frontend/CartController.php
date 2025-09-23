@@ -57,9 +57,35 @@ class CartController extends Controller
                     return redirect()->route('frontend.index');
                 }
             } else { #product
+                $variant_id = null;
                 if ($product->type == 3) {
                     $request->merge(['quantity' => 1]);
                 }
+                $price = $product->price; 
+                if ($product->type == 2) {
+                    if (!$request->filled('variant_id')) {
+                        return redirect()->back()->with(['error' => 'Silahkan pilih varian produk terlebih dahulu.']);
+                    }
+                    try {
+                        $variant_id = decrypt($request->variant_id);
+                        $variant = $product->variants()->find($variant_id);
+                        if (!$variant) {
+                            return redirect()->back()->with(['error' => 'Varian produk tidak ditemukan.']);
+                        }
+                        $price = $variant->price; // ambil harga dari varian
+                    } catch (\Exception $e) {
+                        return redirect()->back()->with(['error' => 'Varian tidak valid.']);
+                    }
+                }
+
+                $cartQuery = Cart::where('product_id', $product->id)
+                    ->where('user_id', Auth::id());
+
+                if ($product->type == 2) {
+                    $cartQuery->where('product_variant_id', $variant_id);
+                }
+
+                $cart = $cartQuery->first();
                 if ($cart) {
                     $cart->qty += $request->quantity;
                     $cart->subtotal = $cart->qty * $cart->price;
@@ -68,9 +94,10 @@ class CartController extends Controller
                     Cart::create([
                         'user_id'    => Auth::id(),
                         'product_id' => $product->id,
-                        'price'      => $product->price,
+                        'product_variant_id' => $variant_id,
+                        'price'      => $price, 
                         'qty'        => $request->quantity,
-                        'subtotal'   => $request->quantity * $product->price,
+                        'subtotal'   => $request->quantity * $price,
                     ]);
                 }
             }
@@ -107,8 +134,8 @@ class CartController extends Controller
                 ->with('product')
                 ->get();
 
-            $total = $carts->sum(fn($c) => $c->product->price * $c->qty);
-            $count = $carts->sum('qty');
+            $total = (float)$carts->sum('subtotal');
+            $count = (int)$carts->sum('qty');
 
             return response()->json([
                 'status'  => true,
@@ -144,8 +171,8 @@ class CartController extends Controller
                 ->with('product')
                 ->get();
 
-            $total = $carts->sum(fn($c) => $c->product->price * $c->qty);
-            $count = $carts->sum('qty');
+            $total = (float)$carts->sum('subtotal');
+            $count = (int)$carts->sum('qty');
 
             return response()->json([
                 'status'  => true,
@@ -154,7 +181,6 @@ class CartController extends Controller
                 'count'   => $count
             ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             return response()->json([
                 'status'  => false,
                 'message' => 'Terjadi kesalahan!',

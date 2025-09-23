@@ -33,8 +33,7 @@ function deleteItem (e) {
         }
     });
 }
-
-$(".format-number").on("input", function() {
+$(document).on("input", ".format-number", function() {
     let value = $(this).val().replace(/\./g, "");
     if (!isNaN(value) && value !== "") {
         $(this).val(value.replace(/\B(?=(\d{3})+(?!\d))/g, "."));

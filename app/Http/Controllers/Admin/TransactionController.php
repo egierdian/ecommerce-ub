@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Illuminate\Http\Request;
@@ -99,12 +100,22 @@ class TransactionController extends Controller
                 foreach ($transactionItems as $item) {
                     $product = Product::findOrFail($item->product_id);
 
-                    if($product->type != 1) {
-                        if ($product->qty < $item->qty) {
-                            throw new \Exception("Stok produk {$product->name} tidak mencukupi.");
+                    if($product->type == 2) {
+                        // if ($product->qty < $item->qty) {
+                        //     throw new \Exception("Stok produk {$product->name} tidak mencukupi.");
+                        // }
+
+                        // $product->decrement('qty', $item->qty);
+
+                        $variant = ProductVariant::findOrFail($item->product_variant_id);
+
+                        $product = $variant->product;
+
+                        if ($variant->stock < $item->qty) {
+                            throw new \Exception("Stok varian {$variant->name} dari produk {$product->name} tidak mencukupi.");
                         }
 
-                        $product->decrement('qty', $item->qty);
+                        $variant->decrement('stock', $item->qty);
                     }
                 }
             }
