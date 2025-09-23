@@ -50,7 +50,7 @@
                       </svg>
                     </a>
                     <figure>
-                      <a href="{{route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" title="{{$product->name}}">
+                      <a href="{{$product->type=='1' ? route('frontend.product.rental') : route('frontend.product.category', ['category' => $product->category->slug, 'product' => $product->slug])}}" title="{{$product->name}}">
                         <img src="{{asset($product->firstImage->path ?? '')}}" class="tab-image" width="100%">
                       </a>
                     </figure>
