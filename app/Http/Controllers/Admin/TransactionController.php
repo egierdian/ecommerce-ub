@@ -135,7 +135,10 @@ class TransactionController extends Controller
     
     public function detail($id)
     {
-        $transaction = Transaction::with(['transactionItems.product'])->findOrFail(decrypt($id));
+        $transaction = Transaction::with([
+            'transactionItems.product',
+            'transactionItems.variant'
+        ])->findOrFail(decrypt($id));
 
         return view('cms.transaction.detail', compact('transaction'));
     }

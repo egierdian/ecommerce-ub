@@ -22,4 +22,9 @@ class ProductVariant extends Model
     {
         return $this->hasMany(Cart::class, 'product_variant_id');
     }
+    
+    public function transactionItems()
+    {
+        return $this->hasMany(TransactionItem::class, 'product_variant_id');
+    }
 }

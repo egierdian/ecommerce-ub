@@ -46,10 +46,21 @@
                             </thead>
                             <tbody>
                                 @foreach($transaction->transactionItems as $i => $item)
+                                @php 
+                                    $productNameDetail = '';
+
+                                    if ($item->product->type == 1) {
+                                        $productNameDetail = '(' . $item->start_date . ' - ' . $item->end_date . ')';
+                                    } elseif ($item->product->type == 2) {
+                                        $productNameDetail = '(' . $item->variant->variant_name . ')';
+                                    }
+                                @endphp
                                 <tr>
                                     <td>{{ $i+1 }}</td>
                                     <td>
-                                        {{ $item->product->name }} <span class='text-muted m-0'>{{$item->product->type == 1 ? '('.$item->start_date.' - '.$item->end_date.')' : ''}}</span></</td>
+                                        {{ $item->product->name }} 
+                                        <span class='text-muted m-0'>{{$productNameDetail??''}}</span>
+                                    </td>
                                     <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>Rp {{ number_format($item->subtotal, 0, ',', '.') }}</td>

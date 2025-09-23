@@ -110,11 +110,19 @@
                 <tbody>
                     @php $subtotal = 0; @endphp
                     @foreach($invoice->transactionItems as $item)
-                    @php $subtotal += $item->subtotal; @endphp
+                    @php $subtotal += $item->subtotal; 
+                        $productNameDetail = '';
+
+                        if ($item->product->type == 1) {
+                            $productNameDetail = '(' . $item->start_date . ' - ' . $item->end_date . ')';
+                        } elseif ($item->product->type == 2) {
+                            $productNameDetail = '(' . $item->variant->variant_name . ')';
+                        }
+                    @endphp
                     <tr>
                         <td>
                             <p class="m-0">{{$item->product->name}}</p>
-                            <span class='text-muted m-0'>{{$item->product->type == 1 ? '('.$item->start_date.' - '.$item->end_date.')' : ''}}</span></td>
+                            <span class='text-muted m-0'>{{$productNameDetail}}</span></td>
                         <td>{{$item->qty}}</td>
                         <td class="item-price">Rp {{number_format($item->price, 0, ',', '.')}}</td>
                         <td class="item-price">Rp {{number_format($item->subtotal, 0, ',', '.')}}</td>
