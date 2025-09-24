@@ -135,13 +135,13 @@ class CartController extends Controller
                 ->get();
 
             $total = (float)$carts->sum('subtotal');
-            $count = (int)$carts->sum('qty');
+            $count = (int)count($carts);
 
             return response()->json([
                 'status'  => true,
                 'message' => 'Produk berhasil dihapus dari keranjang!',
                 'total'   => number_format($total, 0, ',', '.'),
-                'count'   => $count
+                'count'   => $count .' Item'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -172,13 +172,13 @@ class CartController extends Controller
                 ->get();
 
             $total = (float)$carts->sum('subtotal');
-            $count = (int)$carts->sum('qty');
+            $count = (int)count($carts);
 
             return response()->json([
                 'status'  => true,
                 'message' => 'Produk berhasil diperbarui!',
                 'total'   => number_format($total, 0, ',', '.'),
-                'count'   => $count
+                'count'   => $count .' Item'
             ]);
         } catch (\Exception $e) {
             return response()->json([
