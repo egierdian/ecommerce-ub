@@ -16,7 +16,7 @@ $(document).ready(function() {
           if(response.status) {
             $('#cart-item-' + cartId).remove()
             $('.cart-total').text(`Rp ${response.total}`)
-            $('.count-cart').text(`${response.count}`)
+            // $('.count-cart').text(`${response.count}`)
             msgAlert = 'success'
           } else {
           }
@@ -46,7 +46,7 @@ $(document).ready(function() {
           let msgAlert = 'danger'
           if(response.status) {
             $('.cart-total').text(`Rp ${response.total}`)
-            $('.count-cart').text(`${response.count}`)
+            // $('.count-cart').text(`${response.count}`)
             $(`#item-quantity-cart-${cartId} [name=quantityCart]`).val(response.quantity)
             msgAlert = 'success'
           } else {
